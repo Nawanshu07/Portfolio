@@ -45,7 +45,7 @@ export default function Contact() {
                 work. Feel free to connect with me.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <MagneticButton href="mailto:hello@nawanshu.dev">
+                <MagneticButton href="mailto:nawanshusharma05@gmail.com">
                   <Mail className="h-4 w-4" />
                   Email Nawanshu
                 </MagneticButton>
