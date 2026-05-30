@@ -5,7 +5,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowDown, ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowDown, ArrowRight, Code2, PlayCircle, Sparkles } from 'lucide-react'
 import type { MouseEvent } from 'react'
 import MagneticButton from './MagneticButton'
 
@@ -49,80 +49,121 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-[100svh] overflow-hidden"
+      className="relative overflow-hidden bg-background px-3 pb-20 pt-3 sm:px-4"
       onMouseMove={handleMouseMove}
     >
-      <motion.div
-        className="absolute inset-0 scale-[1.04] bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2200&auto=format&fit=crop')] bg-cover bg-center opacity-35"
-        style={{ x: mediaX, y: mediaY }}
-        aria-hidden="true"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,#0A0A0A_0%,rgba(10,10,10,0.9)_38%,rgba(10,10,10,0.54)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_32%,rgba(255,255,255,0.16),transparent_28%),linear-gradient(180deg,transparent,rgba(10,10,10,0.94)_88%)]" />
-
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="visible"
-        className="container-shell relative z-10 flex min-h-[100svh] flex-col justify-center pb-24 pt-28"
-      >
+      <div className="relative min-h-[88svh] overflow-hidden rounded-[24px] border border-white/10 bg-[#120906] shadow-[0_36px_120px_rgba(0,0,0,0.48)] sm:rounded-[34px]">
         <motion.div
-          variants={item}
-          className="mb-8 flex w-fit items-center gap-3 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-zinc-300 backdrop-blur-xl"
-        >
-          <Sparkles className="h-4 w-4 text-amber-200" />
-          BCA Student | Aspiring Software Developer
-        </motion.div>
-
-        <motion.h1
-          variants={item}
-          className="max-w-6xl text-6xl font-black leading-[0.94] text-white md:text-8xl lg:text-9xl"
-        >
-          Nawanshu
-        </motion.h1>
+          className="absolute inset-0 scale-[1.06] bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2400&auto=format&fit=crop')] bg-cover bg-center opacity-90 brightness-[0.62] contrast-[1.1] saturate-[0.78] sepia"
+          style={{ x: mediaX, y: mediaY }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06),rgba(0,0,0,0.22)_45%,rgba(0,0,0,0.92)),linear-gradient(90deg,rgba(248,105,52,0.35),transparent_36%,rgba(0,0,0,0.28)_82%)]"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-background to-transparent"
+          aria-hidden="true"
+        />
 
         <motion.div
-          variants={item}
-          className="mt-8 grid max-w-5xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end"
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="container-shell relative z-10 grid min-h-[88svh] place-items-center py-28 text-center"
         >
-          <p className="text-xl font-semibold leading-8 text-white md:text-3xl md:leading-tight">
-            Building practical software projects while strengthening C, C++,
-            Python, DSA, and web development.
-          </p>
+          <motion.div
+            variants={item}
+            className="absolute left-5 top-28 hidden items-center gap-3 rounded-full border border-white/10 bg-black/25 px-4 py-2 text-sm text-white/80 backdrop-blur-xl md:flex"
+          >
+            <Sparkles className="h-4 w-4 text-[#ff7a3d]" />
+            BCA Student | Software Developer
+          </motion.div>
 
-          <div className="max-w-xl">
-            <p className="text-base leading-8 text-zinc-300 md:text-lg">
-              I enjoy programming, problem-solving, and learning new
-              technologies through consistent practice. My current focus is on
-              practical applications, strong fundamentals, and internship-ready
-              software development skills.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <motion.div
+            variants={item}
+            className="absolute right-5 top-28 hidden items-center gap-3 rounded-full border border-white/10 bg-black/25 px-4 py-2 text-sm text-white/80 backdrop-blur-xl md:flex"
+          >
+            <Code2 className="h-4 w-4 text-cyan-200" />
+            C / C++ / Python / Web
+          </motion.div>
+
+          <div className="mx-auto max-w-5xl">
+            <motion.h1
+              variants={item}
+              className="mb-6 text-2xl font-black leading-none text-white sm:text-3xl"
+            >
+              Nawanshu
+            </motion.h1>
+
+            <motion.p
+              variants={item}
+              className="text-5xl font-black leading-[0.9] text-white sm:text-7xl md:text-8xl lg:text-9xl"
+            >
+              I build software
+              <br />
+              <span className="text-white/50">that feels clear.</span>
+            </motion.p>
+
+            <motion.p
+              variants={item}
+              className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/75 md:text-lg"
+            >
+              Practical projects, strong fundamentals, and clean interfaces
+              shaped through C, C++, Python, DSA, and modern web development.
+            </motion.p>
+
+            <motion.div
+              variants={item}
+              className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            >
               <MagneticButton href="#work">
-                <ArrowRight className="h-4 w-4" />
+                <PlayCircle className="h-4 w-4" />
                 View Projects
               </MagneticButton>
               <MagneticButton href="#contact" variant="ghost">
                 <ArrowRight className="h-4 w-4" />
                 Connect
               </MagneticButton>
-            </div>
+            </motion.div>
           </div>
-        </motion.div>
-      </motion.div>
 
-      <motion.a
-        href="#work"
-        initial={{ opacity: 0, y: 16 }}
+          <motion.div
+            variants={item}
+            className="absolute bottom-7 left-5 right-5 grid gap-4 text-left text-sm text-white/65 md:grid-cols-[1fr_auto_1fr] md:items-end"
+          >
+            <p className="hidden max-w-xs leading-6 md:block">
+              Currently turning learning into polished, internship-ready
+              software projects.
+            </p>
+            <a
+              href="#work"
+              className="mx-auto flex w-fit items-center gap-3 text-white/75 transition hover:text-white"
+            >
+              <span className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/[0.07] backdrop-blur-md">
+                <ArrowDown className="h-4 w-4" />
+              </span>
+              Scroll Down
+            </a>
+            <p className="hidden justify-self-end text-right leading-6 md:block">
+              Focused on logic, usability, and steady growth.
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.05, duration: 0.65 }}
-        className="absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-3 text-sm text-zinc-400 transition hover:text-white md:flex"
+        transition={{ delay: 0.9, duration: 0.75, ease: smoothEase }}
+        className="container-shell pointer-events-none relative z-10 -mt-4 overflow-hidden"
+        aria-hidden="true"
       >
-        <span className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.04]">
-          <ArrowDown className="h-4 w-4" />
-        </span>
-        Scroll
-      </motion.a>
+        <p className="select-none text-6xl font-black leading-none text-white/10 sm:text-8xl md:text-9xl lg:text-[10rem]">
+          PROJECTS
+        </p>
+      </motion.div>
     </section>
   )
 }

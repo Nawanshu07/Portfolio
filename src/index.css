@@ -9,7 +9,7 @@
 
   html {
     scroll-behavior: smooth;
-    background: #0a0a0a;
+    background: #050505;
   }
 
   body {
@@ -25,10 +25,10 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.034) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.034) 1px, transparent 1px);
-    background-size: 76px 76px;
-    mask-image: linear-gradient(to bottom, black, transparent 72%);
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(to bottom, transparent, black 18%, transparent 80%);
   }
 
   ::selection {
@@ -68,11 +68,11 @@
   }
 
   .section-eyebrow {
-    @apply text-sm font-semibold uppercase text-teal-200;
+    @apply text-sm font-semibold uppercase text-[#ff7a3d];
   }
 
   .glass-panel {
-    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+    @apply border border-white/10 bg-white/[0.035] backdrop-blur-xl;
   }
 }
 
