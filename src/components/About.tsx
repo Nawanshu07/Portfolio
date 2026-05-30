@@ -1,4 +1,4 @@
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import SectionHeading from './SectionHeading'
 import { stats } from '../data/portfolio'
@@ -11,12 +11,14 @@ type CounterProps = {
 function Counter({ suffix = '', to }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
-  const [value, setValue] = useState(0)
+  const shouldReduceMotion = useReducedMotion()
+  const [value, setValue] = useState(to)
 
   useEffect(() => {
-    if (!isInView) return
+    if (!isInView || shouldReduceMotion) return
 
     let frame = 0
+    let animation = 0
     const totalFrames = 80
 
     const tick = () => {
@@ -25,14 +27,17 @@ function Counter({ suffix = '', to }: CounterProps) {
       setValue(Math.round(to * progress))
 
       if (frame < totalFrames) {
-        window.requestAnimationFrame(tick)
+        animation = window.requestAnimationFrame(tick)
       }
     }
 
-    const animation = window.requestAnimationFrame(tick)
+    animation = window.requestAnimationFrame(() => {
+      setValue(0)
+      animation = window.requestAnimationFrame(tick)
+    })
 
     return () => window.cancelAnimationFrame(animation)
-  }, [isInView, to])
+  }, [isInView, shouldReduceMotion, to])
 
   return (
     <span ref={ref}>
