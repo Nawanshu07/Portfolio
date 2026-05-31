@@ -9,8 +9,8 @@ import {
 import MagneticButton from './MagneticButton'
 
 const socials = [
-  { href: 'https://github.com/', icon: Code2, label: 'GitHub' },
-  { href: 'https://www.linkedin.com/', icon: Briefcase, label: 'LinkedIn' },
+  { href: 'https://github.com/Nawanshu07', icon: Code2, label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/nawanshu-sharma-104619351?utm_source=share_via&utm_content=profile&utm_medium=member_android', icon: Briefcase, label: 'LinkedIn' },
   { href: '#about', icon: UserRound, label: 'About' },
 ]
 
