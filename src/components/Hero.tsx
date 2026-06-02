@@ -62,15 +62,16 @@ export default function Hero() {
           loop 
           muted 
           playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-80 mix-blend-screen sepia-[.5] hue-rotate-[240deg] saturate-[200%] contrast-[1.2]"
+          className="absolute inset-0 h-full w-full object-cover opacity-80 mix-blend-screen sepia-[.5] hue-rotate-[240deg] saturate-[200%] contrast-[1.2] pointer-events-none"
+          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
           src="https://assets.codepen.io/3364143/7btrrd.mp4"
         />
 
         {/* Deep Black & Purple Cinematic Overlays */}
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-purple-950/40 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030005] via-purple-950/20 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-purple-950/40 mix-blend-multiply pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030005] via-purple-950/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(147,51,234,0.08)_0%,transparent_100%)] pointer-events-none" />
 
         <motion.div
           variants={containerVariants}
