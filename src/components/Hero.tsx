@@ -58,15 +58,15 @@ export default function Hero() {
       >
         {/* Background Video */}
         {/* Using a grayscale fluid video and tinting it deeply with CSS for maximum flexibility */}
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-80 mix-blend-screen sepia-[.5] hue-rotate-[240deg] saturate-[200%] contrast-[1.2] pointer-events-none"
-          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-          src="https://assets.codepen.io/3364143/7btrrd.mp4"
-        />
+<img
+  src="https://images.hdqwalls.com/download/purple-waves-light-abstract-zg-3840x2160.jpg"
+  alt="Purple Abstract Background"
+  className="absolute inset-0 h-full w-full object-cover opacity-70 pointer-events-none"
+  style={{
+    transform: 'translateZ(0)',
+    backfaceVisibility: 'hidden',
+  }}
+/>
 
         {/* Deep Black & Purple Cinematic Overlays */}
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
