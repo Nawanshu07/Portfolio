@@ -44,16 +44,8 @@ export default function Hero() {
       className="relative flex min-h-[100svh] flex-col items-center justify-center bg-[#030005] p-2 sm:p-4 overflow-hidden"
       style={{ perspective: '1200px' }}
     >
-      <motion.div 
-        style={{ 
-          scale: shouldReduceMotion ? 1 : scale, 
-          opacity: shouldReduceMotion ? 1 : opacity, 
-          y: shouldReduceMotion ? 0 : y, 
-          rotateX: shouldReduceMotion ? 0 : rotateX, 
-          transformOrigin: 'bottom center', 
-          transformStyle: 'preserve-3d',
-          willChange: 'transform, opacity'
-        }}
+      <div 
+
         className="relative z-10 flex w-full flex-1 flex-col items-center justify-center text-center rounded-[28px] sm:rounded-[36px] bg-[#030005] px-4 py-20 shadow-[0_0_80px_rgba(147,51,234,0.1)] overflow-hidden border border-purple-900/20"
       >
         {/* Background Video */}
@@ -126,7 +118,7 @@ export default function Hero() {
             </MagneticButton>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
       <motion.div

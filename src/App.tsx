@@ -12,6 +12,7 @@ import Skills from './components/Skills'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
+
   const { scrollYProgress } = useScroll()
   const progressScale = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -27,7 +28,9 @@ export default function App() {
 
   return (
     <>
-      <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isLoading && <Loader />}
+      </AnimatePresence>
 
       <motion.div
         className="fixed left-0 top-0 z-[70] h-px origin-left bg-white"
@@ -43,8 +46,14 @@ export default function App() {
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           >
             <Navbar />
-            <main>
+
+            {/* Sticky Hero */}
+            <div className="sticky top-0 h-screen">
               <Hero />
+            </div>
+
+            {/* Content Scrolls Over Hero */}
+            <main className="relative z-20 bg-[#050505] rounded-t-[40px]">
               <FeaturedWork />
               <Skills />
               <About />
