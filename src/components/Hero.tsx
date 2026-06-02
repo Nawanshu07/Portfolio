@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { ArrowDown, ArrowRight, PlayCircle } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from './Icons'
 import { useRef } from 'react'
 import MagneticButton from './MagneticButton'
 
@@ -105,7 +106,7 @@ export default function Hero() {
 
           <motion.div
             variants={itemVariants}
-            className="mt-12 flex flex-col items-center gap-4 sm:flex-row"
+            className="mt-12 flex flex-wrap items-center justify-center gap-4"
           >
             <MagneticButton href="#work">
               <PlayCircle className="h-4 w-4 text-purple-950" />
@@ -114,6 +115,14 @@ export default function Hero() {
             <MagneticButton href="#contact" variant="ghost">
               <ArrowRight className="h-4 w-4 text-purple-200" />
               <span className="text-purple-100">Connect</span>
+            </MagneticButton>
+            <MagneticButton href="https://github.com/nawanshu07" target="_blank" rel="noopener noreferrer" variant="ghost">
+              <GithubIcon className="h-4 w-4 text-purple-200" />
+              <span className="text-purple-100">GitHub</span>
+            </MagneticButton>
+            <MagneticButton href="https://www.linkedin.com/in/nawanshu-sharma-104619351?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" variant="ghost">
+              <LinkedinIcon className="h-4 w-4 text-purple-200" />
+              <span className="text-purple-100">LinkedIn</span>
             </MagneticButton>
           </motion.div>
         </motion.div>

@@ -7,6 +7,8 @@ type MagneticButtonProps = {
   className?: string
   href: string
   variant?: 'primary' | 'ghost'
+  target?: string
+  rel?: string
 }
 
 export default function MagneticButton({
@@ -14,6 +16,8 @@ export default function MagneticButton({
   className,
   href,
   variant = 'primary',
+  target,
+  rel,
 }: MagneticButtonProps) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -37,6 +41,8 @@ export default function MagneticButton({
   return (
     <motion.a
       href={href}
+      target={target}
+      rel={rel}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetPosition}
       whileTap={{ scale: 0.96 }}
