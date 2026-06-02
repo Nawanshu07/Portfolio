@@ -44,7 +44,7 @@ export default function FeaturedWork() {
                   delay: index * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`group relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950 shadow-card outline-none transition duration-500 hover:-translate-y-1 hover:border-[#ff7a3d]/55 hover:shadow-[0_0_70px_rgba(255,122,61,0.13)] focus-visible:border-white ${project.layout}`}
+                className={`group relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950 shadow-card outline-none transition duration-500 hover:-translate-y-1 hover:border-[#c084fc]/55 hover:shadow-[0_0_70px_rgba(192,132,252,0.13)] focus-visible:border-white ${project.layout}`}
               >
                 <img
                   src={project.image}
@@ -79,7 +79,7 @@ export default function FeaturedWork() {
                         </span>
                       ))}
                     </div>
-                    <p className="mb-2 text-sm text-[#ff7a3d]">
+                    <p className="mb-2 text-sm text-[#c084fc]">
                       {project.year}
                     </p>
                     <h3

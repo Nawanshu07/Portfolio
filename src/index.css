@@ -68,7 +68,7 @@
   }
 
   .section-eyebrow {
-    @apply text-sm font-semibold uppercase text-[#ff7a3d];
+    @apply text-sm font-semibold uppercase text-[#c084fc];
   }
 
   .glass-panel {
