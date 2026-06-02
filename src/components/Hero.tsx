@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, PlayCircle } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './Icons'
 import { useRef } from 'react'
@@ -24,20 +24,8 @@ const itemVariants = {
 }
 
 export default function Hero() {
-  const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  })
-
-  // Highly optimized 3D fold effect
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85])
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0])
-  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 15])
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '8%'])
-
   return (
     <section
       ref={sectionRef}
