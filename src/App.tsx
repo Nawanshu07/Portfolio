@@ -7,7 +7,7 @@ import FeaturedWork from './components/FeaturedWork'
 import Hero from './components/Hero'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
-import Services from './components/Services'
+import Goals from './components/Goals'
 import Skills from './components/Skills'
 
 export default function App() {
@@ -48,7 +48,7 @@ export default function App() {
               <FeaturedWork />
               <Skills />
               <About />
-              <Services />
+              <Goals />
               <ExperienceTimeline />
               <Contact />
             </main>

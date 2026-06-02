@@ -182,7 +182,7 @@ export const skills: IconCard[] = [
   },
 ]
 
-export const services: Required<Pick<IconCard, 'description' | 'icon' | 'outcome' | 'title'>>[] = [
+export const goals: Required<Pick<IconCard, 'description' | 'icon' | 'outcome' | 'title'>>[] = [
   {
     title: 'Strengthen DSA Skills',
     description:
