@@ -8,6 +8,7 @@ type MagneticButtonProps = {
   variant?: 'primary' | 'ghost'
   target?: string
   rel?: string
+  darkBg?: boolean
 }
 
 export default function MagneticButton({
@@ -17,6 +18,7 @@ export default function MagneticButton({
   variant = 'primary',
   target,
   rel,
+  darkBg = false,
 }: MagneticButtonProps) {
   return (
     <a
@@ -24,12 +26,17 @@ export default function MagneticButton({
       target={target}
       rel={rel}
       className={clsx(
-        'group inline-flex h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white',
-        variant === 'primary' &&
-          'bg-white text-black shadow-[0_0_34px_rgba(255,255,255,0.18)] hover:bg-zinc-200',
-        variant === 'ghost' &&
-          'border border-white/15 bg-white/[0.04] text-white backdrop-blur-md hover:border-white/40 hover:bg-white/10',
-        className,
+        'group inline-flex h-12 items-center justify-center gap-2 rounded-pill px-6 text-button-lg transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-link select-none',
+        
+        // Light Background Variants
+        !darkBg && variant === 'primary' && 'bg-primary text-on-primary border border-primary hover:bg-canvas hover:text-ink hover:border-hairline-strong shadow-level2',
+        !darkBg && variant === 'ghost' && 'bg-canvas text-ink border border-hairline hover:bg-canvas-soft-2 hover:border-hairline-strong shadow-level1',
+        
+        // Dark Background Variants
+        darkBg && variant === 'primary' && 'bg-canvas text-ink border border-canvas hover:bg-primary hover:text-white',
+        darkBg && variant === 'ghost' && 'bg-transparent text-white border border-hairline-dark hover:bg-white/5',
+        
+        className
       )}
     >
       {children}

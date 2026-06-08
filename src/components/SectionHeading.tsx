@@ -5,6 +5,7 @@ type SectionHeadingProps = {
   description: string
   eyebrow: string
   title: string
+  dark?: boolean
 }
 
 export default function SectionHeading({
@@ -12,20 +13,23 @@ export default function SectionHeading({
   description,
   eyebrow,
   title,
+  dark = false,
 }: SectionHeadingProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={compact ? 'max-w-3xl' : 'mb-14 max-w-5xl md:mb-20'}
     >
-      <p className="section-eyebrow">{eyebrow}</p>
-      <h2 className="mt-5 text-4xl font-bold leading-tight text-white md:text-6xl">
+      <p className={`text-caption-mono uppercase font-mono tracking-widest ${dark ? 'text-mute' : 'text-body'}`}>
+        // {eyebrow}
+      </p>
+      <h2 className={`mt-4 text-display-lg md:text-[40px] md:leading-[44px] font-semibold tracking-tight text-pretty ${dark ? 'text-white' : 'text-ink'}`}>
         {title}
       </h2>
-      <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
+      <p className={`mt-4 max-w-2xl text-body-md md:text-body-lg leading-relaxed ${dark ? 'text-hairline-strong' : 'text-body'}`}>
         {description}
       </p>
     </motion.div>

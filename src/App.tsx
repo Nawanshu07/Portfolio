@@ -33,7 +33,7 @@ export default function App() {
       </AnimatePresence>
 
       <motion.div
-        className="fixed left-0 top-0 z-[70] h-px origin-left bg-white"
+        className="fixed left-0 top-0 z-[100] h-[2px] origin-left bg-link"
         style={{ scaleX: progressScale, width: '100%' }}
         aria-hidden="true"
       />
@@ -44,16 +44,12 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col min-h-screen"
           >
             <Navbar />
 
-            {/* Sticky Hero */}
-            <div className="sticky top-0 h-screen will-change-transform">
+            <main id="main-content" className="relative z-10 flex-1 w-full bg-canvas-soft">
               <Hero />
-            </div>
-
-            {/* Content Scrolls Over Hero */}
-            <main className="relative z-20 bg-[#050505] rounded-t-[40px] will-change-transform">
               <FeaturedWork />
               <Skills />
               <About />

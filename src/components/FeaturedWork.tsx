@@ -5,9 +5,9 @@ import { projects } from '../data/portfolio'
 
 export default function FeaturedWork() {
   return (
-    <section id="work" className="section-padding pt-4">
+    <section id="work" className="section-padding bg-canvas-soft border-b border-hairline">
       <div className="container-shell">
-        <div className="mb-14 flex flex-col gap-8 md:mb-20 md:flex-row md:items-end md:justify-between">
+        <div className="mb-14 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Projects"
             title="Practical applications, shaped with a sharper visual edge."
@@ -17,90 +17,88 @@ export default function FeaturedWork() {
 
           <motion.a
             href="#contact"
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="group inline-flex w-fit items-center gap-2 border-b border-white/20 pb-2 text-sm font-medium text-white transition hover:border-white hover:text-white"
+            transition={{ duration: 0.5 }}
+            className="group inline-flex w-fit items-center gap-1.5 border-b border-ink/20 pb-1 text-body-sm-strong text-ink transition hover:border-ink hover:text-ink/80 select-none"
           >
             Connect
-            <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-1 group-hover:translate-x-1" />
+            <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </motion.a>
         </div>
 
-        <div className="grid auto-rows-[300px] grid-cols-1 gap-4 md:grid-cols-6 md:auto-rows-[260px]">
+        {/* 
+          Grid layout matching DESIGN.md column patterns:
+          Multi-column responsive grid utilizing Level 3 stacked shadows.
+        */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => {
-            const isFeature = project.layout.includes('row-span')
-
             return (
               <motion.a
                 key={project.title}
                 href="#contact"
-                initial={{ opacity: 0, y: 32 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
+                viewport={{ once: true, margin: '-40px' }}
                 transition={{
-                  duration: 0.7,
-                  delay: index * 0.08,
+                  duration: 0.5,
+                  delay: index * 0.05,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`group relative overflow-hidden rounded-lg border border-white/10 bg-zinc-950 shadow-card outline-none transition duration-500 hover:-translate-y-1 hover:border-[#c084fc]/55 hover:shadow-[0_0_70px_rgba(192,132,252,0.13)] focus-visible:border-white ${project.layout}`}
+                className="group flex flex-col overflow-hidden bg-canvas border border-hairline rounded-md shadow-level2 hover:shadow-level4 hover:border-hairline-strong transition-all duration-300 outline-none"
               >
-                <img
-                  src={project.image}
-                  alt={project.alt}
-                  className="absolute inset-0 h-full w-full object-cover brightness-[0.72] contrast-[1.05] saturate-[0.8] transition duration-700 group-hover:scale-105 group-hover:brightness-[0.82]"
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10 transition duration-500 group-hover:from-black/90 group-hover:via-black/30" />
-                <div
-                  className={`absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${project.accent} opacity-60`}
-                  aria-hidden="true"
-                />
-
-                <div className="relative z-10 flex h-full flex-col justify-between p-5 md:p-7">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="rounded-full border border-white/15 bg-black/35 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur-md">
+                {/* 16:9 Thumbnail Container */}
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-canvas-soft-2 border-b border-hairline">
+                  <img
+                    src={project.image}
+                    alt={project.alt}
+                    width={800}
+                    height={450}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                  {/* Subtle overlay hover effect */}
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.015] transition duration-300" />
+                  
+                  <div className="absolute left-3 top-3">
+                    <span className="inline-flex items-center text-caption-mono bg-canvas/90 text-ink border border-hairline px-2 py-0.5 rounded-sm backdrop-blur-sm uppercase font-mono tracking-wider text-[10px]">
                       {project.category}
-                    </span>
-                    <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white text-black opacity-0 backdrop-blur-md transition duration-300 group-hover:opacity-100">
-                      <ArrowUpRight className="h-5 w-5" />
                     </span>
                   </div>
 
+                  <div className="absolute right-3 top-3">
+                    <span className="grid h-7 w-7 place-items-center rounded-full border border-hairline bg-canvas text-ink opacity-0 shadow-level2 transition duration-200 group-hover:opacity-100">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="flex flex-1 flex-col justify-between p-6">
                   <div>
-                    <div className="mb-4 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-xs text-white/75 backdrop-blur-md"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="mb-2 text-sm text-[#c084fc]">
+                    <span className="text-caption-mono text-mute font-mono text-[11px] block mb-1">
                       {project.year}
-                    </p>
-                    <h3
-                      className={`font-semibold leading-tight text-white ${
-                        isFeature
-                          ? 'text-3xl md:text-4xl'
-                          : 'text-2xl md:text-[1.7rem]'
-                      }`}
-                    >
+                    </span>
+                    <h3 className="text-display-sm text-ink font-semibold tracking-tight transition group-hover:text-link">
                       {project.title}
                     </h3>
-                    <p
-                      className={`mt-3 max-w-xl text-sm text-zinc-300 ${
-                        isFeature
-                          ? 'leading-6'
-                          : 'line-clamp-1 text-xs leading-5'
-                      }`}
-                    >
+                    <p className="mt-2 text-body-sm text-body line-clamp-3 leading-relaxed">
                       {project.description}
                     </p>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="mt-6 flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center rounded-sm bg-canvas-soft-2 border border-hairline px-2 py-0.5 text-caption-mono text-[10px] text-body uppercase font-mono tracking-wider"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.a>

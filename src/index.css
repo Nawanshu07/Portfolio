@@ -13,11 +13,17 @@
   }
 
   body {
-    @apply min-w-[320px] bg-background font-sans text-white antialiased;
+    background-color: #050505;
+    color: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01", "ss02";
     margin: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Grid mesh gradient overlay that sits globally if wanted, or we can use custom divs. */
   body::before {
     content: '';
     position: fixed;
@@ -25,17 +31,17 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(to bottom, #050505 0%, transparent 18%, transparent 80%, #050505 100%),
-      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-    background-size: 100% 100%, 88px 88px, 88px 88px;
+      linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 25%, transparent 75%, rgba(5, 5, 5, 0.8) 100%),
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
     transform: translate3d(0, 0, 0);
     will-change: transform;
   }
 
   ::selection {
-    background: #ffffff;
-    color: #0a0a0a;
+    background-color: #ffffff;
+    color: #000000;
   }
 
   img,
@@ -46,7 +52,7 @@
   }
 
   section[id] {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 5rem;
   }
 
   a {
@@ -58,23 +64,137 @@
   a {
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Focus ring style rules */
+  :focus-visible {
+    outline: 2px solid #0070f3;
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
+  /* Layout utilities */
   .container-shell {
-    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12;
   }
 
   .section-padding {
     @apply py-24 md:py-32;
   }
 
-  .section-eyebrow {
-    @apply text-sm font-semibold uppercase text-[#c084fc];
+  /* Typography utilities from DESIGN.md */
+  .text-display-xl {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -2.4px;
   }
 
-  .glass-panel {
-    @apply border border-white/10 bg-white/[0.035] backdrop-blur-xl;
+  .text-display-lg {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+    letter-spacing: -1.28px;
+  }
+
+  .text-display-md {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.96px;
+  }
+
+  .text-display-sm {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.6px;
+  }
+
+  .text-body-lg {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0px;
+  }
+
+  .text-body-md {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .text-body-md-strong {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .text-body-sm {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.28px;
+  }
+
+  .text-body-sm-strong {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.28px;
+  }
+
+  .text-caption {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .text-caption-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  .text-code {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  .text-button-md {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .text-button-lg {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  /* Shared visual styles */
+  .border-hairline {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .border-hairline-dark {
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -90,5 +210,6 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+    shadow-transition-duration: 0.001ms !important;
   }
 }

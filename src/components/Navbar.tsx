@@ -6,62 +6,80 @@ const navItems = [
   { name: 'Projects', href: '#work' },
   { name: 'Skills', href: '#skills' },
   { name: 'About', href: '#about' },
+  { name: 'Goals', href: '#goals' },
   { name: 'Journey', href: '#experience' },
 ]
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
+  const toggleMenu = () => setIsOpen((prev) => !prev)
+
   return (
     <motion.header
-      initial={{ y: -32, opacity: 0 }}
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-5 z-50 px-3 sm:px-5"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="sticky top-0 z-50 w-full h-16 bg-canvas/85 backdrop-blur-md border-b border-hairline"
     >
-      <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full border border-white/10 bg-[#2b160f]/75 px-4 shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:h-16 sm:px-6">
-        <a href="#" className="text-lg font-bold text-white sm:text-xl">
+      <nav className="mx-auto flex h-full max-w-[1400px] items-center justify-between px-6 sm:px-8 lg:px-12">
+        {/* Brand Logo */}
+        <a href="#" className="text-body-md-strong text-ink tracking-tight font-semibold hover:opacity-85 select-none">
           Nawanshu
         </a>
 
-        <div className="hidden items-center gap-6 md:flex">
+        {/* Desktop Navigation Link Row */}
+        <div className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-white/65 transition hover:text-white"
+              className="text-body-sm text-body px-3 py-1.5 rounded-full hover:bg-canvas-soft-2 hover:text-ink transition duration-150"
             >
               {item.name}
             </a>
           ))}
         </div>
 
-        <a
-          href="#contact"
-          className="hidden h-11 items-center rounded-full bg-white px-6 text-sm font-bold text-black shadow-[0_12px_35px_rgba(255,255,255,0.16)] transition hover:bg-zinc-200 md:inline-flex"
-        >
-          Contact
-        </a>
+        {/* Desktop CTA Action Row */}
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href="https://github.com/nawanshu07"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="h-8 inline-flex items-center justify-center rounded-sm bg-canvas border border-hairline px-3 text-body-sm-strong text-ink hover:bg-canvas-soft-2 hover:border-hairline-strong transition duration-150"
+          >
+            GitHub
+          </a>
+          <a
+            href="#contact"
+            className="h-8 inline-flex items-center justify-center rounded-sm bg-primary border border-primary px-3 text-body-sm-strong text-on-primary hover:bg-canvas hover:text-ink hover:border-hairline-strong transition duration-150 shadow-level2"
+          >
+            Connect
+          </a>
+        </div>
 
+        {/* Mobile Menu Button */}
         <button
           type="button"
           aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
           aria-expanded={isOpen}
-          onClick={() => setIsOpen((value) => !value)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-white/[0.08] text-white md:hidden"
+          onClick={toggleMenu}
+          className="grid h-8 w-8 place-items-center rounded-sm border border-hairline bg-canvas text-ink hover:bg-canvas-soft-2 hover:border-hairline-strong transition md:hidden focus-visible:outline focus-visible:outline-2"
         >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
       </nav>
 
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="mx-auto mt-3 w-full max-w-5xl rounded-2xl border border-white/10 bg-[#0A0A0A]/95 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl md:hidden"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute left-0 right-0 top-[64px] z-40 border-b border-hairline bg-canvas px-6 py-6 shadow-level5 md:hidden"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
@@ -69,18 +87,29 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                  className="rounded-sm px-3 py-2 text-body-md text-body hover:bg-canvas-soft-2 hover:text-ink transition duration-150"
                 >
                   {item.name}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setIsOpen(false)}
-                className="mt-2 rounded-full bg-white px-4 py-3 text-center text-base font-bold text-black"
-              >
-                Contact
-              </a>
+              <div className="mt-4 pt-4 border-t border-hairline flex flex-col gap-3">
+                <a
+                  href="https://github.com/nawanshu07"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="h-10 flex items-center justify-center rounded-sm bg-canvas border border-hairline text-body-sm-strong text-ink hover:bg-canvas-soft-2 transition duration-150"
+                >
+                  GitHub
+                </a>
+                <a
+                  href="#contact"
+                  onClick={() => setIsOpen(false)}
+                  className="h-10 flex items-center justify-center rounded-sm bg-primary border border-primary text-body-sm-strong text-on-primary hover:bg-canvas hover:text-ink transition duration-150"
+                >
+                  Connect
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

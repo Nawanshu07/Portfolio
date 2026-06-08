@@ -4,7 +4,7 @@ import { skills } from '../data/portfolio'
 
 export default function Skills() {
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding bg-canvas-soft border-b border-hairline">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Skills"
@@ -17,14 +17,14 @@ export default function Skills() {
             hidden: {},
             visible: {
               transition: {
-                staggerChildren: 0.07,
+                staggerChildren: 0.05,
               },
             },
           }}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {skills.map((skill) => {
             const Icon = skill.icon
@@ -33,28 +33,32 @@ export default function Skills() {
               <motion.article
                 key={skill.title}
                 variants={{
-                  hidden: { opacity: 0, y: 28 },
+                  hidden: { opacity: 0, y: 16 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                whileHover={{ y: -6, scale: 1.01 }}
-                className="group min-h-[220px] rounded-lg border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl transition hover:border-white/25 hover:bg-white/[0.065]"
+                className="group flex flex-col justify-between min-h-[200px] rounded-md border border-hairline bg-canvas p-6 shadow-level2 hover:shadow-level3 hover:border-hairline-strong transition-all duration-200"
               >
-                <div className="flex items-start justify-between gap-5">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg border border-white/10 bg-white/[0.06] text-white transition group-hover:bg-white group-hover:text-black">
-                    <Icon className="h-5 w-5" />
+                <div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="grid h-10 w-10 place-items-center rounded-sm border border-hairline bg-canvas-soft-2 text-ink transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <span className="text-caption-mono text-mute uppercase font-mono text-[10px] tracking-wider select-none">
+                      // {skill.level}
+                    </span>
                   </div>
-                  <span className="text-sm text-zinc-500">{skill.level}</span>
+                  
+                  <h3 className="mt-6 text-display-sm text-ink font-semibold tracking-tight">
+                    {skill.title}
+                  </h3>
+                  <p className="mt-2 text-body-sm text-body leading-relaxed">
+                    {skill.description}
+                  </p>
                 </div>
-                <h3 className="mt-8 text-xl font-semibold text-white">
-                  {skill.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-zinc-400">
-                  {skill.description}
-                </p>
               </motion.article>
             )
           })}

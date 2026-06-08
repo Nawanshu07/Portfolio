@@ -19,7 +19,7 @@ function Counter({ suffix = '', to }: CounterProps) {
 
     let frame = 0
     let animation = 0
-    const totalFrames = 80
+    const totalFrames = 60
 
     const tick = () => {
       frame += 1
@@ -40,7 +40,7 @@ function Counter({ suffix = '', to }: CounterProps) {
   }, [isInView, shouldReduceMotion, to])
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className="font-mono tabular-nums">
       {value}
       {suffix}
     </span>
@@ -49,28 +49,29 @@ function Counter({ suffix = '', to }: CounterProps) {
 
 export default function About() {
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding bg-black text-on-primary border-b border-hairline-dark">
       <div className="container-shell">
         <SectionHeading
           eyebrow="About"
           title="A BCA student focused on programming, problem-solving, and software development."
           description="I am building my foundation through consistent practice, practical projects, and a steady focus on core computer science concepts."
+          dark
         />
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-lg border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:p-10"
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-6"
           >
-            <p className="max-w-4xl text-2xl font-semibold leading-tight text-white md:text-4xl">
+            <p className="text-display-sm sm:text-2xl md:text-3xl font-semibold leading-snug tracking-tight text-white text-pretty">
               I enjoy building practical applications, learning new
               technologies, and improving my coding skills through consistent
               practice.
             </p>
-            <p className="mt-8 max-w-3xl text-base leading-8 text-zinc-400 md:text-lg">
+            <p className="text-body-md md:text-body-lg leading-relaxed text-hairline-strong text-pretty">
               My current focus is on C, C++, Python, Data Structures and
               Algorithms, and Web Development. I am actively working on projects
               to strengthen my development skills and prepare for internships
@@ -83,7 +84,7 @@ export default function About() {
               hidden: {},
               visible: {
                 transition: {
-                  staggerChildren: 0.12,
+                  staggerChildren: 0.08,
                 },
               },
             }}
@@ -96,19 +97,21 @@ export default function About() {
               <motion.div
                 key={stat.label}
                 variants={{
-                  hidden: { opacity: 0, y: 24 },
+                  hidden: { opacity: 0, y: 12 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="rounded-lg border border-white/10 bg-zinc-950/80 p-6"
+                className="rounded-md border border-hairline bg-canvas p-6 shadow-level3 hover:border-hairline-strong transition-all duration-200"
               >
-                <div className="text-5xl font-bold leading-none text-white">
+                <div className="text-display-lg sm:text-[44px] sm:leading-none font-semibold text-white">
                   <Counter to={stat.value} suffix={stat.suffix} />
                 </div>
-                <p className="mt-3 text-sm text-zinc-400">{stat.label}</p>
+                <p className="mt-2 text-caption-mono text-mute font-mono text-[11px] uppercase tracking-wider select-none">
+                  // {stat.label}
+                </p>
               </motion.div>
             ))}
           </motion.div>
