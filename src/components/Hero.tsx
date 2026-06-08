@@ -39,13 +39,15 @@ export default function Hero() {
         {/* Background Video */}
         {/* Using a grayscale fluid video and tinting it deeply with CSS for maximum flexibility */}
 <img
-  src="https://images.hdqwalls.com/download/purple-waves-light-abstract-zg-3840x2160.jpg"
+  src="/hero-bg-opt.jpg"
   alt="Purple Abstract Background"
   className="absolute inset-0 h-full w-full object-cover opacity-70 pointer-events-none"
   style={{
     transform: 'translateZ(0)',
     backfaceVisibility: 'hidden',
   }}
+  decoding="async"
+  fetchPriority="high"
 />
 
         {/* Deep Black & Purple Cinematic Overlays */}

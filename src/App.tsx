@@ -48,12 +48,12 @@ export default function App() {
             <Navbar />
 
             {/* Sticky Hero */}
-            <div className="sticky top-0 h-screen">
+            <div className="sticky top-0 h-screen will-change-transform">
               <Hero />
             </div>
 
             {/* Content Scrolls Over Hero */}
-            <main className="relative z-20 bg-[#050505] rounded-t-[40px]">
+            <main className="relative z-20 bg-[#050505] rounded-t-[40px] will-change-transform">
               <FeaturedWork />
               <Skills />
               <About />

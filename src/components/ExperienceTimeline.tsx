@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import { useRef } from 'react'
 import SectionHeading from './SectionHeading'
 import { experience } from '../data/portfolio'
@@ -11,8 +11,12 @@ export default function ExperienceTimeline() {
     offset: ['start center', 'end center'],
   })
 
-  // The line will grow as the user scrolls through the container
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  // The line will scale as the user scrolls through the container smoothly
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
 
   return (
     <section id="experience" className="section-padding">
@@ -29,8 +33,8 @@ export default function ExperienceTimeline() {
           
           {/* Glowing animated line that draws on scroll */}
           <motion.div
-            style={{ height: lineHeight }}
-            className="absolute left-4 top-4 w-px bg-gradient-to-b from-teal-400 to-teal-900/10 md:left-1/2 md:-translate-x-[0.5px] origin-top"
+            style={{ scaleY, transformOrigin: 'top' }}
+            className="absolute left-4 top-4 bottom-4 w-px bg-gradient-to-b from-teal-400 to-teal-900/10 md:left-1/2 md:-translate-x-[0.5px]"
           />
 
           {experience.map((item, index) => (

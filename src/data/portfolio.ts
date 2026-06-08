@@ -47,7 +47,7 @@ export const projects: Project[] = [
     description:
       'A console-based application for adding, updating, searching, and deleting student records using file handling.',
     image:
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop',
     alt: 'Laptop with programming workspace and student project files',
     tags: ['C', 'File Handling'],
     accent: 'from-teal-300/30 to-transparent',
@@ -60,7 +60,7 @@ export const projects: Project[] = [
     description:
       'A simple library management application for issuing, returning, and managing books with OOP concepts.',
     image:
-      'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800&auto=format&fit=crop',
     alt: 'Library shelves representing a book management application',
     tags: ['C++', 'OOP'],
     accent: 'from-sky-300/30 to-transparent',
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     description:
       'A modern responsive portfolio website showcasing skills, projects, and contact information with smooth animations.',
     image:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop',
     alt: 'Code editor displaying a responsive website project',
     tags: ['HTML', 'CSS', 'JavaScript'],
     accent: 'from-amber-200/30 to-transparent',
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     description:
       'A command-line application to track daily expenses, categorize spending, and calculate monthly summaries.',
     image:
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop',
     alt: 'Notebook and calculator for expense tracking and summaries',
     tags: ['Python', 'CLI'],
     accent: 'from-rose-300/30 to-transparent',
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     description:
       'A learning-focused project to visualize common data structures and algorithms, including sorting and searching operations.',
     image:
-      'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=2200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800&auto=format&fit=crop',
     alt: 'Algorithm and data visualization code displayed on a monitor',
     tags: ['C', 'Algorithms'],
     accent: 'from-violet-200/25 to-transparent',

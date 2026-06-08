@@ -51,6 +51,7 @@ export default function FeaturedWork() {
                   alt={project.alt}
                   className="absolute inset-0 h-full w-full object-cover brightness-[0.72] contrast-[1.05] saturate-[0.8] transition duration-700 group-hover:scale-105 group-hover:brightness-[0.82]"
                   loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10 transition duration-500 group-hover:from-black/90 group-hover:via-black/30" />
                 <div
