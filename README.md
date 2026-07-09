@@ -1,4 +1,6 @@
-# Portfolio
+<img width="1920" height="943" alt="Screenshot 2026-07-09 180927" src="https://github.com/user-attachments/assets/5e920245-ce6d-4d33-87f2-b144da4b9995" />
+
+# **Portfolio**
 My personal portfolio website built to showcase my projects, skills, and experience.
 🌐 **Live Demo:** https://nawanshu.dpdns.org
 
