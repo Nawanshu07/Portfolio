@@ -11,7 +11,7 @@ export default function FeaturedWork() {
           <SectionHeading
             eyebrow="Projects"
             title="Practical applications, shaped with a sharper visual edge."
-            description="A focused set of C, C++, Python, web development, and upcoming DSA projects showing steady hands-on growth."
+            description="A focused set of Python applications and frontend web development projects showing steady hands-on growth."
             compact
           />
 
@@ -37,7 +37,9 @@ export default function FeaturedWork() {
             return (
               <motion.a
                 key={project.title}
-                href="#contact"
+                href={project.githubUrl || '#contact'}
+                target={project.githubUrl ? '_blank' : undefined}
+                rel={project.githubUrl ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
@@ -55,7 +57,9 @@ export default function FeaturedWork() {
                     alt={project.alt}
                     width={800}
                     height={450}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-102 ${
+                      project.objectFit === 'contain' ? 'object-contain p-8 bg-black' : 'object-cover'
+                    }`}
                     loading={index < 2 ? 'eager' : 'lazy'}
                     decoding="async"
                   />

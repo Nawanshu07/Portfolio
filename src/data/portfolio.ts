@@ -29,6 +29,8 @@ export type Project = {
   tags: string[]
   title: string
   year: string
+  githubUrl?: string
+  objectFit?: 'cover' | 'contain'
 }
 
 export type IconCard = {
@@ -41,69 +43,47 @@ export type IconCard = {
 
 export const projects: Project[] = [
   {
-    title: 'Student Management System',
-    category: 'C Programming',
+    title: 'Virtual Voice Assistant',
+    category: 'Python Application',
     year: 'Project 01',
     description:
-      'A console-based application for adding, updating, searching, and deleting student records using file handling.',
+      'A hands-free desktop voice assistant written in Python that executes local commands, performs web searches, and handles speech-to-text instructions dynamically.',
     image:
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop',
-    alt: 'Laptop with programming workspace and student project files',
-    tags: ['C', 'File Handling'],
+      'https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=800&auto=format&fit=crop',
+    alt: 'Modern workspace demonstrating robotic and AI voice command concept',
+    tags: ['Python', 'Speech Recognition', 'Speech Synthesis', 'Automation'],
     accent: 'from-teal-300/30 to-transparent',
-    layout: 'md:col-span-4 md:row-span-2',
+    layout: 'md:col-span-1',
+    githubUrl: 'https://github.com/Nawanshu07/Voice-Assistant',
   },
   {
-    title: 'Library Management System',
-    category: 'C++ Application',
+    title: 'Python Music Player',
+    category: 'Python Application',
     year: 'Project 02',
     description:
-      'A simple library management application for issuing, returning, and managing books with OOP concepts.',
+      'A console-based terminal music player built using Python and Pygame, featuring support for playing, pausing, resuming, stopping, and managing playlist tracks.',
     image:
-      'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800&auto=format&fit=crop',
-    alt: 'Library shelves representing a book management application',
-    tags: ['C++', 'OOP'],
+      'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
+    alt: 'A high-fidelity glowing equalizer display illustrating audio controls',
+    tags: ['Python', 'Pygame', 'Audio Playback', 'CLI'],
     accent: 'from-sky-300/30 to-transparent',
-    layout: 'md:col-span-2',
+    layout: 'md:col-span-1',
+    githubUrl: 'https://github.com/Nawanshu07/Music-Player',
   },
   {
-    title: 'Personal Portfolio Website',
+    title: 'Netflix Clone',
     category: 'Web Development',
     year: 'Project 03',
     description:
-      'A modern responsive portfolio website showcasing skills, projects, and contact information with smooth animations.',
+      'A pixel-perfect responsive clone of the Netflix landing page, focusing on sleek dark interfaces, custom layout structures, and pure HTML/CSS hover state animations.',
     image:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop',
-    alt: 'Code editor displaying a responsive website project',
-    tags: ['HTML', 'CSS', 'JavaScript'],
-    accent: 'from-amber-200/30 to-transparent',
-    layout: 'md:col-span-2',
-  },
-  {
-    title: 'Python Expense Tracker',
-    category: 'Python CLI',
-    year: 'Project 04',
-    description:
-      'A command-line application to track daily expenses, categorize spending, and calculate monthly summaries.',
-    image:
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop',
-    alt: 'Notebook and calculator for expense tracking and summaries',
-    tags: ['Python', 'CLI'],
+      'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
+    alt: 'Netflix red wordmark logo on transparent background',
+    tags: ['HTML5', 'CSS3', 'Responsive Design', 'Vercel Aesthetics'],
     accent: 'from-rose-300/30 to-transparent',
-    layout: 'md:col-span-3',
-  },
-  {
-    title: 'DSA Visualizer',
-    category: 'Upcoming',
-    year: 'Project 05',
-    description:
-      'A learning-focused project to visualize common data structures and algorithms, including sorting and searching operations.',
-    image:
-      'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800&auto=format&fit=crop',
-    alt: 'Algorithm and data visualization code displayed on a monitor',
-    tags: ['C', 'Algorithms'],
-    accent: 'from-violet-200/25 to-transparent',
-    layout: 'md:col-span-3',
+    layout: 'md:col-span-1',
+    githubUrl: 'https://github.com/Nawanshu07/Netfilx-Website-clone',
+    objectFit: 'contain',
   },
 ]
 
@@ -221,7 +201,7 @@ export const goals: Required<Pick<IconCard, 'description' | 'icon' | 'outcome' |
 ]
 
 export const stats = [
-  { label: 'Projects featured', suffix: '', value: 5 },
+  { label: 'Projects featured', suffix: '', value: 3 },
   { label: 'Current goals', suffix: '', value: 5 },
   { label: 'Skill areas', suffix: '', value: 4 },
 ]
