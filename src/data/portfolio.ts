@@ -18,6 +18,7 @@ import {
   Workflow,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { GithubIcon } from '../components/Icons'
 
 export type Project = {
   accent: string
@@ -63,8 +64,8 @@ export const projects: Project[] = [
     description:
       'A console-based terminal music player built using Python and Pygame, featuring support for playing, pausing, resuming, stopping, and managing playlist tracks.',
     image:
-      'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
-    alt: 'A high-fidelity glowing equalizer display illustrating audio controls',
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop',
+    alt: 'A clean dark-themed text editor displaying organized code files',
     tags: ['Python', 'Pygame', 'Audio Playback', 'CLI'],
     accent: 'from-sky-300/30 to-transparent',
     layout: 'md:col-span-1',
@@ -87,78 +88,59 @@ export const projects: Project[] = [
   },
 ]
 
-export const skills: IconCard[] = [
+export type SkillItem = {
+  name: string
+  icon: LucideIcon
+}
+
+export type SkillCategory = {
+  title: string
+  description: string
+  icon: LucideIcon
+  skills: SkillItem[]
+}
+
+export const skillCategories: SkillCategory[] = [
   {
-    title: 'C',
-    description: 'Console applications, file handling, core syntax, functions, arrays, pointers, and structured logic.',
+    title: 'Languages',
+    description: 'Core languages used for scripting, systems programming, and web logic.',
     icon: Code2,
-    level: 'Language',
+    skills: [
+      { name: 'C', icon: Code2 },
+      { name: 'C++', icon: Braces },
+      { name: 'Python', icon: Terminal },
+      { name: 'JavaScript', icon: FileCode2 },
+    ],
   },
   {
-    title: 'C++',
-    description: 'Object-oriented programming concepts, classes, basic project structure, and problem solving.',
-    icon: Braces,
-    level: 'Language',
-  },
-  {
-    title: 'Python',
-    description: 'Command-line tools, scripting, clean logic, expense tracking, and practical automation basics.',
-    icon: Terminal,
-    level: 'Language',
-  },
-  {
-    title: 'DSA in C',
-    description: 'Learning arrays, linked lists, stacks, queues, sorting, searching, and algorithmic thinking.',
-    icon: Layers3,
-    level: 'Core',
-  },
-  {
-    title: 'Problem Solving',
-    description: 'Consistent coding practice, logical thinking, debugging, and breaking problems into steps.',
-    icon: Search,
-    level: 'Core',
-  },
-  {
-    title: 'OOP',
-    description: 'Basic object-oriented programming with classes, objects, encapsulation, and reusable code.',
-    icon: Boxes,
-    level: 'Core',
-  },
-  {
-    title: 'Database Basics',
-    description: 'Foundational database concepts, records, tables, and data organization for applications.',
-    icon: Database,
-    level: 'Core',
-  },
-  {
-    title: 'HTML, CSS, JavaScript',
-    description: 'Responsive web pages, clean layouts, interactive behavior, and browser-based projects.',
-    icon: FileCode2,
-    level: 'Web',
-  },
-  {
-    title: 'Responsive Design',
-    description: 'Mobile-first layouts that adapt cleanly across phones, tablets, and desktop screens.',
+    title: 'Web Development',
+    description: 'Structuring, styling, and building modern, responsive layouts for the browser.',
     icon: Monitor,
-    level: 'Web',
+    skills: [
+      { name: 'HTML', icon: FileCode2 },
+      { name: 'CSS', icon: Brush },
+    ],
   },
   {
-    title: 'Git and GitHub',
-    description: 'Version control, repositories, commits, project hosting, and collaboration workflows.',
-    icon: GitBranch,
-    level: 'Tool',
+    title: 'Core CS',
+    description: 'Fundamental computer science principles, algorithmic problem solving, and database management.',
+    icon: Layers3,
+    skills: [
+      { name: 'DSA in C++', icon: Layers3 },
+      { name: 'OOP', icon: Boxes },
+      { name: 'Problem Solving', icon: Search },
+      { name: 'DBMS', icon: Database },
+    ],
   },
   {
-    title: 'VS Code',
-    description: 'Daily development environment for writing, organizing, debugging, and running code.',
+    title: 'Tools',
+    description: 'Version control, code editors, and environments that power my daily developer workflow.',
     icon: Frame,
-    level: 'Tool',
-  },
-  {
-    title: 'Linux Ubuntu',
-    description: 'Basic terminal usage, development setup, package commands, and coding practice on Linux.',
-    icon: Terminal,
-    level: 'Tool',
+    skills: [
+      { name: 'Git', icon: GitBranch },
+      { name: 'GitHub', icon: GithubIcon as unknown as LucideIcon },
+      { name: 'VS Code', icon: Frame },
+    ],
   },
 ]
 
