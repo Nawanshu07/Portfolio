@@ -33,7 +33,7 @@ export default function MagneticButton({
         !darkBg && variant === 'ghost' && 'bg-canvas text-ink border border-hairline hover:bg-canvas-soft-2 hover:border-hairline-strong shadow-level1',
         
         // Dark Background Variants
-        darkBg && variant === 'primary' && 'bg-canvas text-ink border border-canvas hover:bg-primary hover:text-white',
+        darkBg && variant === 'primary' && 'bg-canvas text-ink border border-canvas hover:bg-primary hover:text-on-primary',
         darkBg && variant === 'ghost' && 'bg-transparent text-white border border-hairline-dark hover:bg-white/5',
         
         className

@@ -5,7 +5,7 @@ import { projects } from '../data/portfolio'
 
 export default function FeaturedWork() {
   return (
-    <section id="work" className="section-padding bg-canvas-soft border-b border-hairline">
+    <section id="work" className="section-padding bg-transparent border-b border-hairline">
       <div className="container-shell">
         <div className="mb-14 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
           <SectionHeading
@@ -48,7 +48,7 @@ export default function FeaturedWork() {
                   delay: index * 0.05,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="group flex flex-col overflow-hidden bg-canvas border border-hairline rounded-md shadow-level2 hover:shadow-level4 hover:border-hairline-strong transition-all duration-300 outline-none"
+                className="group flex flex-col overflow-hidden bg-[#0f0f11] border-2 border-white/10 rounded-md shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28] transition-all duration-300 outline-none"
               >
                 {/* 16:9 Thumbnail Container */}
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-canvas-soft-2 border-b border-hairline">

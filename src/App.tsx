@@ -48,7 +48,7 @@ export default function App() {
           >
             <Navbar />
 
-            <main id="main-content" className="relative z-10 flex-1 w-full bg-canvas-soft">
+            <main id="main-content" className="relative z-10 flex-1 w-full bg-transparent">
               <Hero />
               <FeaturedWork />
               <Skills />

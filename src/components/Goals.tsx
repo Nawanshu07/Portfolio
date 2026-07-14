@@ -4,7 +4,7 @@ import { goals } from '../data/portfolio'
 
 export default function Goals() {
   return (
-    <section id="goals" className="section-padding bg-canvas-soft border-b border-hairline" aria-label="My Current Goals">
+    <section id="goals" className="section-padding bg-transparent border-b border-hairline" aria-label="My Current Goals">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Current Goals"
@@ -41,23 +41,23 @@ export default function Goals() {
                     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className={`group flex flex-col justify-between rounded-lg p-8 shadow-level4 border transition-all duration-300 min-h-[280px] ${
+                className={`group flex flex-col justify-between rounded-lg p-8 border-2 transition-all duration-300 min-h-[280px] ${
                   isFeatured
-                    ? 'bg-primary text-on-primary border-primary shadow-[0_12px_40px_rgba(255,255,255,0.06)]'
-                    : 'bg-canvas text-ink border-hairline hover:border-hairline-strong'
+                    ? 'bg-[#ffd300] text-black border-black shadow-[4px_4px_0px_rgba(255,255,255,0.1)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#ffffff]'
+                    : 'bg-[#0f0f11] text-white border-white/10 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28]'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-4">
                     <div className={`grid h-10 w-10 place-items-center rounded-sm border ${
                       isFeatured 
-                        ? 'border-on-primary/10 bg-on-primary/5 text-on-primary' 
-                        : 'border-hairline bg-canvas-soft-2 text-ink'
+                        ? 'border-black/20 bg-black/5 text-black' 
+                        : 'border-hairline bg-[#161619] text-ink'
                     }`}>
                       <Icon className="h-4 w-4" aria-hidden="true" />
                     </div>
                     {isFeatured && (
-                      <span className="inline-flex items-center text-caption-mono bg-link text-white px-2 py-0.5 rounded-sm uppercase font-mono text-[9px] tracking-wider select-none font-medium">
+                      <span className="inline-flex items-center text-caption-mono bg-black text-white px-2 py-0.5 rounded-sm uppercase font-mono text-[9px] tracking-wider select-none font-semibold">
                         Active Milestone
                       </span>
                     )}

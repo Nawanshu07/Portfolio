@@ -19,7 +19,7 @@ export default function ExperienceTimeline() {
   })
 
   return (
-    <section id="experience" className="section-padding bg-canvas-soft border-b border-hairline">
+    <section id="experience" className="section-padding bg-transparent border-b border-hairline">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Journey"
@@ -52,7 +52,7 @@ export default function ExperienceTimeline() {
               }`}
             >
               <div
-                className={`rounded-md border border-hairline bg-canvas p-6 shadow-level2 hover:shadow-level3 hover:border-hairline-strong transition-all duration-200 ${
+                className={`rounded-md border-2 border-white/10 bg-[#0f0f11] p-6 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28] transition-all duration-200 ${
                   index % 2 === 0 ? 'md:text-right' : ''
                 }`}
               >

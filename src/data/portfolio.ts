@@ -91,6 +91,9 @@ export const projects: Project[] = [
 export type SkillItem = {
   name: string
   icon: LucideIcon
+  topics: string[]
+  projects?: string[]
+  status: 'learned' | 'in-progress' | 'future'
 }
 
 export type SkillCategory = {
@@ -106,10 +109,32 @@ export const skillCategories: SkillCategory[] = [
     description: 'Core languages used for scripting, systems programming, and web logic.',
     icon: Code2,
     skills: [
-      { name: 'C', icon: Code2 },
-      { name: 'C++', icon: Braces },
-      { name: 'Python', icon: Terminal },
-      { name: 'JavaScript', icon: FileCode2 },
+      {
+        name: 'C',
+        icon: Code2,
+        status: 'learned',
+        topics: ['Basic Syntax', 'Data Types & Variables', 'Control Statements', 'Functions & Scope', 'Arrays & Strings', 'Pointers & Memory'],
+      },
+      {
+        name: 'C++',
+        icon: Braces,
+        status: 'learned',
+        topics: ['OOP Principles', 'Classes & Objects', 'Inheritance & Polymorphism', 'Templates & STL', 'Exception Handling', 'File Handling'],
+      },
+      {
+        name: 'Python',
+        icon: Terminal,
+        status: 'learned',
+        topics: ['Syntax & Lists/Dicts', 'Functions & Lambdas', 'Modules & Packages', 'File I/O', 'Pygame library', 'Speech Recognition'],
+        projects: ['Virtual Voice Assistant', 'Python Music Player'],
+      },
+      {
+        name: 'JavaScript',
+        icon: FileCode2,
+        status: 'learned',
+        topics: ['Variables & ES6+ Syntax', 'DOM Manipulation', 'Event Listeners', 'Async/Await & Promises', 'Fetch API', 'JSON Handling'],
+        projects: ['Netflix Clone'],
+      },
     ],
   },
   {
@@ -117,8 +142,20 @@ export const skillCategories: SkillCategory[] = [
     description: 'Structuring, styling, and building modern, responsive layouts for the browser.',
     icon: Monitor,
     skills: [
-      { name: 'HTML', icon: FileCode2 },
-      { name: 'CSS', icon: Brush },
+      {
+        name: 'HTML',
+        icon: FileCode2,
+        status: 'learned',
+        topics: ['Semantic Elements', 'Forms & Validations', 'Document Structure', 'SEO Meta Tags', 'Accessibility (ARIA)', 'DOM Hierarchy'],
+        projects: ['Netflix Clone'],
+      },
+      {
+        name: 'CSS',
+        icon: Brush,
+        status: 'learned',
+        topics: ['Flexbox Layouts', 'Grid Layouts', 'Media Queries (Responsive)', 'Transitions & Transforms', 'CSS Variables', 'Hover & Active States'],
+        projects: ['Netflix Clone'],
+      },
     ],
   },
   {
@@ -126,10 +163,30 @@ export const skillCategories: SkillCategory[] = [
     description: 'Fundamental computer science principles, algorithmic problem solving, and database management.',
     icon: Layers3,
     skills: [
-      { name: 'DSA in C++', icon: Layers3 },
-      { name: 'OOP', icon: Boxes },
-      { name: 'Problem Solving', icon: Search },
-      { name: 'DBMS', icon: Database },
+      {
+        name: 'DSA in C++',
+        icon: Layers3,
+        status: 'in-progress',
+        topics: ['Time & Space Complexity', 'Arrays & Linked Lists', 'Stacks & Queues', 'Trees & BSTs', 'Recursion & Backtracking', 'Sorting & Searching'],
+      },
+      {
+        name: 'OOP',
+        icon: Boxes,
+        status: 'learned',
+        topics: ['Encapsulation', 'Abstraction', 'Inheritance', 'Polymorphism', 'Interfaces & Abstract Classes', 'Constructor/Destructor'],
+      },
+      {
+        name: 'Problem Solving',
+        icon: Search,
+        status: 'learned',
+        topics: ['Logic Formulation', 'Debugging & dry-runs', 'Optimization', 'Pattern Matching', 'Algorithmic Thinking'],
+      },
+      {
+        name: 'DBMS',
+        icon: Database,
+        status: 'learned',
+        topics: ['Relational Database Design', 'SQL Queries (SELECT, JOIN)', 'Normalization (1NF, 2NF, 3NF)', 'Transactions & ACID', 'Keys (Primary, Foreign)', 'Indexing'],
+      },
     ],
   },
   {
@@ -137,9 +194,25 @@ export const skillCategories: SkillCategory[] = [
     description: 'Version control, code editors, and environments that power my daily developer workflow.',
     icon: Frame,
     skills: [
-      { name: 'Git', icon: GitBranch },
-      { name: 'GitHub', icon: GithubIcon as unknown as LucideIcon },
-      { name: 'VS Code', icon: Frame },
+      {
+        name: 'Git',
+        icon: GitBranch,
+        status: 'learned',
+        topics: ['Repository Initialization', 'Staging & Commits', 'Branching & Merging', 'Resolving Conflicts', 'Stashing', 'Diff & Logs'],
+      },
+      {
+        name: 'GitHub',
+        icon: GithubIcon as unknown as LucideIcon,
+        status: 'learned',
+        topics: ['Remote Repositories', 'Pushing & Pulling', 'Pull Requests', 'Forking & Cloning', 'GitHub Pages (Hosting)', 'Issues & Projects'],
+        projects: ['Virtual Voice Assistant', 'Python Music Player', 'Netflix Clone'],
+      },
+      {
+        name: 'VS Code',
+        icon: Frame,
+        status: 'learned',
+        topics: ['Keyboard Shortcuts', 'Extensions & Themes', 'Integrated Terminal', 'Multi-file Search', 'Workspace Settings', 'Debugging Tools'],
+      },
     ],
   },
 ]

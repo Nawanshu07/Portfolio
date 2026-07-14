@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <div className="relative w-full">
       {/* Polarity-Flipped Dark Contact Section */}
-      <section id="contact" className="section-padding bg-black text-on-primary border-b border-hairline-dark relative overflow-hidden">
+      <section id="contact" className="section-padding bg-transparent text-on-primary border-b border-hairline-dark relative overflow-hidden">
         {/* Subtle mesh background element */}
         <div className="absolute right-0 top-0 -z-10 h-[400px] w-[400px] rounded-full blur-[100px] opacity-10 pointer-events-none"
              style={{ backgroundImage: 'radial-gradient(circle, #50e3c2 0%, #0070f3 50%, transparent 100%)' }} />

@@ -9,11 +9,16 @@
 
   html {
     scroll-behavior: smooth;
-    background: #050505;
+    background: #000000;
   }
 
   body {
-    background-color: #050505;
+    background-color: #000000;
+    background-image:
+      linear-gradient(rgba(249, 203, 40, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249, 203, 40, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px, 64px 64px;
+    background-attachment: fixed;
     color: #ffffff;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: "ss01", "ss02";
@@ -21,22 +26,6 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Grid mesh gradient overlay that sits globally if wanted, or we can use custom divs. */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-      linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 25%, transparent 75%, rgba(5, 5, 5, 0.8) 100%),
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-    background-size: 100% 100%, 64px 64px, 64px 64px;
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
   }
 
   ::selection {

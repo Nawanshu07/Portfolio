@@ -25,7 +25,7 @@ const itemVariants = {
 export default function Hero() {
   return (
     <section
-      className="relative flex min-h-[92svh] flex-col items-center justify-center bg-canvas-soft px-6 py-20 overflow-hidden border-b border-hairline"
+      className="relative flex min-h-[92svh] flex-col items-center justify-center bg-transparent px-6 py-20 overflow-hidden border-b border-hairline"
     >
       {/* Background Image */}
       <img
@@ -55,7 +55,7 @@ export default function Hero() {
           }}
         />
         {/* Faint subtle grid pattern overlaying the gradient */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:64px_64px]" />
       </div>
 
       <motion.div

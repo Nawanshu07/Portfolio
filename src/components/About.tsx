@@ -49,7 +49,7 @@ function Counter({ suffix = '', to }: CounterProps) {
 
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-black text-on-primary border-b border-hairline-dark">
+    <section id="about" className="section-padding bg-transparent text-on-primary border-b border-hairline-dark">
       <div className="container-shell">
         <SectionHeading
           eyebrow="About"
@@ -104,7 +104,7 @@ export default function About() {
                     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="rounded-md border border-hairline bg-canvas p-6 shadow-level3 hover:border-hairline-strong transition-all duration-200"
+                className="rounded-md border-2 border-white/10 bg-[#0f0f11] p-6 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28] transition-all duration-200"
               >
                 <div className="text-display-lg sm:text-[44px] sm:leading-none font-semibold text-white">
                   <Counter to={stat.value} suffix={stat.suffix} />
