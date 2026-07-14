@@ -86,7 +86,7 @@ export default function RoadmapNodeDetail({
                   const isActive = status === s
                   let statusLabel = 'To Learn'
                   let StatusIcon = Circle
-                  let activeClasses = 'bg-canvas-soft-2 border-hairline text-mute'
+                  let activeClasses: string
 
                   if (s === 'learned') {
                     statusLabel = 'Learned'

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2, Clock, Circle, BookOpen } from 'lucide-react'
-import { skillCategories, type SkillItem } from '../data/portfolio'
-import RoadmapNodeDetail from './RoadmapNodeDetail'
+import { skillCategories } from '../data/portfolio'
+// import RoadmapNodeDetail from './RoadmapNodeDetail'
 
 // Definition of roadmap connection paths
 type Connection = {
@@ -16,15 +16,11 @@ export default function InteractiveRoadmap() {
   // Track node coordinate positions for drawing connections
   const [coords, setCoords] = useState<Record<string, { x: number; y: number; w: number; h: number }>>({})
   
-  // Track selected skill node for drawer detail popup
-  const [selectedSkill, setSelectedSkill] = useState<SkillItem | null>(null)
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  
   // Track hovered node for highlighting connecting paths
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   
   // Local storage state for tracking user progress dynamically
-  const [skillStatuses, setSkillStatuses] = useState<Record<string, 'learned' | 'in-progress' | 'future'>>(() => {
+  const [skillStatuses] = useState<Record<string, 'learned' | 'in-progress' | 'future'>>(() => {
     const saved = localStorage.getItem('nawanshu_roadmap_statuses')
     if (saved) {
       try {
@@ -43,13 +39,6 @@ export default function InteractiveRoadmap() {
     });
     return defaults
   })
-
-  // Save statuses to local storage on change
-  const handleStatusChange = (skillName: string, status: 'learned' | 'in-progress' | 'future') => {
-    const updated = { ...skillStatuses, [skillName]: status }
-    setSkillStatuses(updated)
-    localStorage.setItem('nawanshu_roadmap_statuses', JSON.stringify(updated))
-  }
 
   // Calculate coordinates of all nodes relative to container
   const updateCoords = () => {
@@ -323,24 +312,20 @@ export default function InteractiveRoadmap() {
                     }
 
                     return (
-                      <button
+                      <div
                         key={skill.name}
                         id={skillId}
                         data-roadmap-node
-                        onClick={() => {
-                          setSelectedSkill(skill)
-                          setIsDrawerOpen(true)
-                        }}
                         onMouseEnter={() => setHoveredNode(skillId)}
                         onMouseLeave={() => setHoveredNode(null)}
-                        className={`flex items-center justify-between p-4 rounded-md text-left text-xs gap-3 transition-all duration-200 cursor-pointer ${statusClasses}`}
+                        className={`flex items-center justify-between p-4 rounded-md text-left text-xs gap-3 transition-all duration-200 cursor-default ${statusClasses}`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <SkillIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-black' : skillStatus === 'in-progress' ? 'text-white' : 'text-mute'}`} />
                           <span className="font-medium truncate">{skill.name}</span>
                         </div>
                         <StatusIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-black' : skillStatus === 'in-progress' ? 'text-white' : 'text-body/40'}`} />
-                      </button>
+                      </div>
                     )
                   })}
                 </div>
@@ -350,21 +335,7 @@ export default function InteractiveRoadmap() {
         </div>
       </div>
 
-      {/* Drawer Detail Sheet */}
-      <RoadmapNodeDetail
-        isOpen={isDrawerOpen}
-        onClose={() => {
-          setIsDrawerOpen(false)
-          setSelectedSkill(null)
-        }}
-        skill={selectedSkill}
-        status={selectedSkill ? skillStatuses[selectedSkill.name] || 'future' : 'future'}
-        onStatusChange={(status) => {
-          if (selectedSkill) {
-            handleStatusChange(selectedSkill.name, status)
-          }
-        }}
-      />
+      {/* Drawer Detail Sheet is disabled as elements are now unclickable */}
     </div>
   )
 }
