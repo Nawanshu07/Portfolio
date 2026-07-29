@@ -107,18 +107,13 @@ app.post('/api/contact', async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    // Configure transporter with explicit Gmail SMTP settings
+    // Configure transporter for Gmail
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, // true for port 465 (secure TLS)
+      service: 'gmail',
       auth: {
         user: emailUser,
         pass: emailPass, // Gmail App Password
       },
-      tls: {
-        rejectUnauthorized: false // Helps bypass potential self-signed certificate/routing issues on cloud platforms
-      }
     });
 
     // Construct the email body
