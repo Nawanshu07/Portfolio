@@ -25,6 +25,46 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'OK', message: 'Server is running smoothly' });
 });
 
+// Diagnostic connection test endpoint
+app.get('/api/test-connection', async (req: Request, res: Response) => {
+  const emailUser = process.env.EMAIL_USER;
+  const emailPass = process.env.EMAIL_PASS;
+  
+  if (!emailUser || !emailPass) {
+    res.status(500).json({
+      success: false,
+      message: 'EMAIL_USER or EMAIL_PASS environment variables are missing on Render.',
+      emailUser: emailUser ? 'Set' : 'Missing',
+      emailPass: emailPass ? 'Set' : 'Missing',
+    });
+    return;
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: emailUser,
+        pass: emailPass,
+      },
+    });
+
+    await transporter.verify();
+    res.json({
+      success: true,
+      message: 'SMTP connection successfully established! Server can send emails.',
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'SMTP Connection Failed',
+      error: error.message,
+      code: error.code,
+      response: error.response,
+    });
+  }
+});
+
 // Contact form submission endpoint
 app.post('/api/contact', async (req: Request, res: Response): Promise<void> => {
   const { name, email, phone, message } = req.body;
