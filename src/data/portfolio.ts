@@ -31,6 +31,7 @@ export type Project = {
   title: string
   year: string
   githubUrl?: string
+  liveUrl?: string
   objectFit?: 'cover' | 'contain'
 }
 
@@ -84,6 +85,7 @@ export const projects: Project[] = [
     accent: 'from-rose-300/30 to-transparent',
     layout: 'md:col-span-1',
     githubUrl: 'https://github.com/Nawanshu07/Netfilx-Website-clone',
+    liveUrl: 'https://netflix-clone.nawanshu.dpdns.org/',
     objectFit: 'contain',
   },
 ]

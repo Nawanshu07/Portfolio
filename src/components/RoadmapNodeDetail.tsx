@@ -148,9 +148,9 @@ export default function RoadmapNodeDetail({
                   {linkedProjects.map((project) => (
                     <a
                       key={project.title}
-                      href={project.githubUrl || '#contact'}
-                      target={project.githubUrl ? '_blank' : undefined}
-                      rel={project.githubUrl ? 'noopener noreferrer' : undefined}
+                      href={project.liveUrl || project.githubUrl || '#contact'}
+                      target={project.liveUrl || project.githubUrl ? '_blank' : undefined}
+                      rel={project.liveUrl || project.githubUrl ? 'noopener noreferrer' : undefined}
                       className="group flex items-center justify-between rounded-sm border border-hairline bg-canvas-soft-2 p-4 shadow-level2 hover:border-hairline-strong hover:shadow-level3 transition-all duration-200"
                     >
                       <div className="flex items-center gap-3">
@@ -171,7 +171,7 @@ export default function RoadmapNodeDetail({
                         </div>
                       </div>
                       <span className="grid h-7 w-7 place-items-center rounded-full border border-hairline bg-canvas text-ink opacity-60 group-hover:opacity-100 group-hover:bg-canvas-soft-2 transition">
-                        {project.githubUrl ? <GithubIcon className="h-3.5 w-3.5" /> : <ArrowUpRight className="h-3.5 w-3.5" />}
+                        {project.liveUrl ? <ArrowUpRight className="h-3.5 w-3.5" /> : project.githubUrl ? <GithubIcon className="h-3.5 w-3.5" /> : <ArrowUpRight className="h-3.5 w-3.5" />}
                       </span>
                     </a>
                   ))}

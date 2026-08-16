@@ -37,9 +37,9 @@ export default function FeaturedWork() {
             return (
               <motion.a
                 key={project.title}
-                href={project.githubUrl || '#contact'}
-                target={project.githubUrl ? '_blank' : undefined}
-                rel={project.githubUrl ? 'noopener noreferrer' : undefined}
+                href={project.liveUrl || project.githubUrl || '#contact'}
+                target={project.liveUrl || project.githubUrl ? '_blank' : undefined}
+                rel={project.liveUrl || project.githubUrl ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
