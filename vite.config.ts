@@ -18,7 +18,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id: string) {
-          if (id.includes('framer-motion')) {
+          if (id.includes('framer-motion') || id.includes('lenis')) {
             return 'vendor-motion'
           }
           if (id.includes('lucide-react')) {

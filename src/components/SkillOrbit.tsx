@@ -63,14 +63,14 @@ export default function SkillOrbit() {
     [0, 1, 1, 0]
   )
 
-  // Scroll contributes directly to the orbital angle
+  // Gentle scroll rotation contribution without erratic spinning
   const scrollRotation = useTransform(
     smoothProgress,
     [0.15, 0.85],
-    [0, Math.PI * 2.5]
+    [0, Math.PI * 0.35]
   )
 
-  // Smooth continuous animation frame loop for perpetual orbit
+  // Smooth continuous animation frame loop calibrated to 1 revolution per 5 seconds
   useEffect(() => {
     if (shouldReduceMotion) return
 
@@ -81,8 +81,9 @@ export default function SkillOrbit() {
       const delta = (now - lastTimestamp) / 1000
       lastTimestamp = now
 
-      // Slow down orbit speed on hover for inspectability
-      const speed = isHovered ? 0.08 : 0.28
+      // Exact calibrated speed: 1 full revolution (2 * PI) every 5 seconds
+      // On hover, gently slows down to 1 revolution in 16 seconds for effortless interaction
+      const speed = isHovered ? (Math.PI * 2) / 16 : (Math.PI * 2) / 5
       setTimeAngle((prev) => (prev + delta * speed) % (Math.PI * 2))
 
       animationFrameId = requestAnimationFrame(step)

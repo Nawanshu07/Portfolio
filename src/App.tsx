@@ -1,5 +1,7 @@
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import About from './components/About'
 import Contact from './components/Contact'
 import ExperienceTimeline from './components/ExperienceTimeline'
@@ -23,10 +25,35 @@ export default function App() {
     restDelta: 0.001,
   })
 
+  // Initialize Lenis smooth scroll with exact Sunny Patel sensitivity & inertia
   useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.1, // Exact Sunny Patel sensitivity (10% movement per frame)
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.0,
+      smoothWheel: true,
+      syncTouch: false,
+      syncTouchLerp: 0.075,
+      touchInertiaExponent: 1.7,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      anchors: true,
+    })
+
+    function raf(time: number) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    const rafId = requestAnimationFrame(raf)
+
     const timeout = window.setTimeout(() => setIsLoading(false), 900)
 
-    return () => window.clearTimeout(timeout)
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+      window.clearTimeout(timeout)
+    }
   }, [])
 
   return (
