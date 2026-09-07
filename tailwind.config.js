@@ -1,45 +1,56 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: '#ffffff',
-        'on-primary': '#0f0f11',
-        ink: '#ffffff',
-        body: '#a1a1a1',
-        mute: '#666666',
-        hairline: 'rgba(255, 255, 255, 0.08)',
-        'hairline-strong': 'rgba(255, 255, 255, 0.16)',
-        canvas: '#0f0f11',
-        'canvas-soft': '#000000',
-        'canvas-soft-2': '#161619',
-        link: '#f9cb28',
-        'link-deep': '#ffd300',
-        'link-bg-soft': 'rgba(249, 203, 40, 0.1)',
-        success: '#f9cb28',
-        error: '#ff1a1a',
-        'error-soft': '#3f0e11',
-        'error-deep': '#ff3333',
-        warning: '#f5a623',
-        'warning-soft': '#3f2d0a',
-        'warning-deep': '#f7b955',
-        violet: '#f5a623',
-        'violet-soft': '#3f2d0a',
-        'violet-deep': '#f9cb28',
-        cyan: '#f9cb28',
-        'cyan-soft': 'rgba(249, 203, 40, 0.15)',
-        'cyan-deep': '#ffd300',
-        'highlight-pink': '#ffd300',
-        'highlight-magenta': '#f9cb28',
-        'gradient-develop-start': '#f5a623',
-        'gradient-develop-end': '#f9cb28',
-        'gradient-preview-start': '#ffd300',
-        'gradient-preview-end': '#f9cb28',
-        'gradient-ship-start': '#ffd300',
-        'gradient-ship-end': '#ffd300',
-        'selection-bg': '#f9cb28',
-        'selection-fg': '#000000',
+        // Dynamic tokens supporting black theme & light mode
+        primary: 'var(--color-primary)',
+        'primary-active': 'var(--color-primary-active)',
+        'on-primary': 'var(--color-on-primary)',
+
+        // Surfaces
+        canvas: 'var(--color-canvas)',
+        'canvas-soft': 'var(--color-canvas-soft)',
+        'canvas-deep': 'var(--color-canvas-deep)',
+        'surface-card': 'var(--color-surface-card)',
+        'surface-strong': 'var(--color-surface-strong)',
+        'surface-dark': 'var(--color-surface-dark)',
+        'surface-dark-elevated': 'var(--color-surface-dark-elevated)',
+
+        // Hairlines
+        hairline: 'var(--color-hairline)',
+        'hairline-soft': 'var(--color-hairline-soft)',
+        'hairline-strong': 'var(--color-hairline-strong)',
+
+        // Text
+        ink: 'var(--color-ink)',
+        body: 'var(--color-body)',
+        'body-strong': 'var(--color-body-strong)',
+        muted: 'var(--color-muted)',
+        'muted-soft': 'var(--color-muted-soft)',
+        'on-dark': 'var(--color-on-dark)',
+        'on-dark-soft': 'var(--color-on-dark-soft)',
+
+        // Atmospheric Gradient Stops (signature pastel orbs)
+        'gradient-mint': '#a7e5d3',
+        'gradient-peach': '#f4c5a8',
+        'gradient-lavender': '#c8b8e0',
+        'gradient-sky': '#a8c8e8',
+        'gradient-rose': '#e8b8c4',
+
+        // Semantic
+        success: '#16a34a',
+        error: '#dc2626',
+        'error-soft': 'var(--color-error-soft)',
+
+        // Sunny Patel Inspired Palette Tokens
+        ember: '#d9663d',
+        'ember-glow': 'rgba(217, 102, 61, 0.25)',
+        bone: '#ede8dc',
+        'bone-dim': '#a19d93',
+        line: 'var(--color-hairline)',
       },
       fontFamily: {
         sans: [
@@ -47,6 +58,16 @@ export default {
           'system-ui',
           '-apple-system',
           'sans-serif',
+        ],
+        serif: [
+          '"EB Garamond"',
+          'Times New Roman',
+          'serif',
+        ],
+        display: [
+          '"EB Garamond"',
+          'Times New Roman',
+          'serif',
         ],
         mono: [
           'JetBrains Mono',
@@ -64,12 +85,8 @@ export default {
         md: '16px',
         lg: '24px',
         xl: '32px',
-        '2xl': '40px',
-        '3xl': '48px',
-        '4xl': '64px',
-        '5xl': '96px',
-        '6xl': '128px',
-        section: '192px',
+        xxl: '48px',
+        section: '96px',
       },
       borderRadius: {
         xs: '4px',
@@ -77,15 +94,16 @@ export default {
         md: '8px',
         lg: '12px',
         xl: '16px',
-        'pill-sm': '64px',
-        pill: '100px',
+        xxl: '24px',
+        pill: '9999px',
+        full: '9999px',
       },
       boxShadow: {
-        level1: 'inset 0 0 0 1px rgba(0, 0, 0, 0.08)',
-        level2: '0px 1px 1px rgba(0, 0, 0, 0.02), 0px 2px 2px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(0, 0, 0, 0.08)',
-        level3: '0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 8px -8px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(0, 0, 0, 0.08)',
-        level4: '0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 16px -4px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(0, 0, 0, 0.08)',
-        level5: '0px 1px 1px rgba(0, 0, 0, 0.02), 0px 8px 16px -4px rgba(0, 0, 0, 0.04), 0px 24px 32px -8px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.08)',
+        'soft-drop': '0 4px 16px rgba(0, 0, 0, 0.25)',
+        'soft-hover': '0 8px 24px rgba(0, 0, 0, 0.4)',
+        level1: '0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--color-hairline)',
+        level2: '0 4px 16px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--color-hairline)',
+        level3: '0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--color-hairline-strong)',
       },
     },
   },

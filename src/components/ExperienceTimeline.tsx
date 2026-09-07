@@ -19,19 +19,19 @@ export default function ExperienceTimeline() {
   })
 
   return (
-    <section id="experience" className="section-padding bg-transparent border-b border-hairline">
+    <section id="experience" className="section-padding bg-canvas border-b border-hairline">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Journey"
-          title="A focused learning path from fundamentals to internship readiness."
-          description="The roadmap is simple: strengthen core concepts, build practical projects, and keep improving through real coding practice."
+          title="A focused progression from core fundamentals to engineering readiness."
+          description="The trajectory is straightforward: sharpen computer science essentials, write practical applications, and grow through consistent coding practice."
         />
 
         <div ref={containerRef} className="relative mx-auto max-w-5xl py-4">
           {/* Faint background timeline track */}
           <div className="absolute left-4 top-4 bottom-4 w-px bg-hairline md:left-1/2 md:-translate-x-[0.5px]" />
           
-          {/* Animated tracking line (solid Vercel primary ink) */}
+          {/* Animated tracking line (solid brand primary ink) */}
           <motion.div
             style={{ scaleY, transformOrigin: 'top' }}
             className="absolute left-4 top-4 bottom-4 w-px bg-primary md:left-1/2 md:-translate-x-[0.5px]"
@@ -52,23 +52,30 @@ export default function ExperienceTimeline() {
               }`}
             >
               <div
-                className={`rounded-md border-2 border-white/10 bg-[#0f0f11] p-6 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28] transition-all duration-200 ${
+                className={`rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-soft-drop transition-all duration-200 ${
                   index % 2 === 0 ? 'md:text-right' : ''
                 }`}
               >
-                <p className="text-caption-mono text-mute font-mono uppercase tracking-wider text-[11px] select-none">// {item.period}</p>
-                <h3 className="mt-2 text-display-sm font-semibold text-ink tracking-tight">
+                <p className="text-caption-mono text-muted text-[11px] uppercase tracking-wider select-none">
+                  // {item.period}
+                </p>
+
+                <h3 className="mt-1.5 font-display font-light text-display-sm text-ink tracking-tight">
                   {item.role}
                 </h3>
-                <p className="mt-0.5 text-body-sm-strong text-link font-medium">{item.company}</p>
-                <p className="mt-4 text-body-sm text-body leading-relaxed">
+
+                <p className="mt-0.5 text-body-sm-strong text-body-strong font-medium">
+                  {item.company}
+                </p>
+
+                <p className="mt-3 text-body-sm text-body leading-relaxed">
                   {item.description}
                 </p>
               </div>
 
               {/* Checkpoint Dot */}
               <div
-                className="absolute left-0 top-4 grid h-8 w-8 place-items-center rounded-full border border-hairline bg-canvas md:left-1/2 md:-translate-x-1/2 shadow-level2"
+                className="absolute left-0 top-4 grid h-8 w-8 place-items-center rounded-full border border-hairline bg-surface-card md:left-1/2 md:-translate-x-1/2 shadow-level1"
                 aria-hidden="true"
               >
                 <motion.span 

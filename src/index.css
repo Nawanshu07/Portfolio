@@ -3,34 +3,102 @@
 @tailwind utilities;
 
 @layer base {
+  /* Default Black Theme (:root) */
+  :root {
+    --color-canvas: #09090b;
+    --color-canvas-soft: #121216;
+    --color-canvas-deep: #000000;
+    --color-surface-card: #131317;
+    --color-surface-strong: #1e1e24;
+    --color-surface-dark: #000000;
+    --color-surface-dark-elevated: #16161b;
+
+    --color-hairline: rgba(255, 255, 255, 0.09);
+    --color-hairline-soft: rgba(255, 255, 255, 0.05);
+    --color-hairline-strong: rgba(255, 255, 255, 0.18);
+
+    --color-ink: #ffffff;
+    --color-body: #a1a1aa;
+    --color-body-strong: #f4f4f5;
+    --color-muted: #71717a;
+    --color-muted-soft: #52525b;
+    --color-on-dark: #ffffff;
+    --color-on-dark-soft: #a1a1aa;
+
+    --color-primary: #ffffff;
+    --color-primary-active: #e4e4e7;
+    --color-on-primary: #09090b;
+
+    --color-error-soft: rgba(220, 38, 38, 0.15);
+  }
+
+  /* Optional Light Editorial Theme */
+  html.light {
+    --color-canvas: #f5f5f5;
+    --color-canvas-soft: #fafafa;
+    --color-canvas-deep: #0c0a09;
+    --color-surface-card: #ffffff;
+    --color-surface-strong: #f0efed;
+    --color-surface-dark: #0c0a09;
+    --color-surface-dark-elevated: #1c1917;
+
+    --color-hairline: #e7e5e4;
+    --color-hairline-soft: #f0efed;
+    --color-hairline-strong: #d6d3d1;
+
+    --color-ink: #0c0a09;
+    --color-body: #4e4e4e;
+    --color-body-strong: #292524;
+    --color-muted: #777169;
+    --color-muted-soft: #a8a29e;
+    --color-on-dark: #ffffff;
+    --color-on-dark-soft: #a8a29e;
+
+    --color-primary: #292524;
+    --color-primary-active: #0c0a09;
+    --color-on-primary: #ffffff;
+
+    --color-error-soft: #fef2f2;
+  }
+
   * {
     box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
-    background: #000000;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  /* Custom cursor hiding for fine pointer devices when CustomCursor is active */
+  @media (pointer: fine) {
+    html.cursor-active,
+    html.cursor-active body,
+    html.cursor-active a,
+    html.cursor-active button,
+    html.cursor-active input,
+    html.cursor-active textarea,
+    html.cursor-active [role="button"] {
+      cursor: none !important;
+    }
   }
 
   body {
-    background-color: #000000;
-    background-image:
-      linear-gradient(rgba(249, 203, 40, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(249, 203, 40, 0.045) 1px, transparent 1px);
-    background-size: 64px 64px, 64px 64px;
-    background-attachment: fixed;
-    color: #ffffff;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-feature-settings: "ss01", "ss02";
+    letter-spacing: 0.012em;
     margin: 0;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 
   img,
@@ -54,137 +122,201 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Focus ring style rules */
+  /* Accessible visible focus ring */
   :focus-visible {
-    outline: 2px solid #0070f3;
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Layout utilities */
+  /* Layout utilities (1200px max width) */
   .container-shell {
-    @apply mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:px-12;
   }
 
+  /* 96px section rhythm */
   .section-padding {
-    @apply py-24 md:py-32;
+    @apply py-20 md:py-24;
   }
 
-  /* Typography utilities from DESIGN.md */
+  /* Typography utilities */
+  .font-display {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+  }
+
+  .text-display-mega {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
   .text-display-xl {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 48px;
-    font-weight: 600;
-    line-height: 48px;
-    letter-spacing: -2.4px;
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
   }
 
   .text-display-lg {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 40px;
-    letter-spacing: -1.28px;
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: clamp(26px, 3.5vw, 36px);
+    font-weight: 300;
+    line-height: 1.17;
+    letter-spacing: -0.015em;
   }
 
   .text-display-md {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 32px;
-    letter-spacing: -0.96px;
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.13;
+    letter-spacing: -0.01em;
   }
 
   .text-display-sm {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 28px;
-    letter-spacing: -0.6px;
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0;
   }
 
-  .text-body-lg {
+  .text-title-md {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .text-title-sm {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 18px;
-    font-weight: 400;
-    line-height: 28px;
-    letter-spacing: 0px;
+    font-weight: 500;
+    line-height: 1.44;
+    letter-spacing: 0.012em;
   }
 
   .text-body-md {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 1.5;
+    letter-spacing: 0.012em;
   }
 
-  .text-body-md-strong {
+  .text-body-strong {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 1.5;
+    letter-spacing: 0.012em;
   }
 
   .text-body-sm {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.28px;
+    line-height: 1.47;
+    letter-spacing: 0.01em;
   }
 
   .text-body-sm-strong {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
-    line-height: 20px;
-    letter-spacing: -0.28px;
+    line-height: 1.47;
+    letter-spacing: 0.01em;
   }
 
   .text-caption {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 1.5;
+  }
+
+  .text-caption-uppercase {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .text-caption-mono {
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
   }
 
-  .text-code {
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  .text-button-md {
+  .text-button {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 1.0;
   }
 
-  .text-button-lg {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-
-  /* Shared visual styles */
+  /* Hairlines */
   .border-hairline {
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-color: var(--color-hairline);
   }
 
-  .border-hairline-dark {
-    border: 1px solid rgba(255, 255, 255, 0.15);
+  .border-hairline-soft {
+    border-color: var(--color-hairline-soft);
   }
+
+  .border-hairline-strong {
+    border-color: var(--color-hairline-strong);
+  }
+
+  /* Atmospheric Orbs */
+  .orb-mint {
+    background: radial-gradient(circle, rgba(167, 229, 211, 0.35) 0%, rgba(167, 229, 211, 0.08) 50%, transparent 70%);
+  }
+
+  .orb-peach {
+    background: radial-gradient(circle, rgba(244, 197, 168, 0.35) 0%, rgba(244, 197, 168, 0.08) 50%, transparent 70%);
+  }
+
+  .orb-lavender {
+    background: radial-gradient(circle, rgba(200, 184, 224, 0.35) 0%, rgba(200, 184, 224, 0.08) 50%, transparent 70%);
+  }
+
+  .orb-sky {
+    background: radial-gradient(circle, rgba(168, 200, 232, 0.35) 0%, rgba(168, 200, 232, 0.08) 50%, transparent 70%);
+  }
+
+  .orb-rose {
+    background: radial-gradient(circle, rgba(232, 184, 196, 0.35) 0%, rgba(232, 184, 196, 0.08) 50%, transparent 70%);
+  }
+}
+
+/* Infinite Marquee Keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -199,6 +331,10 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
-    shadow-transition-duration: 0.001ms !important;
+  }
+
+  .animate-marquee {
+    animation: none;
+    overflow-x: auto;
   }
 }

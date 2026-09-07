@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle2, Clock, Circle, BookOpen } from 'lucide-react'
 import { skillCategories } from '../data/portfolio'
-// import RoadmapNodeDetail from './RoadmapNodeDetail'
 
-// Definition of roadmap connection paths
 type Connection = {
   from: string
   to: string
@@ -35,13 +33,13 @@ export default function InteractiveRoadmap() {
     skillCategories.forEach((cat) => {
       cat.skills.forEach((skill) => {
         defaults[skill.name] = skill.status
-      });
-    });
+      })
+    })
     return defaults
   })
 
   // Calculate coordinates of all nodes relative to container
-  const updateCoords = () => {
+  const updateCoords = useCallback(() => {
     if (!containerRef.current) return
     const containerRect = containerRef.current.getBoundingClientRect()
     const elements = containerRef.current.querySelectorAll('[data-roadmap-node]')
@@ -58,9 +56,9 @@ export default function InteractiveRoadmap() {
           h: rect.height,
         }
       }
-    });
+    })
     setCoords(newCoords)
-  }
+  }, [])
 
   // Monitor DOM resize to keep coordinates perfectly aligned
   useEffect(() => {
@@ -75,7 +73,7 @@ export default function InteractiveRoadmap() {
     updateCoords()
     
     // Fallback for fonts or delayed layout shifts
-    const timeout = setTimeout(updateCoords, 500)
+    const timeout = setTimeout(updateCoords, 400)
     
     window.addEventListener('resize', updateCoords)
 
@@ -84,7 +82,7 @@ export default function InteractiveRoadmap() {
       clearTimeout(timeout)
       window.removeEventListener('resize', updateCoords)
     }
-  }, [])
+  }, [updateCoords])
 
   // Node hierarchy and connections definitions
   const connections: Connection[] = []
@@ -118,7 +116,6 @@ export default function InteractiveRoadmap() {
     // Calculate mid-point vertically
     const midY = startY + (endY - startY) / 2
 
-    // Path command: Go down to midY, horizontal to endX, down to endY
     return `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`
   }
 
@@ -127,10 +124,8 @@ export default function InteractiveRoadmap() {
     const isCategoryConnection = fromId.startsWith('cat-')
     const skillName = toId.startsWith('skill-') ? toId.replace('skill-', '') : ''
     
-    // Find skill status
     let status: 'learned' | 'in-progress' | 'future' = 'future'
     if (skillName) {
-      // Find matching skill case-insensitively or matching spaces
       const matchingKey = Object.keys(skillStatuses).find(
         (k) => k.replace(/\s+/g, '-').toLowerCase() === skillName
       )
@@ -138,7 +133,6 @@ export default function InteractiveRoadmap() {
         status = skillStatuses[matchingKey]
       }
     } else if (isCategoryConnection) {
-      // For root-to-category paths, highlight if category contains any active/learned skill
       const catTitle = fromId.replace('cat-', '')
       const category = skillCategories.find(
         (c) => c.title.replace(/\s+/g, '-').toLowerCase() === catTitle
@@ -152,26 +146,24 @@ export default function InteractiveRoadmap() {
 
     const isHovered = hoveredNode === fromId || hoveredNode === toId
     
-    let strokeColor = 'rgba(255, 255, 255, 0.08)' // default hairline
+    let strokeColor = '#e7e5e4' // hairline
     let isDashed = false
     
     if (status === 'learned') {
-      strokeColor = '#0070f3' // solid blue path
+      strokeColor = '#292524' // primary ink path
     } else if (status === 'in-progress') {
-      strokeColor = '#0070f3' // blue path
+      strokeColor = '#777169' // muted ink path
       isDashed = true
     }
 
     if (isHovered) {
-      // Intensify path style on hover
-      strokeColor = '#3291ff'
+      strokeColor = '#0c0a09'
     }
 
     return {
       stroke: strokeColor,
-      strokeWidth: isHovered ? 2.5 : 1.5,
+      strokeWidth: isHovered ? 2 : 1.25,
       strokeDasharray: isDashed ? '4,4' : undefined,
-      className: isHovered && !isDashed ? 'animate-[dash_1s_linear_infinite]' : '',
     }
   }
 
@@ -183,24 +175,25 @@ export default function InteractiveRoadmap() {
   return (
     <div ref={containerRef} className="relative w-full">
       {/* Roadmap Metrics Bar */}
-      <div className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-md border border-hairline bg-canvas p-5 shadow-level2">
-        <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-sm border border-hairline bg-canvas-soft-2 text-link">
-            <BookOpen className="h-5 w-5" />
+      <div className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-hairline bg-surface-card p-5 shadow-sm">
+        <div className="flex items-center gap-3.5">
+          <div className="grid h-10 w-10 place-items-center rounded-pill border border-hairline bg-canvas-soft text-ink">
+            <BookOpen className="h-5 w-5 text-ink" />
           </div>
           <div>
-            <h4 className="text-body-sm-strong text-ink font-semibold">Learning Progress</h4>
-            <p className="text-[11px] text-mute font-mono uppercase tracking-wider mt-0.5">
-              Interactive Dev Roadmap
+            <h4 className="text-body-strong font-medium text-ink">Curriculum Tracking</h4>
+            <p className="text-[11px] text-muted font-mono uppercase tracking-wider mt-0.5">
+              Structured Developer Roadmap
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+
+        <div className="flex items-center gap-5">
           <div className="text-right">
-            <span className="text-display-sm text-ink font-semibold">{learnedSkills} / {totalSkills}</span>
-            <span className="text-caption text-mute ml-1.5">skills learned</span>
+            <span className="font-display text-2xl font-light text-ink">{learnedSkills} / {totalSkills}</span>
+            <span className="text-caption text-muted ml-2">skills mastered</span>
           </div>
-          <div className="h-10 w-px bg-hairline" />
+          <div className="h-8 w-px bg-hairline" />
           <div className="relative flex h-12 w-12 items-center justify-center">
             {/* Circular Progress SVG */}
             <svg className="absolute inset-0 h-full w-full -rotate-90">
@@ -209,33 +202,27 @@ export default function InteractiveRoadmap() {
                 cy="24"
                 r="20"
                 className="stroke-hairline fill-none"
-                strokeWidth="3.5"
+                strokeWidth="3"
               />
               <motion.circle
                 cx="24"
                 cy="24"
                 r="20"
-                className="stroke-link fill-none"
-                strokeWidth="3.5"
+                className="stroke-primary fill-none"
+                strokeWidth="3"
                 strokeDasharray={`${2 * Math.PI * 20}`}
                 initial={{ strokeDashoffset: 2 * Math.PI * 20 }}
                 animate={{ strokeDashoffset: 2 * Math.PI * 20 * (1 - progressPercent / 100) }}
                 transition={{ duration: 1, ease: 'easeOut' }}
               />
             </svg>
-            <span className="text-[10px] font-mono font-medium text-ink">{progressPercent}%</span>
+            <span className="text-[11px] font-mono font-medium text-ink">{progressPercent}%</span>
           </div>
         </div>
       </div>
 
       {/* SVG Canvas overlay for connecting lines */}
       <svg className="absolute inset-0 pointer-events-none z-0 h-full w-full">
-        <defs>
-          <linearGradient id="glowing-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#f5a623" />
-            <stop offset="100%" stopColor="#ff0080" />
-          </linearGradient>
-        </defs>
         {connections.map(({ from, to }) => {
           const pathD = drawStepPath(from, to)
           if (!pathD) return null
@@ -254,60 +241,59 @@ export default function InteractiveRoadmap() {
       </svg>
 
       {/* Tree Node Structure */}
-      <div className="relative z-10 flex flex-col items-center gap-16">
+      <div className="relative z-10 flex flex-col items-center gap-14">
         
         {/* Root Node */}
         <div
           id="roadmap-root"
           data-roadmap-node
-          className="flex flex-col items-center justify-center px-6 py-4 rounded-md border-2 border-black bg-white text-black text-center select-none hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#ffd300] transition-all duration-200"
+          className="flex flex-col items-center justify-center px-6 py-3.5 rounded-pill border border-hairline-strong bg-surface-card text-ink text-center select-none shadow-sm hover:shadow-soft-drop transition-all duration-200"
         >
-          <span className="text-caption-mono font-mono text-[9px] uppercase tracking-widest text-[#555] mb-1">
+          <span className="text-caption-mono font-mono text-[10px] uppercase tracking-widest text-muted mb-0.5">
             Core Curriculum
           </span>
-          <h3 className="text-body-md-strong font-bold">
-            Nawanshu's Tech Stack
+          <h3 className="text-body-strong font-medium text-ink">
+            Technical Stack Architecture
           </h3>
         </div>
 
         {/* Categories Grid (2 Cols on Desktop/Tablet, 1 Col on Mobile) */}
-        <div className="grid w-full gap-x-12 gap-y-16 grid-cols-1 md:grid-cols-2">
+        <div className="grid w-full gap-x-10 gap-y-14 grid-cols-1 md:grid-cols-2">
           {skillCategories.map((category) => {
             const catId = `cat-${category.title.replace(/\s+/g, '-').toLowerCase()}`
             const CategoryIcon = category.icon
 
             return (
-              <div key={category.title} className="flex flex-col items-center gap-10">
+              <div key={category.title} className="flex flex-col items-center gap-8">
                 {/* Category Node Header */}
                 <div
                   id={catId}
                   data-roadmap-node
                   onMouseEnter={() => setHoveredNode(catId)}
                   onMouseLeave={() => setHoveredNode(null)}
-                  className="flex items-center gap-3 px-6 py-3.5 rounded-md border-2 border-black bg-[#ffe8c5] text-black font-semibold hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#ffffff] transition-all duration-200 cursor-default"
+                  className="flex items-center gap-3 px-5 py-2.5 rounded-pill border border-hairline bg-surface-card text-ink font-medium hover:border-hairline-strong shadow-sm hover:shadow-soft-drop transition-all duration-200 cursor-default"
                 >
-                  <div className="grid h-8 w-8 place-items-center rounded-sm border border-black bg-white text-black">
-                    <CategoryIcon className="h-4 w-4" />
+                  <div className="grid h-7 w-7 place-items-center rounded-full bg-surface-strong text-ink">
+                    <CategoryIcon className="h-3.5 w-3.5" />
                   </div>
-                  <h4 className="text-body-md-strong font-bold tracking-tight">{category.title}</h4>
+                  <h4 className="text-body-sm-strong font-medium tracking-tight text-ink">{category.title}</h4>
                 </div>
 
                 {/* Sub-skills grid (2 columns) */}
-                <div className="grid w-full gap-4 grid-cols-2">
+                <div className="grid w-full gap-3 grid-cols-2">
                   {category.skills.map((skill) => {
                     const skillId = `skill-${skill.name.replace(/\s+/g, '-').toLowerCase()}`
                     const skillStatus = skillStatuses[skill.name] || 'future'
                     const SkillIcon = skill.icon
 
-                    // Decide styling classes based on learning state
-                    let statusClasses = 'bg-[#161616] border border-hairline text-body/60 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(255,255,255,0.1)] hover:border-hairline-strong'
+                    let statusClasses = 'bg-surface-card border-hairline text-ink hover:border-hairline-strong shadow-sm hover:shadow-soft-drop'
                     let StatusIcon = Circle
 
                     if (skillStatus === 'learned') {
-                      statusClasses = 'bg-[#ffd300] text-black border-2 border-black font-bold hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#ffffff]'
+                      statusClasses = 'bg-surface-card border-hairline-strong text-ink hover:border-primary shadow-sm hover:shadow-soft-drop'
                       StatusIcon = CheckCircle2
                     } else if (skillStatus === 'in-progress') {
-                      statusClasses = 'bg-[#0070f3] text-white border-2 border-black font-bold hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[4px_4px_0px_#ffffff]'
+                      statusClasses = 'bg-canvas-soft border-hairline-strong text-ink'
                       StatusIcon = Clock
                     }
 
@@ -318,13 +304,13 @@ export default function InteractiveRoadmap() {
                         data-roadmap-node
                         onMouseEnter={() => setHoveredNode(skillId)}
                         onMouseLeave={() => setHoveredNode(null)}
-                        className={`flex items-center justify-between p-4 rounded-md text-left text-xs gap-3 transition-all duration-200 cursor-default ${statusClasses}`}
+                        className={`flex items-center justify-between p-3.5 rounded-xl border text-left text-xs gap-2.5 transition-all duration-200 cursor-default ${statusClasses}`}
                       >
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <SkillIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-black' : skillStatus === 'in-progress' ? 'text-white' : 'text-mute'}`} />
-                          <span className="font-medium truncate">{skill.name}</span>
+                        <div className="flex items-center gap-2 min-w-0">
+                          <SkillIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-primary' : 'text-muted'}`} />
+                          <span className="font-medium truncate text-[13px]">{skill.name}</span>
                         </div>
-                        <StatusIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-black' : skillStatus === 'in-progress' ? 'text-white' : 'text-body/40'}`} />
+                        <StatusIcon className={`h-3.5 w-3.5 shrink-0 ${skillStatus === 'learned' ? 'text-primary' : 'text-muted-soft'}`} />
                       </div>
                     )
                   })}
@@ -334,8 +320,6 @@ export default function InteractiveRoadmap() {
           })}
         </div>
       </div>
-
-      {/* Drawer Detail Sheet is disabled as elements are now unclickable */}
     </div>
   )
 }

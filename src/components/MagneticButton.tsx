@@ -5,10 +5,9 @@ type MagneticButtonProps = {
   children: ReactNode
   className?: string
   href: string
-  variant?: 'primary' | 'ghost'
+  variant?: 'primary' | 'outline' | 'ghost'
   target?: string
   rel?: string
-  darkBg?: boolean
 }
 
 export default function MagneticButton({
@@ -18,7 +17,6 @@ export default function MagneticButton({
   variant = 'primary',
   target,
   rel,
-  darkBg = false,
 }: MagneticButtonProps) {
   return (
     <a
@@ -26,16 +24,21 @@ export default function MagneticButton({
       target={target}
       rel={rel}
       className={clsx(
-        'group inline-flex h-12 items-center justify-center gap-2 rounded-pill px-6 text-button-lg transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-link select-none',
+        // Base Pill Geometry (DESIGN.md - rounded.pill, 40px height, 15px font)
+        'group inline-flex h-10 items-center justify-center gap-2 rounded-pill px-5 text-[15px] font-medium transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary select-none whitespace-nowrap',
         
-        // Light Background Variants
-        !darkBg && variant === 'primary' && 'bg-primary text-on-primary border border-primary hover:bg-canvas hover:text-ink hover:border-hairline-strong shadow-level2',
-        !darkBg && variant === 'ghost' && 'bg-canvas text-ink border border-hairline hover:bg-canvas-soft-2 hover:border-hairline-strong shadow-level1',
+        // Primary Ink Pill ({component.button-primary})
+        variant === 'primary' &&
+          'bg-primary text-on-primary hover:bg-primary-active shadow-sm hover:shadow-soft-drop active:scale-[0.98]',
         
-        // Dark Background Variants
-        darkBg && variant === 'primary' && 'bg-canvas text-ink border border-canvas hover:bg-primary hover:text-on-primary',
-        darkBg && variant === 'ghost' && 'bg-transparent text-white border border-hairline-dark hover:bg-white/5',
-        
+        // Secondary Outline Pill ({component.button-outline})
+        variant === 'outline' &&
+          'bg-transparent text-ink border border-hairline-strong hover:border-ink hover:bg-canvas-soft active:scale-[0.98]',
+
+        // Ghost / Transparent Link
+        variant === 'ghost' &&
+          'bg-transparent text-body hover:text-ink hover:bg-canvas-soft border border-transparent hover:border-hairline',
+
         className
       )}
     >

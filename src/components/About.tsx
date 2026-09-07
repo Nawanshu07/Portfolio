@@ -40,7 +40,7 @@ function Counter({ suffix = '', to }: CounterProps) {
   }, [isInView, shouldReduceMotion, to])
 
   return (
-    <span ref={ref} className="font-mono tabular-nums">
+    <span ref={ref} className="font-display font-light tabular-nums">
       {value}
       {suffix}
     </span>
@@ -49,16 +49,20 @@ function Counter({ suffix = '', to }: CounterProps) {
 
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-transparent text-on-primary border-b border-hairline-dark">
-      <div className="container-shell">
+    <section id="about" className="section-padding bg-canvas text-ink border-b border-hairline relative overflow-hidden">
+      {/* Subtle atmospheric gradient orb in background */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none" aria-hidden="true">
+        <div className="orb-peach h-[400px] w-[400px] rounded-full blur-[80px] opacity-40" />
+      </div>
+
+      <div className="container-shell relative z-10">
         <SectionHeading
-          eyebrow="About"
-          title="A BCA student focused on programming, problem-solving, and software development."
-          description="I am building my foundation through consistent practice, practical projects, and a steady focus on core computer science concepts."
-          dark
+          eyebrow="Profile & Background"
+          title="A computer science student focused on programming discipline and problem solving."
+          description="Building a solid foundation through deliberate practice, practical software applications, and continuous curiosity."
         />
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -66,16 +70,11 @@ export default function About() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-6"
           >
-            <p className="text-display-sm sm:text-2xl md:text-3xl font-semibold leading-snug tracking-tight text-white text-pretty">
-              I enjoy building practical applications, learning new
-              technologies, and improving my coding skills through consistent
-              practice.
+            <p className="font-display font-light text-display-md sm:text-display-lg leading-snug tracking-tight text-ink text-pretty">
+              I enjoy constructing clean, purposeful applications, exploring new tools, and strengthening my programming abilities every single day.
             </p>
-            <p className="text-body-md md:text-body-lg leading-relaxed text-hairline-strong text-pretty">
-              My current focus is on C, C++, Python, Data Structures and
-              Algorithms, and Web Development. I am actively working on projects
-              to strengthen my development skills and prepare for internships
-              and professional opportunities.
+            <p className="text-body-md md:text-body-lg leading-relaxed text-body text-pretty">
+              My current active focus spans C, C++, Python, Data Structures &amp; Algorithms, and modern Web Development. I am preparing for software engineering internships and professional opportunities where thoughtful code and dependable problem solving matter.
             </p>
           </motion.div>
 
@@ -104,12 +103,12 @@ export default function About() {
                     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="rounded-md border-2 border-white/10 bg-[#0f0f11] p-6 shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_#f9cb28] hover:border-[#f9cb28] transition-all duration-200"
+                className="rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-soft-drop transition-all duration-200"
               >
-                <div className="text-display-lg sm:text-[44px] sm:leading-none font-semibold text-white">
+                <div className="font-display font-light text-display-xl sm:text-[48px] sm:leading-none text-ink">
                   <Counter to={stat.value} suffix={stat.suffix} />
                 </div>
-                <p className="mt-2 text-caption-mono text-mute font-mono text-[11px] uppercase tracking-wider select-none">
+                <p className="mt-2 text-caption-mono text-muted text-[11px] uppercase tracking-wider select-none">
                   // {stat.label}
                 </p>
               </motion.div>

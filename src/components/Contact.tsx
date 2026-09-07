@@ -32,7 +32,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Form validations
+    // Validations
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error')
       setErrorMessage('Please fill in all required fields.')
@@ -76,14 +76,20 @@ export default function Contact() {
   }
 
   return (
-    <div className="relative w-full">
-      {/* Polarity-Flipped Dark Contact Section */}
-      <section id="contact" className="section-padding bg-transparent text-on-primary border-b border-hairline-dark relative overflow-hidden">
-        {/* Subtle mesh background element */}
-        <div className="absolute right-0 top-0 -z-10 h-[400px] w-[400px] rounded-full blur-[100px] opacity-10 pointer-events-none"
-             style={{ backgroundImage: 'radial-gradient(circle, #50e3c2 0%, #0070f3 50%, transparent 100%)' }} />
+    <div className="relative w-full bg-canvas text-ink">
+      {/* Contact Section */}
+      <section 
+        id="contact" 
+        aria-label="Contact and Collaboration"
+        className="section-padding bg-canvas border-b border-hairline relative overflow-hidden"
+      >
+        {/* Soft pastel atmospheric gradient orb bloom */}
+        <div className="absolute right-0 top-1/4 pointer-events-none select-none" aria-hidden="true">
+          <div className="orb-sky h-[450px] w-[450px] rounded-full blur-[90px] opacity-45" />
+          <div className="orb-rose h-[350px] w-[350px] -translate-x-20 rounded-full blur-[80px] opacity-40" />
+        </div>
         
-        <div className="container-shell">
+        <div className="container-shell relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -94,138 +100,140 @@ export default function Contact() {
             {/* Left Column: Contact details */}
             <div className="flex flex-col gap-6">
               <div>
-                <p className="text-caption-mono text-mute font-mono uppercase tracking-widest text-[11px] select-none">
-                  // Connect
+                <p className="text-caption-mono text-muted uppercase tracking-widest text-[11px] select-none">
+                  // Contact &amp; Connect
                 </p>
-                <h2 className="mt-4 text-display-lg md:text-[44px] md:leading-[48px] font-semibold text-white tracking-tight text-pretty">
-                  Open to learning opportunities, collaborations, and software projects.
+                <h2 className="mt-3 font-display font-light text-display-lg md:text-display-xl tracking-tight text-ink text-pretty">
+                  Open to software opportunities, internships, and technical collaboration.
                 </h2>
               </div>
               
-              <p className="text-body-md md:text-body-lg text-hairline-strong leading-relaxed text-pretty">
-                I am always open to connecting with people, learning from real projects, and growing through practical software development work. Feel free to reach out.
+              <p className="text-body-md md:text-body-lg text-body leading-relaxed text-pretty">
+                I am always excited to connect with developers, learn from real-world engineering environments, and contribute through diligent software development.
               </p>
 
-              <div className="flex flex-col gap-4 mt-4 text-body-sm text-hairline-strong">
-                <a href="mailto:nawanshusharma05@gmail.com" className="flex items-center gap-3 text-mute hover:text-white transition duration-150 group w-fit">
-                  <span className="p-2.5 rounded-lg border border-hairline bg-canvas-soft group-hover:border-link group-hover:bg-link-bg-soft transition duration-200">
-                    <Mail className="h-4 w-4 text-mute group-hover:text-link transition duration-200" />
+              <div className="flex flex-col gap-3.5 mt-2 text-body-sm">
+                <a 
+                  href="mailto:nawanshusharma05@gmail.com" 
+                  className="flex items-center gap-3 text-body hover:text-ink transition duration-150 group w-fit"
+                >
+                  <span className="p-2.5 rounded-full border border-hairline bg-surface-card group-hover:border-hairline-strong group-hover:shadow-sm transition duration-200">
+                    <Mail className="h-4 w-4 text-ink" />
                   </span>
-                  <span>nawanshusharma05@gmail.com</span>
+                  <span className="font-medium">nawanshusharma05@gmail.com</span>
                 </a>
                 
-                <div className="flex items-center gap-3 text-mute w-fit">
-                  <span className="p-2.5 rounded-lg border border-hairline bg-canvas-soft">
-                    <Phone className="h-4 w-4 text-mute" />
+                <div className="flex items-center gap-3 text-body w-fit">
+                  <span className="p-2.5 rounded-full border border-hairline bg-surface-card">
+                    <Phone className="h-4 w-4 text-ink" />
                   </span>
-                  <span>Available for Internships & Projects</span>
+                  <span>Available for Internships &amp; Practical Projects</span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 mt-6">
-                <MagneticButton href="mailto:nawanshusharma05@gmail.com" variant="primary" darkBg={true}>
+              <div className="flex flex-wrap gap-3.5 mt-4">
+                <MagneticButton href="mailto:nawanshusharma05@gmail.com" variant="primary">
                   <Mail className="h-4 w-4" />
                   <span>Email Nawanshu</span>
                 </MagneticButton>
-                <MagneticButton href="#work" variant="ghost" darkBg={true}>
+
+                <MagneticButton href="#work" variant="outline">
                   <ArrowUpRight className="h-4 w-4" />
                   <span>View Projects</span>
                 </MagneticButton>
               </div>
             </div>
 
-            {/* Right Column: Contact form */}
-            <div className="bg-canvas-soft-2/40 border border-hairline p-6 sm:p-8 rounded-xl backdrop-blur-md relative overflow-hidden">
-              <div className="absolute top-0 right-0 -z-10 h-32 w-32 rounded-full blur-[60px] opacity-10 bg-link pointer-events-none" />
-              
-              <form onSubmit={handleSubmit} className="relative z-10">
+            {/* Right Column: Contact form with DESIGN.md text-input styles */}
+            <div className="bg-surface-card border border-hairline p-6 sm:p-8 rounded-2xl shadow-sm relative overflow-hidden">
+              <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-5">
                 {status === 'success' ? (
                   <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center justify-center text-center py-10"
                   >
-                    <CheckCircle2 className="h-12 w-12 text-link mb-4 animate-bounce" />
-                    <h3 className="text-display-sm text-white font-semibold mb-2">Message Sent!</h3>
-                    <p className="text-body-sm text-mute max-w-xs">
-                      Thank you for reaching out. I've received your submission and will get back to you as soon as possible.
+                    <CheckCircle2 className="h-12 w-12 text-primary mb-3" />
+                    <h3 className="font-display font-light text-display-sm text-ink mb-2">Message Sent</h3>
+                    <p className="text-body-sm text-body max-w-xs leading-relaxed">
+                      Thank you for reaching out. I have received your message and will reply promptly.
                     </p>
                     <button
                       type="button"
                       onClick={() => setStatus('idle')}
-                      className="mt-6 text-caption-mono text-link hover:text-white uppercase tracking-wider text-[11px] underline cursor-pointer"
+                      className="mt-6 text-caption-mono text-ink hover:underline uppercase tracking-wider text-[11px] cursor-pointer"
                     >
                       Send another message
                     </button>
                   </motion.div>
                 ) : (
                   <>
-                    <h3 className="text-display-sm text-white font-semibold mb-6">Send a Message</h3>
+                    <h3 className="font-display font-light text-display-sm text-ink mb-2">
+                      Send a Message
+                    </h3>
                     
                     {status === 'error' && (
-                      <div className="flex items-start gap-2.5 p-3.5 mb-6 rounded-lg bg-error-soft border border-error/20 text-error-deep text-body-sm">
+                      <div className="flex items-start gap-2.5 p-3.5 rounded-md bg-error-soft border border-error/20 text-error text-body-sm">
                         <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                         <span>{errorMessage}</span>
                       </div>
                     )}
 
-                    <div className="relative mb-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="name" className="text-caption-mono text-muted text-[11px] uppercase tracking-wider">
+                        Your Name *
+                      </label>
                       <input
                         type="text"
                         id="name"
                         name="name"
+                        autoComplete="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        placeholder="Name"
-                        className="peer w-full bg-transparent border-b border-hairline py-2.5 text-white placeholder-transparent focus:outline-none focus:border-link transition duration-200 text-body-md"
+                        placeholder="John Doe"
+                        className="w-full bg-surface-card border border-hairline-strong rounded-md px-4 py-2.5 text-ink placeholder:text-muted-soft focus:outline-none focus:border-2 focus:border-ink transition-all text-body-md h-11"
                       />
-                      <label
-                        htmlFor="name"
-                        className="absolute left-0 -top-3.5 text-caption-mono text-mute transition-all duration-200 pointer-events-none peer-placeholder-shown:text-body-md peer-placeholder-shown:top-2.5 peer-focus:-top-3.5 peer-focus:text-caption-mono peer-focus:text-link font-mono uppercase tracking-wider text-[10px]"
-                      >
-                        Your Name *
-                      </label>
                     </div>
 
-                    <div className="relative mb-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="email" className="text-caption-mono text-muted text-[11px] uppercase tracking-wider">
+                        Email Address *
+                      </label>
                       <input
                         type="email"
                         id="email"
                         name="email"
+                        autoComplete="email"
+                        spellCheck={false}
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        placeholder="Email Address"
-                        className="peer w-full bg-transparent border-b border-hairline py-2.5 text-white placeholder-transparent focus:outline-none focus:border-link transition duration-200 text-body-md"
+                        placeholder="name@example.com"
+                        className="w-full bg-surface-card border border-hairline-strong rounded-md px-4 py-2.5 text-ink placeholder:text-muted-soft focus:outline-none focus:border-2 focus:border-ink transition-all text-body-md h-11"
                       />
-                      <label
-                        htmlFor="email"
-                        className="absolute left-0 -top-3.5 text-caption-mono text-mute transition-all duration-200 pointer-events-none peer-placeholder-shown:text-body-md peer-placeholder-shown:top-2.5 peer-focus:-top-3.5 peer-focus:text-caption-mono peer-focus:text-link font-mono uppercase tracking-wider text-[10px]"
-                      >
-                        Email Address *
-                      </label>
                     </div>
 
-                    <div className="relative mb-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="phone" className="text-caption-mono text-muted text-[11px] uppercase tracking-wider">
+                        Phone Number (Optional)
+                      </label>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
+                        autoComplete="tel"
                         value={formData.phone}
                         onChange={handleChange}
-                        placeholder="Phone Number"
-                        className="peer w-full bg-transparent border-b border-hairline py-2.5 text-white placeholder-transparent focus:outline-none focus:border-link transition duration-200 text-body-md"
+                        placeholder="+1 (555) 000-0000"
+                        className="w-full bg-surface-card border border-hairline-strong rounded-md px-4 py-2.5 text-ink placeholder:text-muted-soft focus:outline-none focus:border-2 focus:border-ink transition-all text-body-md h-11"
                       />
-                      <label
-                        htmlFor="phone"
-                        className="absolute left-0 -top-3.5 text-caption-mono text-mute transition-all duration-200 pointer-events-none peer-placeholder-shown:text-body-md peer-placeholder-shown:top-2.5 peer-focus:-top-3.5 peer-focus:text-caption-mono peer-focus:text-link font-mono uppercase tracking-wider text-[10px]"
-                      >
-                        Phone Number (Optional)
-                      </label>
                     </div>
 
-                    <div className="relative mb-8">
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="message" className="text-caption-mono text-muted text-[11px] uppercase tracking-wider">
+                        Your Message *
+                      </label>
                       <textarea
                         id="message"
                         name="message"
@@ -233,30 +241,24 @@ export default function Contact() {
                         onChange={handleChange}
                         required
                         rows={4}
-                        placeholder="Message"
-                        className="peer w-full bg-transparent border-b border-hairline py-2.5 text-white placeholder-transparent focus:outline-none focus:border-link transition duration-200 text-body-md resize-none"
+                        placeholder="Share a brief note about your project or opportunity…"
+                        className="w-full bg-surface-card border border-hairline-strong rounded-md px-4 py-3 text-ink placeholder:text-muted-soft focus:outline-none focus:border-2 focus:border-ink transition-all text-body-md resize-none"
                       />
-                      <label
-                        htmlFor="message"
-                        className="absolute left-0 -top-3.5 text-caption-mono text-mute transition-all duration-200 pointer-events-none peer-placeholder-shown:text-body-md peer-placeholder-shown:top-2.5 peer-focus:-top-3.5 peer-focus:text-caption-mono peer-focus:text-link font-mono uppercase tracking-wider text-[10px]"
-                      >
-                        Your Message *
-                      </label>
                     </div>
 
                     <button
                       type="submit"
                       disabled={status === 'loading'}
-                      className="w-full relative flex items-center justify-center gap-2 bg-link text-on-primary py-3 px-4 rounded-lg font-semibold hover:bg-link-deep transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed group overflow-hidden"
+                      className="mt-2 h-11 w-full relative flex items-center justify-center gap-2 bg-primary text-on-primary rounded-pill font-medium hover:bg-primary-active transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed group shadow-sm"
                     >
                       {status === 'loading' ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>Sending...</span>
+                          <span>Sending…</span>
                         </>
                       ) : (
                         <>
-                          <Send className="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                          <Send className="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-200" />
                           <span>Send Message</span>
                         </>
                       )}
@@ -269,28 +271,29 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Structured Light Vercel-Style Footer */}
+      {/* Editorial Footer (DESIGN.md) */}
       <footer className="bg-canvas border-t border-hairline py-16 text-body">
         <div className="container-shell">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {/* Column 1: Brand Identity */}
             <div className="col-span-2 md:col-span-1">
-              <p className="text-body-md-strong text-ink font-semibold tracking-tight">
+              <p className="font-display font-light text-xl text-ink tracking-tight">
                 Nawanshu
               </p>
-              <p className="mt-4 text-body-sm leading-relaxed max-w-[240px]">
-                BCA student and software developer focused on C, C++, Python, DSA, and modern web development.
+              <p className="mt-3 text-body-sm leading-relaxed max-w-[240px] text-muted">
+                Student and aspiring software engineer focused on C, C++, Python, Data Structures, and modern web development.
               </p>
             </div>
 
             {/* Column 2: Navigation */}
             <div>
-              <p className="text-caption-mono text-mute font-mono uppercase tracking-widest text-[10px] mb-4 select-none">
+              <p className="text-caption-mono text-muted uppercase tracking-widest text-[10px] mb-4 select-none">
                 // Navigation
               </p>
               <div className="flex flex-col gap-2.5">
                 <a href="#work" className="text-body-sm hover:text-ink transition duration-150">Projects</a>
-                <a href="#skills" className="text-body-sm hover:text-ink transition duration-150">Skills</a>
+                <a href="#ecosystem" className="text-body-sm hover:text-ink transition duration-150">Ecosystem Orbit</a>
+                <a href="#skills" className="text-body-sm hover:text-ink transition duration-150">Curriculum</a>
                 <a href="#about" className="text-body-sm hover:text-ink transition duration-150">About</a>
                 <a href="#goals" className="text-body-sm hover:text-ink transition duration-150">Goals</a>
                 <a href="#experience" className="text-body-sm hover:text-ink transition duration-150">Journey</a>
@@ -299,14 +302,24 @@ export default function Contact() {
 
             {/* Column 3: Socials */}
             <div>
-              <p className="text-caption-mono text-mute font-mono uppercase tracking-widest text-[10px] mb-4 select-none">
+              <p className="text-caption-mono text-muted uppercase tracking-widest text-[10px] mb-4 select-none">
                 // Socials
               </p>
               <div className="flex flex-col gap-2.5">
-                <a href="https://github.com/nawanshu07" target="_blank" rel="noopener noreferrer" className="text-body-sm hover:text-ink transition duration-150 inline-flex items-center gap-1">
+                <a 
+                  href="https://github.com/nawanshu07" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-body-sm hover:text-ink transition duration-150 inline-flex items-center gap-1"
+                >
                   GitHub <ArrowUpRight className="h-3 w-3" />
                 </a>
-                <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noopener noreferrer" className="text-body-sm hover:text-ink transition duration-150 inline-flex items-center gap-1">
+                <a 
+                  href="https://www.linkedin.com/in/nawanshu-sharma-104619351" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-body-sm hover:text-ink transition duration-150 inline-flex items-center gap-1"
+                >
                   LinkedIn <ArrowUpRight className="h-3 w-3" />
                 </a>
               </div>
@@ -314,23 +327,28 @@ export default function Contact() {
 
             {/* Column 4: Contact */}
             <div>
-              <p className="text-caption-mono text-mute font-mono uppercase tracking-widest text-[10px] mb-4 select-none">
-                // Contact
+              <p className="text-caption-mono text-muted uppercase tracking-widest text-[10px] mb-4 select-none">
+                // Direct
               </p>
               <div className="flex flex-col gap-2.5">
-                <a href="mailto:nawanshusharma05@gmail.com" className="text-body-sm hover:text-ink transition duration-150 break-all">
+                <a 
+                  href="mailto:nawanshusharma05@gmail.com" 
+                  className="text-body-sm hover:text-ink transition duration-150 break-all"
+                >
                   nawanshusharma05@gmail.com
                 </a>
-                <span className="text-body-sm">Available for Internship</span>
+                <span className="text-body-sm text-muted">
+                  Open for Internship Roles
+                </span>
               </div>
             </div>
           </div>
 
           {/* Bottom Copyright Block */}
-          <div className="mt-12 pt-6 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-4 text-caption text-mute select-none font-medium">
-            <p>2026 Nawanshu. Designed and built with React.</p>
-            <p className="text-caption-mono font-mono text-[11px] uppercase tracking-wider">
-              // stark.duet.canvas
+          <div className="mt-12 pt-6 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-4 text-caption text-muted select-none">
+            <p>2026 Nawanshu. Designed following editorial print design standards.</p>
+            <p className="text-caption-mono text-[11px] uppercase tracking-wider">
+              // editorial.canvas.system
             </p>
           </div>
         </div>

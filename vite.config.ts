@@ -12,4 +12,20 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: 'esnext',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (id.includes('framer-motion')) {
+            return 'vendor-motion'
+          }
+          if (id.includes('lucide-react')) {
+            return 'vendor-icons'
+          }
+        },
+      },
+    },
+  },
 })

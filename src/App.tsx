@@ -9,6 +9,9 @@ import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Goals from './components/Goals'
 import Skills from './components/Skills'
+import LogoCarousel from './components/LogoCarousel'
+import SkillOrbit from './components/SkillOrbit'
+import CustomCursor from './components/CustomCursor'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -21,7 +24,7 @@ export default function App() {
   })
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => setIsLoading(false), 1350)
+    const timeout = window.setTimeout(() => setIsLoading(false), 900)
 
     return () => window.clearTimeout(timeout)
   }, [])
@@ -32,8 +35,9 @@ export default function App() {
         {isLoading && <Loader />}
       </AnimatePresence>
 
+      {/* Top Page Scroll Progress Indicator (Primary Ink) */}
       <motion.div
-        className="fixed left-0 top-0 z-[100] h-[2px] origin-left bg-link"
+        className="fixed left-0 top-0 z-[100] h-[2px] origin-left bg-primary"
         style={{ scaleX: progressScale, width: '100%' }}
         aria-hidden="true"
       />
@@ -43,14 +47,17 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col min-h-screen"
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col min-h-screen bg-canvas text-ink"
           >
+            <CustomCursor />
             <Navbar />
 
-            <main id="main-content" className="relative z-10 flex-1 w-full bg-transparent">
+            <main id="main-content" className="relative z-10 flex-1 w-full bg-canvas">
               <Hero />
+              <LogoCarousel />
               <FeaturedWork />
+              <SkillOrbit />
               <Skills />
               <About />
               <Goals />
