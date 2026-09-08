@@ -52,7 +52,7 @@ export default function ExperienceTimeline() {
               }`}
             >
               <div
-                className={`rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-soft-drop transition-all duration-200 ${
+                className={`rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:border-hairline-strong hover:shadow-soft-drop transition-[border-color,box-shadow] duration-200 ${
                   index % 2 === 0 ? 'md:text-right' : ''
                 }`}
               >
@@ -73,9 +73,9 @@ export default function ExperienceTimeline() {
                 </p>
               </div>
 
-              {/* Checkpoint Dot */}
+              {/* Checkpoint Dot — aligned at left-4 on mobile (same as the timeline line), centred on desktop */}
               <div
-                className="absolute left-0 top-4 grid h-8 w-8 place-items-center rounded-full border border-hairline bg-surface-card md:left-1/2 md:-translate-x-1/2 shadow-level1"
+                className="absolute left-4 top-4 -translate-x-1/2 grid h-8 w-8 place-items-center rounded-full border border-hairline bg-surface-card md:left-1/2 shadow-level1"
                 aria-hidden="true"
               >
                 <motion.span 

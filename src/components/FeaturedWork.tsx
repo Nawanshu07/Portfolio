@@ -45,12 +45,13 @@ export default function FeaturedWork() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
+                whileHover={{ y: -5 }}
                 transition={{
                   duration: 0.5,
                   delay: index * 0.06,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="group flex flex-col overflow-hidden bg-surface-card border border-hairline rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:border-hairline-strong hover:shadow-soft-hover transition-all duration-300"
+                className="group flex flex-col overflow-hidden bg-surface-card border border-hairline rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-hairline-strong hover:shadow-soft-hover transition-[border-color,box-shadow] duration-300"
               >
                 {/* 16:9 Thumbnail Container */}
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-canvas-soft border-b border-hairline">

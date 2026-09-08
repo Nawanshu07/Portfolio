@@ -1,78 +1,99 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export default function CustomCursor() {
-  const [enabled, setEnabled] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isTextHovered, setIsTextHovered] = useState(false)
-  const [isPressed, setIsPressed] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
+  const [enabled] = useState(() => {
+    if (typeof window === 'undefined') return false
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    return hasFinePointer && !prefersReducedMotion
+  })
 
-  // Raw mouse coordinates
+  // Track hover/press/visible via refs so the effect never needs to re-run
+  const isHoveredRef = useRef(false)
+  const isTextHoveredRef = useRef(false)
+  const isPressedRef = useRef(false)
+  const isVisibleRef = useRef(false)
+
+  // Reactive state only for rendering the cursor appearance
+  const [cursorState, setCursorState] = useState({
+    isHovered: false,
+    isTextHovered: false,
+    isPressed: false,
+    isVisible: false,
+  })
+
+  // Raw mouse coordinates via motion values (never causes re-render)
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
 
-  // 1. Inner Dot Physics: High sensitivity, ultra-fast tracking (0.12s equivalent)
-  const dotSpringConfig = { stiffness: 850, damping: 45, mass: 0.2 }
-  const dotX = useSpring(mouseX, dotSpringConfig)
-  const dotY = useSpring(mouseY, dotSpringConfig)
+  // Inner dot: ultra-fast, tight tracking
+  const dotX = useSpring(mouseX, { stiffness: 850, damping: 45, mass: 0.2 })
+  const dotY = useSpring(mouseY, { stiffness: 850, damping: 45, mass: 0.2 })
 
-  // 2. Outer Ring Physics: Lower sensitivity, smooth trailing inertia (0.40s equivalent)
-  // When hovered over interactive elements, stiffness & damping adapt for a magnetic feel
-  const ringSpringConfig = isHovered
-    ? { stiffness: 320, damping: 32, mass: 0.6 } // Sticky / magnetic sensitivity
-    : { stiffness: 220, damping: 24, mass: 0.8 } // Fluid trailing inertia
-  const ringX = useSpring(mouseX, ringSpringConfig)
-  const ringY = useSpring(mouseY, ringSpringConfig)
+  // Outer ring: smooth trailing inertia (always same spring — the animate prop drives appearance)
+  const ringX = useSpring(mouseX, { stiffness: 220, damping: 24, mass: 0.8 })
+  const ringY = useSpring(mouseY, { stiffness: 220, damping: 24, mass: 0.8 })
 
   useEffect(() => {
-    // Check if device supports fine pointer (mouse/trackpad) and reduced motion is not preferred
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!enabled) return
 
-    if (hasFinePointer && !prefersReducedMotion) {
-      setEnabled(true)
-      document.documentElement.classList.add('cursor-active')
+    document.documentElement.classList.add('cursor-active')
+
+    const sync = () => {
+      setCursorState({
+        isHovered: isHoveredRef.current,
+        isTextHovered: isTextHoveredRef.current,
+        isPressed: isPressedRef.current,
+        isVisible: isVisibleRef.current,
+      })
     }
 
     const handlePointerMove = (e: PointerEvent) => {
-      if (!isVisible) setIsVisible(true)
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true
+        sync()
+      }
     }
 
     const handlePointerOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null
       if (!target) return
 
-      // Interactive target detection (buttons, links, inputs, cards)
-      const interactiveEl = target.closest('a, button, input, textarea, select, [role="button"], [data-cursor="pointer"]')
-      if (interactiveEl) {
-        setIsHovered(true)
-        setIsTextHovered(false)
-        return
-      }
+      const interactiveEl = target.closest(
+        'a, button, input, textarea, select, [role="button"], [data-cursor="pointer"]'
+      )
+      const newHovered = Boolean(interactiveEl)
+      const textEl = !newHovered && Boolean(target.closest('h1, h2, h3, h4, p, [data-cursor="text"]'))
 
-      // Text target detection (headings, paragraphs)
-      const textEl = target.closest('h1, h2, h3, h4, p, [data-cursor="text"]')
-      if (textEl && !interactiveEl) {
-        setIsTextHovered(true)
-        setIsHovered(false)
-        return
+      if (newHovered !== isHoveredRef.current || textEl !== isTextHoveredRef.current) {
+        isHoveredRef.current = newHovered
+        isTextHoveredRef.current = textEl
+        sync()
       }
-
-      setIsHovered(false)
-      setIsTextHovered(false)
     }
 
-    const handleMouseDown = () => setIsPressed(true)
-    const handleMouseUp = () => setIsPressed(false)
+    const handleMouseDown = () => {
+      isPressedRef.current = true
+      sync()
+    }
+    const handleMouseUp = () => {
+      isPressedRef.current = false
+      sync()
+    }
+    const handleMouseLeave = () => {
+      isVisibleRef.current = false
+      sync()
+    }
+    const handleMouseEnter = () => {
+      isVisibleRef.current = true
+      sync()
+    }
 
-    const handleMouseLeave = () => setIsVisible(false)
-    const handleMouseEnter = () => setIsVisible(true)
-
-    window.addEventListener('pointermove', handlePointerMove)
-    window.addEventListener('mouseover', handlePointerOver)
+    window.addEventListener('pointermove', handlePointerMove, { passive: true })
+    window.addEventListener('mouseover', handlePointerOver, { passive: true })
     window.addEventListener('mousedown', handleMouseDown)
     window.addEventListener('mouseup', handleMouseUp)
     document.addEventListener('mouseleave', handleMouseLeave)
@@ -87,37 +108,21 @@ export default function CustomCursor() {
       document.removeEventListener('mouseenter', handleMouseEnter)
       document.documentElement.classList.remove('cursor-active')
     }
-  }, [mouseX, mouseY, isVisible, isHovered])
+  }, [enabled, mouseX, mouseY]) // stable deps only — no isHovered/isVisible
 
-  if (!enabled || !isVisible) return null
+  if (!enabled || !cursorState.isVisible) return null
 
-  // Determine dynamic ring size and shape based on element hover & click states
-  let ringScale = 1
-  let ringOpacity = 0.6
-  let ringBorderColor = 'rgba(237, 232, 220, 0.4)'
-  let ringBg = 'transparent'
+  const { isHovered, isTextHovered, isPressed } = cursorState
 
-  if (isPressed) {
-    ringScale = 0.85
-    ringOpacity = 1
-    ringBorderColor = '#d9663d'
-  } else if (isHovered) {
-    ringScale = 1.85 // Expands significantly on interactive elements (Sunny Patel style)
-    ringOpacity = 1
-    ringBorderColor = '#d9663d'
-    ringBg = 'rgba(217, 102, 61, 0.08)'
-  } else if (isTextHovered) {
-    ringScale = 1.35
-    ringOpacity = 0.8
-    ringBorderColor = 'rgba(237, 232, 220, 0.65)'
-  }
+  // Ring appearance based on state
+  const ringScale = isPressed ? 0.8 : isHovered ? 1.9 : isTextHovered ? 1.35 : 1
+  const ringOpacity = isHovered || isPressed ? 1 : isTextHovered ? 0.8 : 0.6
+  const ringBorderColor = isPressed || isHovered ? '#d9663d' : isTextHovered ? 'rgba(237,232,220,0.65)' : 'rgba(237,232,220,0.4)'
+  const ringBg = isHovered ? 'rgba(217,102,61,0.08)' : 'transparent'
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[999] overflow-hidden select-none">
-      {/* 
-        Outer Cursor Ring (38px circle)
-        Lags smoothly behind with trailing inertia, expands to 1.85x on hover
-      */}
+      {/* Outer trailing ring */}
       <motion.div
         style={{
           x: ringX,
@@ -131,18 +136,12 @@ export default function CustomCursor() {
           borderColor: ringBorderColor,
           backgroundColor: ringBg,
         }}
-        transition={{
-          duration: 0.22,
-          ease: [0.16, 1, 0.3, 1],
-        }}
+        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 h-[38px] w-[38px] rounded-full border border-solid pointer-events-none will-change-transform"
         aria-hidden="true"
       />
 
-      {/* 
-        Inner Cursor Dot (8px circle)
-        Solid Ember (#d9663d), responds with tight, ultra-fast sensitivity
-      */}
+      {/* Inner precise dot */}
       <motion.div
         style={{
           x: dotX,
@@ -151,14 +150,10 @@ export default function CustomCursor() {
           translateY: '-50%',
         }}
         animate={{
-          scale: isPressed ? 1.4 : isHovered ? 1.25 : 1,
-          backgroundColor: isHovered || isPressed ? '#d9663d' : '#d9663d',
+          scale: isPressed ? 1.5 : isHovered ? 1.2 : 1,
         }}
-        transition={{
-          duration: 0.15,
-          ease: 'easeOut',
-        }}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full pointer-events-none will-change-transform shadow-[0_0_8px_rgba(217,102,61,0.6)]"
+        transition={{ duration: 0.12, ease: 'easeOut' }}
+        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-ember pointer-events-none will-change-transform shadow-[0_0_8px_rgba(217,102,61,0.6)]"
         aria-hidden="true"
       />
     </div>

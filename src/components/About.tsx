@@ -12,7 +12,7 @@ function Counter({ suffix = '', to }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
   const shouldReduceMotion = useReducedMotion()
-  const [value, setValue] = useState(to)
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
     if (!isInView || shouldReduceMotion) return
@@ -103,7 +103,9 @@ export default function About() {
                     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-soft-drop transition-all duration-200"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:border-hairline-strong hover:shadow-soft-drop"
               >
                 <div className="font-display font-light text-display-xl sm:text-[48px] sm:leading-none text-ink">
                   <Counter to={stat.value} suffix={stat.suffix} />

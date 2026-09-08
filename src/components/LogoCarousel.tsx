@@ -1,18 +1,20 @@
 import {
-  Code2,
-  Braces,
-  Terminal,
-  FileCode2,
   Cpu,
-  Layers,
-  GitBranch,
-  Database,
   Globe,
   Sparkles,
-  Blocks,
   Zap,
 } from 'lucide-react'
-import { GithubIcon } from './Icons'
+import {
+  GithubIcon,
+  PythonIcon,
+  CppIcon,
+  CIcon,
+  JavaScriptIcon,
+  ReactIcon,
+  GitIcon,
+  SqlIcon,
+  DsaIcon,
+} from './Icons'
 
 type TechItem = {
   name: string
@@ -21,16 +23,16 @@ type TechItem = {
 }
 
 const technologies: TechItem[] = [
-  { name: 'Python', category: 'Language', icon: Terminal },
-  { name: 'C++', category: 'Systems & OOP', icon: Braces },
-  { name: 'C Language', category: 'Low-Level', icon: Code2 },
-  { name: 'DSA & Algorithms', category: 'Computer Science', icon: Layers },
-  { name: 'JavaScript (ES6+)', category: 'Frontend & Logic', icon: FileCode2 },
-  { name: 'React', category: 'Web UI', icon: Blocks },
+  { name: 'Python', category: 'Language', icon: PythonIcon },
+  { name: 'C++', category: 'Systems & OOP', icon: CppIcon },
+  { name: 'C Language', category: 'Low-Level', icon: CIcon },
+  { name: 'DSA & Algorithms', category: 'Computer Science', icon: DsaIcon },
+  { name: 'JavaScript (ES6+)', category: 'Frontend & Logic', icon: JavaScriptIcon },
+  { name: 'React', category: 'Web UI', icon: ReactIcon },
   { name: 'HTML5 & CSS3', category: 'Web Standards', icon: Globe },
-  { name: 'Git', category: 'Version Control', icon: GitBranch },
+  { name: 'Git', category: 'Version Control', icon: GitIcon },
   { name: 'GitHub', category: 'Collaboration', icon: GithubIcon },
-  { name: 'SQL & DBMS', category: 'Databases', icon: Database },
+  { name: 'SQL & DBMS', category: 'Databases', icon: SqlIcon },
   { name: 'Pygame', category: 'Game & Audio', icon: Zap },
   { name: 'VS Code', category: 'Editor & Tooling', icon: Cpu },
   { name: 'Responsive Design', category: 'UI Engineering', icon: Sparkles },

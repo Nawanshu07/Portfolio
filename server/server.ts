@@ -54,13 +54,14 @@ app.get('/api/test-connection', async (req: Request, res: Response) => {
       success: true,
       message: 'SMTP connection successfully established! Server can send emails.',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string; code?: string; response?: string }
     res.status(500).json({
       success: false,
       message: 'SMTP Connection Failed',
-      error: error.message,
-      code: error.code,
-      response: error.response,
+      error: err?.message || 'Unknown error',
+      code: err?.code,
+      response: err?.response,
     });
   }
 });
@@ -175,12 +176,13 @@ ${message}
       success: true, 
       message: 'Your message has been sent successfully!' 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     console.error('Error sending email:', error);
     res.status(500).json({ 
       success: false, 
       error: 'Failed to send email. Server encountered an error.', 
-      details: error.message 
+      details: errorMessage 
     });
   }
 });

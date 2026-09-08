@@ -41,10 +41,12 @@ export default function Goals() {
                     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className={`group flex flex-col justify-between rounded-xl p-7 border transition-all duration-300 min-h-[280px] ${
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className={`group flex flex-col justify-between rounded-xl p-7 border min-h-[280px] cursor-default ${
                   isFeatured
-                    ? 'bg-surface-dark text-on-dark border-surface-dark shadow-level2 hover:-translate-y-1 hover:shadow-level3'
-                    : 'bg-surface-card text-ink border-hairline shadow-sm hover:-translate-y-1 hover:border-hairline-strong hover:shadow-soft-drop'
+                    ? 'bg-surface-dark text-on-dark border-surface-dark shadow-level2 hover:shadow-level3'
+                    : 'bg-surface-card text-ink border-hairline shadow-sm hover:border-hairline-strong hover:shadow-soft-drop'
                 }`}
               >
                 <div>

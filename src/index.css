@@ -299,14 +299,12 @@
   }
 }
 
-/* Infinite Marquee Keyframes */
+/* ─────────────────────────────────────────
+   Marquee
+───────────────────────────────────────── */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
@@ -319,6 +317,51 @@
   animation-play-state: paused;
 }
 
+/* ─────────────────────────────────────────
+   Hero Ambient Orb Drift
+   Slow breathe + float — makes the hero feel alive
+───────────────────────────────────────── */
+@keyframes orb-drift {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translate(25%, -50%) scale(1);
+  }
+  33% {
+    opacity: 0.6;
+    transform: translate(28%, -54%) scale(1.04);
+  }
+  66% {
+    opacity: 0.9;
+    transform: translate(22%, -46%) scale(0.97);
+  }
+}
+
+@keyframes orb-drift-reverse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-25%, -50%) scale(1);
+  }
+  33% {
+    opacity: 0.8;
+    transform: translate(-22%, -46%) scale(1.03);
+  }
+  66% {
+    opacity: 0.5;
+    transform: translate(-28%, -54%) scale(0.96);
+  }
+}
+
+.animate-orb-drift {
+  animation: orb-drift 10s ease-in-out infinite;
+}
+
+.animate-orb-drift-reverse {
+  animation: orb-drift-reverse 12s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Reduced motion overrides
+───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -336,5 +379,10 @@
   .animate-marquee {
     animation: none;
     overflow-x: auto;
+  }
+
+  .animate-orb-drift,
+  .animate-orb-drift-reverse {
+    animation: none;
   }
 }

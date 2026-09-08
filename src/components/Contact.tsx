@@ -59,19 +59,24 @@ export default function Contact() {
         body: JSON.stringify(formData),
       })
 
-      const data = await response.json()
+      let data: { success?: boolean; error?: string; message?: string } | null = null
+      try {
+        data = await response.json()
+      } catch {
+        // Response was not JSON (e.g. 502 HTML)
+      }
 
-      if (response.ok && data.success) {
+      if (response.ok && data?.success) {
         setStatus('success')
         setFormData({ name: '', email: '', phone: '', message: '' })
       } else {
         setStatus('error')
-        setErrorMessage(data.error || 'Something went wrong. Please try again.')
+        setErrorMessage(data?.error || data?.message || 'Server encountered an issue sending your message.')
       }
     } catch (err) {
       console.error('Contact form submission error:', err)
       setStatus('error')
-      setErrorMessage('Could not connect to the server. Please try again later.')
+      setErrorMessage('Could not connect to the backend server. You can still email me directly below.')
     }
   }
 
@@ -173,9 +178,18 @@ export default function Contact() {
                     </h3>
                     
                     {status === 'error' && (
-                      <div className="flex items-start gap-2.5 p-3.5 rounded-md bg-error-soft border border-error/20 text-error text-body-sm">
-                        <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
-                        <span>{errorMessage}</span>
+                      <div className="flex flex-col gap-2 p-3.5 rounded-md bg-error-soft border border-error/20 text-error text-body-sm">
+                        <div className="flex items-start gap-2.5">
+                          <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                          <span>{errorMessage}</span>
+                        </div>
+                        <a
+                          href={`mailto:nawanshusharma05@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.name || 'Visitor'}`)}&body=${encodeURIComponent((formData.message || '') + (formData.phone ? `\n\nPhone: ${formData.phone}` : '') + `\n\nFrom: ${formData.name} (${formData.email})`)}`}
+                          className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-ink underline hover:opacity-80 transition"
+                        >
+                          <span>Send directly to nawanshusharma05@gmail.com</span>
+                          <ArrowUpRight className="h-3 w-3" />
+                        </a>
                       </div>
                     )}
 
