@@ -10,12 +10,22 @@ type CounterProps = {
 
 function Counter({ suffix = '', to }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  // Use a generous margin so the counter triggers as soon as the element
+  // enters the viewport — negative margins can prevent firing on mobile
+  // when the section doesn't scroll far enough into view.
+  const isInView = useInView(ref, { once: true, margin: '0px' })
   const shouldReduceMotion = useReducedMotion()
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (!isInView || shouldReduceMotion) return
+    if (!isInView) return
+
+    // When the user prefers reduced motion, skip the animation but still
+    // show the correct final number (previously it stayed at 0).
+    if (shouldReduceMotion) {
+      setValue(to)
+      return
+    }
 
     let frame = 0
     let animation = 0
@@ -89,7 +99,7 @@ export default function About() {
             }}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
+            viewport={{ once: true, margin: '0px' }}
             className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1"
           >
             {stats.map((stat) => (
