@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   /* Default Black Theme (:root) */
   :root {
     --color-canvas: #09090b;
@@ -73,6 +74,7 @@
 
   /* Custom cursor hiding for fine pointer devices when CustomCursor is active */
   @media (pointer: fine) {
+
     html.cursor-active,
     html.cursor-active body,
     html.cursor-active a,
@@ -130,6 +132,7 @@
 }
 
 @layer components {
+
   /* Layout utilities (1200px max width) */
   .container-shell {
     @apply mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:px-12;
@@ -303,8 +306,13 @@
    Marquee
 ───────────────────────────────────────── */
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -322,14 +330,18 @@
    Slow breathe + float — makes the hero feel alive
 ───────────────────────────────────────── */
 @keyframes orb-drift {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.8;
     transform: translate(25%, -50%) scale(1);
   }
+
   33% {
     opacity: 0.6;
     transform: translate(28%, -54%) scale(1.04);
   }
+
   66% {
     opacity: 0.9;
     transform: translate(22%, -46%) scale(0.97);
@@ -337,14 +349,18 @@
 }
 
 @keyframes orb-drift-reverse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.6;
     transform: translate(-25%, -50%) scale(1);
   }
+
   33% {
     opacity: 0.8;
     transform: translate(-22%, -46%) scale(1.03);
   }
+
   66% {
     opacity: 0.5;
     transform: translate(-28%, -54%) scale(0.96);

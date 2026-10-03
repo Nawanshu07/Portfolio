@@ -157,11 +157,10 @@ export default function Navbar() {
                   <a
                     key={item.name}
                     href={item.href}
-                    className={`relative text-[13px] px-3.5 py-1.5 rounded-pill transition duration-150 font-normal focus-visible:ring-1 focus-visible:ring-primary focus:outline-none ${
-                      isActive
+                    className={`relative text-[13px] px-3.5 py-1.5 rounded-pill transition duration-150 font-normal focus-visible:ring-1 focus-visible:ring-primary focus:outline-none ${isActive
                         ? 'text-ink bg-canvas-soft'
                         : 'text-body hover:bg-canvas-soft hover:text-ink'
-                    }`}
+                      }`}
                   >
                     {isActive && (
                       <motion.span
@@ -282,11 +281,10 @@ export default function Navbar() {
                           delay: shouldReduceMotion ? 0 : 0.03 * index + 0.05,
                           duration: shouldReduceMotion ? 0 : 0.2,
                         }}
-                        className={`rounded-xl px-3.5 py-2.5 text-sm font-normal active:scale-[0.98] transition duration-150 focus-visible:ring-1 focus-visible:ring-primary focus:outline-none ${
-                          activeSection === item.sectionId
+                        className={`rounded-xl px-3.5 py-2.5 text-sm font-normal active:scale-[0.98] transition duration-150 focus-visible:ring-1 focus-visible:ring-primary focus:outline-none ${activeSection === item.sectionId
                             ? 'bg-canvas-soft text-ink'
                             : 'text-body hover:bg-canvas-soft hover:text-ink'
-                        }`}
+                          }`}
                       >
                         {item.name}
                       </motion.a>

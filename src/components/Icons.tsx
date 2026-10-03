@@ -123,4 +123,4 @@ export const DsaIcon = ({ className }: { className?: string }) => (
     <path d="M12 6.7v4.7" stroke="currentColor" strokeWidth="1.3" />
     <path d="M7.7 18.5h8.6" stroke="currentColor" strokeWidth="1.2" strokeDasharray="2 2" />
   </svg>
-);
+);
