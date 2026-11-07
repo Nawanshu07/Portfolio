@@ -5,7 +5,7 @@ import { GithubIcon } from './Icons'
 
 const navItems = [
   { name: 'Works', href: '#work', sectionId: 'work' },
-  { name: 'Skills', href: '#skills', sectionId: 'skills' },
+  { name: 'Stack', href: '#ecosystem', sectionId: 'ecosystem' },
   { name: 'About', href: '#about', sectionId: 'about' },
   { name: 'Goals', href: '#goals', sectionId: 'goals' },
   { name: 'Journey', href: '#experience', sectionId: 'experience' },

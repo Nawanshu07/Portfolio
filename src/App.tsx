@@ -10,7 +10,7 @@ import Hero from './components/Hero'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Goals from './components/Goals'
-import Skills from './components/Skills'
+import SkillOrbit from './components/SkillOrbit'
 import LogoCarousel from './components/LogoCarousel'
 import CustomCursor from './components/CustomCursor'
 
@@ -83,7 +83,7 @@ export default function App() {
               <Hero />
               <LogoCarousel />
               <FeaturedWork />
-              <Skills />
+              <SkillOrbit />
               <About />
               <Goals />
               <ExperienceTimeline />
