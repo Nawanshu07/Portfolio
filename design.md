@@ -1,98 +1,102 @@
-# Design Bomb Design System & Architecture Specification
+# Tidewell-Inspired Developer Portfolio Design System & Specification
 
-## Overview
+## 1. Vision & Creative Direction
 
-Inspired directly by **Design Bomb Festival** ([designbomb.it](https://www.designbomb.it/)), this website transforms Nawanshu's software developer portfolio into a high-voltage, neo-brutalist digital festival experience. It merges high-impact Italian creative direction, bold typography, vivid color blocking, playful stickers, floating navigation docks, and seamless interactive micro-animations.
+Inspired by **Tidewell**'s serene, high-craft editorial digital experience, this design system transforms Nawanshu's software developer portfolio into a luminous, atmospheric masterwork. It combines deep oceanic navy hues, warm organic cream typography, and glowing sunset coral highlights with fluted ribbed-glass textures, floating frosted glassmorphic navigation, and tactile micro-interactions.
 
-The aesthetic communicates technical rigor and daring creativity — proving that a software engineer can build web experiences that rival Awwwards Studio of the Year and Framer showcase winners.
+The aesthetic communicates quiet confidence, deep technical mastery, and refined aesthetic restraint — proving that a software engineer can deliver systems that are both mathematically rigorous and visually unforgettable.
 
 ---
 
-## 1. Color Palette & Tokens
+## 2. Color Palette & Design Tokens
 
-| Token Name | Hex Code | Purpose & Application |
+Defined strictly according to the client-provided specifications:
+
+| Token Name | Hex / Value | Role & Visual Expression |
 |---|---|---|
-| **Dark Obsidian** (`bg-dark`) | `#141414` | Primary page floor, deep dark cards, high-contrast containers |
-| **Electric Lime** (`accent-lime`) | `#ceff00` | Signature brand voltage, primary CTA buttons, active status, starbursts |
-| **Hot Pink** (`accent-pink`) | `#ff3eba` | Secondary explosive accent, badge highlights, stickers, special tags |
-| **Cobalt Blue** (`accent-blue`) | `#4a60ff` | Interactive links, tech category highlights, secondary buttons |
-| **Forest Green** (`accent-green`) | `#31a362` | Live status pulse, success confirmation, verified badges |
-| **Vintage Cream** (`surface-cream`)| `#f7f6eb` | Inverted hero cards, ticket badges, contrast marquee bands |
-| **Card Charcoal** (`surface-card`) | `#1c1c1f` | Elevated content surfaces, feature card backgrounds |
-| **Card Strong** (`surface-strong`) | `#26262b` | Inner wells, code blocks, active filter buttons |
-| **Border Hairline** (`border-subtle`)| `rgba(255, 255, 255, 0.12)` | Clean 1px structural separators on dark canvas |
-| **Border Brutalist** (`border-bold`)| `#141414` / `#ceff00` | Chunky high-contrast outlines for badges & sticker buttons |
+| **Deep Navy Canvas** (`navy`) | `#14213D` | Primary brand canvas floor, backdrop base, midnight atmosphere |
+| **Navy Deep / Vignette** (`navy-dark`) | `#0B1222` | Edge vignette stops, deep shadow wells, high-contrast code backgrounds |
+| **Navy Card Glass** (`navy-card`) | `rgba(20, 33, 61, 0.72)` | Frosted glassmorphism panels with 24px backdrop blur |
+| **Warm Aesthetic Cream** (`cream`) | `#F4EDE0` | Primary typographic ink, crisp high-contrast headings, icons |
+| **Cream Muted** (`cream-muted`) | `rgba(244, 237, 224, 0.70)` | Secondary descriptive text, metadata labels, active states |
+| **Cream Hairline** (`cream-line`) | `rgba(244, 237, 224, 0.14)` | Elegant 1px glass card borders and structural dividers |
+| **Vibrant Sunset Coral** (`coral`) | `#FF6B5B` | Primary call-to-action pills, active indicator dots, glowing backlights |
+| **Coral Glow** (`coral-glow`) | `rgba(255, 107, 91, 0.32)` | Atmospheric radial diffusion blooming behind fluted glass |
+| **Coral Hover** (`coral-hover`) | `#F05847` | Interactive state for primary buttons and focus rings |
+| **Coral Badge** (`coral-badge`) | `rgba(255, 107, 91, 0.20)` | Highlight tag background for discount/status badges |
 
 ---
 
-## 2. Typography Hierarchy
+## 3. Atmospheric Fluted Glass & Ribbed Backdrop
 
-| Style | Font Family | Weight | Case / Tracking | Application |
+The signature visual element of the Tidewell hero is the **vertical fluted / ribbed glass texture** illuminated by a central glowing coral bloom:
+
+- **Radial Glow**: An intense warm coral orb (`#FF6B5B` at 35% opacity) radiating from the horizontal center-right, dissolving gracefully into deep navy (`#14213D`) at the outer perimeter.
+- **Fluted Ribs**: Vertical linear-gradient stripes spaced at `12px` to `16px` intervals with subtle transparency (`rgba(244, 237, 224, 0.035)` to `transparent`), creating the physical sensation of looking through architectural reeded glass.
+- **Vignette & Noise**: Soft radial vignette masking at the edges to ensure zero eye strain and impeccable text legibility.
+
+---
+
+## 4. Typography Scale & Hierarchy
+
+| Role | Font Family | Weight | Tracking | Usage |
 |---|---|---|---|---|
-| **Display Mega** | Syne / Inter Display | 800 / 900 Italic | Uppercase, -0.04em | Hero headline ("NAWANSHU // DEV BOMB") |
-| **Display Section** | Syne / Space Grotesk | 700 / 800 Italic | Uppercase, -0.03em | Section titles ("LINEUP", "PROGRAMMA", "WORKSHOP") |
-| **Card Title** | Syne / Space Grotesk | 700 | Normal, -0.02em | Project & Workshop card names |
-| **Mono Badge** | JetBrains Mono | 600 / 700 | Uppercase, +0.08em | Timestamps, coordinates, technical tags |
-| **Body Running** | Inter | 400 / 500 | Normal, +0.01em | Project descriptions, bios, talk abstracts |
-| **Pill Label** | Inter / JetBrains Mono | 700 | Uppercase, +0.05em | Navigation items, filter tabs, action buttons |
+| **Display Hero** | Inter / System Sans | 600 / 700 | -0.035em | "Software engineered to feel effortless." |
+| **Section Headings** | Inter / EB Garamond | 600 | -0.025em | "Featured Projects", "Engineering Stack" |
+| **Card Headings** | Inter | 600 | -0.015em | Project & system titles inside glass modules |
+| **Body Running** | Inter | 400 | +0.010em | Hero subtitles, project bios, descriptions |
+| **Pill & Nav Labels** | Inter | 500 / 600 | +0.015em | Top capsule links (`● Works`, `Stack`, `About`) |
+| **Technical Mono** | JetBrains Mono | 500 | +0.040em | Live metrics, memory stats, commit hashes |
 
 ---
 
-## 3. Core Component Layouts
+## 5. Hero Section Blueprint (Matching First Image)
 
-### 3.1. Floating Top Header
-- Fixed at top (`top-4 left-4 right-4 z-50 max-w-7xl mx-auto`).
-- Glass-dock container with rounded-full geometry (`rounded-full px-5 py-3 bg-[#141414]/85 backdrop-blur-md border border-white/10`).
-- Left: Brand icon + logo with animated starburst ("NAWANSHU ✦ DEV BOMB").
-- Center: Live status indicator pill ("● OPEN FOR WORK & INTERNSHIPS '26").
-- Right: High-contrast button in `#ceff00` with instant contact anchor.
+### 5.1. Top Navigation Bar
+- **Left**: Minimalist brand logo with Tidewell-style wave mark: `〰 Nawanshu`.
+- **Center**: Centered floating capsule (`rounded-full px-5 py-2.5 backdrop-blur-xl bg-[#14213D]/65 border border-[#F4EDE0]/15`).
+  - Active item: `● Works` with glowing Coral `#FF6B5B` dot.
+  - Links: `Stack`, `Roadmap`, `About`, `Contact`.
+- **Right**:
+  - Frosted circle button with GitHub/Search icon.
+  - Frosted circle button with menu toggle.
 
-### 3.2. Floating Bottom Navigation Dock (Design Bomb Signature)
-- Fixed at screen bottom (`bottom-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 z-50 w-auto`).
-- Rounded pill shell with dark backdrop blur: `bg-[#141414]/90 backdrop-blur-xl border border-white/15 px-3 py-2 shadow-2xl`.
-- Dynamic active pill indicators for:
-  - `01. HOME`
-  - `02. LINEUP` (Projects)
-  - `03. PROGRAMMA` (Timeline & Schedule)
-  - `04. WORKSHOP` (Skills & Labs)
-  - `05. THE LAB` (About & Philosophy)
-  - `06. GET TICKET / CONTACT` (Vibrant `#ceff00` pill)
+### 5.2. Hero Left Column
+- **Hero Title**: Crisp, large-scale modern sans text:
+  *"Software engineered to feel effortless."*
+- **Hero Subtitle**: Warm cream copy:
+  *"From low-level systems in C & C++ to responsive web applications and AI tools. Clean architecture, zero bloat, engineered from the metal up."*
+- **Action Buttons**:
+  - Primary: Vibrant Coral pill button: `Explore Work »` with smooth hover elevation.
+  - Secondary: Ghost link in cream: `See the systems »` with subtle rightward arrow animation on hover.
 
-### 3.3. Hero Section
-- Giant rounded-3xl container (`bg-[#1c1c1f] border border-white/10 p-8 md:p-14`).
-- Slanted festival headline: "A FESTIVAL FOR HARDCORE CODE & DIGITAL CRAFT".
-- Interactive floating stickers:
-  - Tilted sticker: `[💣 100% REVERSED ENGINEERED]`
-  - Neon Lime pill: `[★ 2026 EDITION // BCA GRAD]`
-  - Location badge: `[📍 NEW DELHI ✦ GLOBAL CLIENTS]`
-- Dual high-voltage CTA buttons:
-  - Primary: `#ceff00` solid pill with black bold text.
-  - Secondary: High-contrast transparent pill with white border and hover inversion.
+### 5.3. Hero Right Column (Floating Frosted Glass Card)
+Directly mirrors the Point Reyes reservation card:
+- **Card Shell**: `backdrop-blur-2xl bg-[#14213D]/70 border border-[#F4EDE0]/18 rounded-3xl p-6 shadow-2xl`.
+- **Top Location Bar**: `📍 New Delhi, India · Available for 2026 roles` with subtle glass pill styling.
+- **Preview Item 1**:
+  - Title: `Virtual Voice Assistant` · Rating: `★ 4.97 rating`
+  - Specs: `Python · Speech AI` | `Realtime Audio` | `Zero Latency`
+- **Preview Item 2**:
+  - Title: `C++ Low-Level Systems` · Rating: `★ 4.94 rating`
+  - Specs: `C++20 · DSP Engine` | `60 FPS` | `Hardware Control`
+- **Highlight Badge**:
+  - Vibrant Coral pill: `Available for Full-time & Internships` (mirrors `Save 20% midweek`).
 
-### 3.4. Dual Infinite Marquee Tickers
-- Row 1: Running left with neon lime background (`#ceff00`) and black bold text:
-  `✦ PYTHON APPS ✦ C++ & LOW LEVEL ✦ REACT & TYPESCRIPT ✦ SPEECH AI ✦ SYSTEM DESIGN ✦ MOTION UI ✦`
-- Row 2: Running right with dark carbon background (`#141414`) and white bold text:
-  `★ FULL PASS AVAILABLE ★ EXPLOSIVE PORTFOLIO ★ CLEAN ARCHITECTURE ★ OPEN SOURCE ★`
+### 5.4. Hero Bottom Micro-Feature Strip (5 Items)
+A horizontal responsive shelf across the bottom with icons and labels:
+- **Item 1 (Active)**: `⌂ Hand-crafted systems from the metal up` (features active Coral accent bar above it).
+- **Item 2**: `⏱ Realtime response & low latency`.
+- **Item 3**: `🔑 Clean code & verified safety`.
+- **Item 4**: `🐾 Open source contributor & builder`.
+- **Item 5**: `✓ Open for 2026 internships & full-time`.
 
-### 3.5. "Lineup" (Project Grid)
-- Filterable by categories: `ALL`, `PYTHON APPS`, `WEB DEVELOPMENT`, `SYSTEMS & DSA`.
-- Neo-brutalist card geometry with numbered badges (`01`, `02`, `03`), tech stacks, interactive hover reveals, and direct GitHub/Live link buttons.
+---
 
-### 3.6. "Programma" (Interactive 3-Day Festival Schedule)
-- Modeled directly on Design Bomb's schedule:
-  - **Day 01 / Foundations**: C, C++, Memory management, Object-Oriented Design.
-  - **Day 02 / Active Builds**: Python Speech Assistant, Pygame Audio Engine, Netflix clone.
-  - **Day 03 / Next Horizon**: Advanced Web Architecture, Open-Source, Distributed Systems.
-- Interactive day filters + category filter pills (`Talks`, `Projects`, `Milestones`, `Code Labs`).
-- Expandable accordion rows with time slots, location badges, and comprehensive breakdown.
+## 6. Cohesive Site-Wide Integration
 
-### 3.7. "Workshop & Cameretta" (Skills & Interactive Tech Lab)
-- Hands-on workshop cards with date tags, skill badges, and code playground demonstrations.
-
-### 3.8. "Digital Box / Il Mercatino" (Developer Perks & Toolkit)
-- Interactive card offering downloadable CV, GitHub config dotfiles, DSA algorithm cheat sheets, and project starter templates.
-
-### 3.9. Pre-Footer & Contact ("Festival È Qui")
-- Massive explosive pre-footer card with warm cream `#f7f6eb` or neon lime `#ceff00` background.
-- Working contact form with validation, social links, and Italian festival copyright signature: `Proudly presented by Nawanshu ✦ 2026`.
+The entire portfolio adopts this Navy (`#14213D`), Cream (`#F4EDE0`), and Coral (`#FF6B5B`) language:
+- **Featured Work**: Dark navy frosted cards with cream typography and coral link accents.
+- **Skill Orbit / Stack**: Deep navy space backdrop with glowing coral orbital rings.
+- **Roadmap / Timeline**: Subtle cream connecting lines with glowing coral milestone checkpoints.
+- **Contact**: Clean frosted glass form with coral submission button and instant feedback.

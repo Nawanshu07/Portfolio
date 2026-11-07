@@ -4,62 +4,62 @@
 
 @layer base {
 
-  /* Default Black Theme (:root) */
+  /* Navy + Cream + Coral Theme (:root) */
   :root {
-    --color-canvas: #09090b;
-    --color-canvas-soft: #121216;
-    --color-canvas-deep: #000000;
-    --color-surface-card: #131317;
-    --color-surface-strong: #1e1e24;
-    --color-surface-dark: #000000;
-    --color-surface-dark-elevated: #16161b;
+    --color-canvas: #14213D;
+    --color-canvas-soft: #182747;
+    --color-canvas-deep: #0B1222;
+    --color-surface-card: rgba(20, 33, 61, 0.75);
+    --color-surface-strong: #1C2D52;
+    --color-surface-dark: #0B1222;
+    --color-surface-dark-elevated: #19294B;
 
-    --color-hairline: rgba(255, 255, 255, 0.09);
-    --color-hairline-soft: rgba(255, 255, 255, 0.05);
-    --color-hairline-strong: rgba(255, 255, 255, 0.18);
+    --color-hairline: rgba(244, 237, 224, 0.14);
+    --color-hairline-soft: rgba(244, 237, 224, 0.08);
+    --color-hairline-strong: rgba(244, 237, 224, 0.28);
 
-    --color-ink: #ffffff;
-    --color-body: #a1a1aa;
-    --color-body-strong: #f4f4f5;
-    --color-muted: #71717a;
-    --color-muted-soft: #52525b;
-    --color-on-dark: #ffffff;
-    --color-on-dark-soft: #a1a1aa;
+    --color-ink: #F4EDE0;
+    --color-body: rgba(244, 237, 224, 0.85);
+    --color-body-strong: #F4EDE0;
+    --color-muted: rgba(244, 237, 224, 0.65);
+    --color-muted-soft: rgba(244, 237, 224, 0.45);
+    --color-on-dark: #F4EDE0;
+    --color-on-dark-soft: rgba(244, 237, 224, 0.75);
 
-    --color-primary: #ffffff;
-    --color-primary-active: #e4e4e7;
-    --color-on-primary: #09090b;
+    --color-primary: #FF6B5B;
+    --color-primary-active: #F05847;
+    --color-on-primary: #FFFFFF;
 
     --color-error-soft: rgba(220, 38, 38, 0.15);
   }
 
   /* Optional Light Editorial Theme */
   html.light {
-    --color-canvas: #f5f5f5;
-    --color-canvas-soft: #fafafa;
-    --color-canvas-deep: #0c0a09;
-    --color-surface-card: #ffffff;
-    --color-surface-strong: #f0efed;
-    --color-surface-dark: #0c0a09;
-    --color-surface-dark-elevated: #1c1917;
+    --color-canvas: #F4EDE0;
+    --color-canvas-soft: #FAF6F0;
+    --color-canvas-deep: #14213D;
+    --color-surface-card: #FFFFFF;
+    --color-surface-strong: #EBE2D3;
+    --color-surface-dark: #14213D;
+    --color-surface-dark-elevated: #1E3055;
 
-    --color-hairline: #e7e5e4;
-    --color-hairline-soft: #f0efed;
-    --color-hairline-strong: #d6d3d1;
+    --color-hairline: rgba(20, 33, 61, 0.12);
+    --color-hairline-soft: rgba(20, 33, 61, 0.06);
+    --color-hairline-strong: rgba(20, 33, 61, 0.22);
 
-    --color-ink: #0c0a09;
-    --color-body: #4e4e4e;
-    --color-body-strong: #292524;
-    --color-muted: #777169;
-    --color-muted-soft: #a8a29e;
-    --color-on-dark: #ffffff;
-    --color-on-dark-soft: #a8a29e;
+    --color-ink: #14213D;
+    --color-body: #2B3A5A;
+    --color-body-strong: #14213D;
+    --color-muted: #536384;
+    --color-muted-soft: #7C8BA8;
+    --color-on-dark: #F4EDE0;
+    --color-on-dark-soft: rgba(244, 237, 224, 0.75);
 
-    --color-primary: #292524;
-    --color-primary-active: #0c0a09;
-    --color-on-primary: #ffffff;
+    --color-primary: #FF6B5B;
+    --color-primary-active: #F05847;
+    --color-on-primary: #FFFFFF;
 
-    --color-error-soft: #fef2f2;
+    --color-error-soft: #FEF2F2;
   }
 
   * {
@@ -278,6 +278,31 @@
 
   .border-hairline-strong {
     border-color: var(--color-hairline-strong);
+  }
+
+  /* Fluted Ribbed Glass Texture (Tidewell Signature) */
+  .bg-fluted-glass {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(244, 237, 224, 0.035) 0px,
+      rgba(244, 237, 224, 0.035) 1px,
+      transparent 1px,
+      transparent 7px,
+      rgba(0, 0, 0, 0.22) 7px,
+      rgba(0, 0, 0, 0.22) 8px,
+      transparent 8px,
+      transparent 14px
+    );
+  }
+
+  .glow-coral-bloom {
+    background: radial-gradient(
+      ellipse 62% 52% at 58% 46%,
+      rgba(255, 107, 91, 0.36) 0%,
+      rgba(255, 107, 91, 0.16) 38%,
+      rgba(20, 33, 61, 0.70) 72%,
+      #0B1222 100%
+    );
   }
 
   /* Atmospheric Orbs */

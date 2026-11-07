@@ -60,7 +60,7 @@ export default function ExperienceTimeline() {
                   // {item.period}
                 </p>
 
-                <h3 className="mt-1.5 font-display font-light text-display-sm text-ink tracking-tight">
+                <h3 className="mt-1.5 font-sans font-medium text-lg text-cream tracking-tight">
                   {item.role}
                 </h3>
 

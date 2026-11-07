@@ -60,9 +60,9 @@ function Counter({ suffix = '', to }: CounterProps) {
 export default function About() {
   return (
     <section id="about" className="section-padding bg-canvas text-ink border-b border-hairline relative overflow-hidden">
-      {/* Subtle atmospheric gradient orb in background */}
+      {/* Subtle atmospheric radiant coral glow in background */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none" aria-hidden="true">
-        <div className="orb-peach h-[400px] w-[400px] rounded-full blur-[80px] opacity-40" />
+        <div className="h-[400px] w-[400px] rounded-full bg-coral/10 blur-[100px]" />
       </div>
 
       <div className="container-shell relative z-10">
@@ -80,7 +80,7 @@ export default function About() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-6"
           >
-            <p className="font-display font-light text-display-md sm:text-display-lg leading-snug tracking-tight text-ink text-pretty">
+            <p className="font-sans font-medium text-xl sm:text-2xl lg:text-3xl leading-snug tracking-tight text-cream text-pretty">
               I enjoy constructing clean, purposeful applications, exploring new tools, and strengthening my programming abilities every single day.
             </p>
             <p className="text-body-md md:text-body-lg leading-relaxed text-body text-pretty">
@@ -117,7 +117,7 @@ export default function About() {
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-xl border border-hairline bg-surface-card p-6 shadow-sm hover:border-hairline-strong hover:shadow-soft-drop"
               >
-                <div className="font-display font-light text-display-xl sm:text-[48px] sm:leading-none text-ink">
+                <div className="font-sans font-semibold text-3xl sm:text-4xl text-coral tracking-tight">
                   <Counter to={stat.value} suffix={stat.suffix} />
                 </div>
                 <p className="mt-2 text-caption-mono text-muted text-[11px] uppercase tracking-wider select-none">

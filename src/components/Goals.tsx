@@ -59,15 +59,13 @@ export default function Goals() {
                       <Icon className="h-4 w-4" aria-hidden="true" />
                     </div>
                     {isFeatured && (
-                      <span className="inline-flex items-center text-caption-mono bg-white/10 text-on-dark border border-white/20 px-2.5 py-0.5 rounded-pill uppercase text-[10px] tracking-wider select-none font-medium">
+                      <span className="inline-flex items-center text-caption-mono bg-coral/20 text-coral border border-coral/30 px-2.5 py-0.5 rounded-pill uppercase text-[10px] tracking-wider select-none font-medium">
                         Active Focus
                       </span>
                     )}
                   </div>
 
-                  <h3 className={`mt-6 font-display font-light text-display-sm tracking-tight leading-snug ${
-                    isFeatured ? 'text-on-dark' : 'text-ink'
-                  }`}>
+                  <h3 className="mt-6 font-sans font-medium text-lg sm:text-xl tracking-tight leading-snug text-cream">
                     {goal.title}
                   </h3>
                   

@@ -1,324 +1,176 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import { CheckCircle2, Clock, Circle, BookOpen } from 'lucide-react'
-import { skillCategories } from '../data/portfolio'
-
-type Connection = {
-  from: string
-  to: string
-}
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { CheckCircle2, Clock, ChevronDown } from 'lucide-react'
+import { skillCategories, type SkillItem } from '../data/portfolio'
 
 export default function InteractiveRoadmap() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  
-  // Track node coordinate positions for drawing connections
-  const [coords, setCoords] = useState<Record<string, { x: number; y: number; w: number; h: number }>>({})
-  
-  // Track hovered node for highlighting connecting paths
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
-  
-  // Local storage state for tracking user progress dynamically
-  const [skillStatuses] = useState<Record<string, 'learned' | 'in-progress' | 'future'>>(() => {
-    const saved = localStorage.getItem('nawanshu_roadmap_statuses')
-    if (saved) {
-      try {
-        return JSON.parse(saved)
-      } catch (e) {
-        console.error('Failed to parse roadmap statuses', e)
-      }
-    }
-    
-    // Default fallback values from data definitions
-    const defaults: Record<string, 'learned' | 'in-progress' | 'future'> = {}
-    skillCategories.forEach((cat) => {
-      cat.skills.forEach((skill) => {
-        defaults[skill.name] = skill.status
-      })
-    })
-    return defaults
-  })
+  const [selectedSkill, setSelectedSkill] = useState<SkillItem | null>(null)
 
-  // Calculate coordinates of all nodes relative to container
-  const updateCoords = useCallback(() => {
-    if (!containerRef.current) return
-    const containerRect = containerRef.current.getBoundingClientRect()
-    const elements = containerRef.current.querySelectorAll('[data-roadmap-node]')
-    const newCoords: typeof coords = {}
-    
-    elements.forEach((el) => {
-      const id = el.getAttribute('id')
-      if (id) {
-        const rect = el.getBoundingClientRect()
-        newCoords[id] = {
-          x: rect.left - containerRect.left,
-          y: rect.top - containerRect.top,
-          w: rect.width,
-          h: rect.height,
-        }
-      }
-    })
-    setCoords(newCoords)
-  }, [])
-
-  // Monitor DOM resize to keep coordinates perfectly aligned
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const observer = new ResizeObserver(() => {
-      updateCoords()
-    })
-    observer.observe(containerRef.current)
-
-    // Initial positioning
-    updateCoords()
-    
-    // Fallback for fonts or delayed layout shifts
-    const timeout = setTimeout(updateCoords, 400)
-    
-    window.addEventListener('resize', updateCoords)
-
-    return () => {
-      observer.disconnect()
-      clearTimeout(timeout)
-      window.removeEventListener('resize', updateCoords)
-    }
-  }, [updateCoords])
-
-  // Node hierarchy and connections definitions
-  const connections: Connection[] = []
-  
-  // Connect root node to category headers
-  skillCategories.forEach((cat) => {
-    connections.push({ from: 'roadmap-root', to: `cat-${cat.title.replace(/\s+/g, '-').toLowerCase()}` })
-    
-    // Connect category header to its direct child skills
-    cat.skills.forEach((skill) => {
-      connections.push({
-        from: `cat-${cat.title.replace(/\s+/g, '-').toLowerCase()}`,
-        to: `skill-${skill.name.replace(/\s+/g, '-').toLowerCase()}`,
-      })
-    })
-  })
-
-  // Draw step paths (orthogonal paths with right angles)
-  const drawStepPath = (fromId: string, toId: string) => {
-    const from = coords[fromId]
-    const to = coords[toId]
-    
-    if (!from || !to) return null
-
-    // Compute start (center-bottom of parent) and end (center-top of child)
-    const startX = from.x + from.w / 2
-    const startY = from.y + from.h
-    const endX = to.x + to.w / 2
-    const endY = to.y
-
-    // Calculate mid-point vertically
-    const midY = startY + (endY - startY) / 2
-
-    return `M ${startX} ${startY} L ${startX} ${midY} L ${endX} ${midY} L ${endX} ${endY}`
-  }
-
-  // Determine path style classes based on learning state
-  const getPathStyles = (fromId: string, toId: string) => {
-    const isCategoryConnection = fromId.startsWith('cat-')
-    const skillName = toId.startsWith('skill-') ? toId.replace('skill-', '') : ''
-    
-    let status: 'learned' | 'in-progress' | 'future' = 'future'
-    if (skillName) {
-      const matchingKey = Object.keys(skillStatuses).find(
-        (k) => k.replace(/\s+/g, '-').toLowerCase() === skillName
-      )
-      if (matchingKey) {
-        status = skillStatuses[matchingKey]
-      }
-    } else if (isCategoryConnection) {
-      const catTitle = fromId.replace('cat-', '')
-      const category = skillCategories.find(
-        (c) => c.title.replace(/\s+/g, '-').toLowerCase() === catTitle
-      )
-      if (category) {
-        const statuses = category.skills.map((s) => skillStatuses[s.name])
-        if (statuses.includes('learned')) status = 'learned'
-        else if (statuses.includes('in-progress')) status = 'in-progress'
-      }
-    }
-
-    const isHovered = hoveredNode === fromId || hoveredNode === toId
-    
-    let strokeColor = '#e7e5e4' // hairline
-    let isDashed = false
-    
-    if (status === 'learned') {
-      strokeColor = '#292524' // primary ink path
-    } else if (status === 'in-progress') {
-      strokeColor = '#777169' // muted ink path
-      isDashed = true
-    }
-
-    if (isHovered) {
-      strokeColor = '#0c0a09'
-    }
-
-    return {
-      stroke: strokeColor,
-      strokeWidth: isHovered ? 2 : 1.25,
-      strokeDasharray: isDashed ? '4,4' : undefined,
-    }
-  }
-
-  // Calculate learning stats to display at the top
-  const totalSkills = Object.keys(skillStatuses).length
-  const learnedSkills = Object.values(skillStatuses).filter((s) => s === 'learned').length
-  const progressPercent = totalSkills > 0 ? Math.round((learnedSkills / totalSkills) * 100) : 0
+  // Calculate learning metrics
+  const allSkills = skillCategories.flatMap((cat) => cat.skills)
+  const totalSkills = allSkills.length
+  const learnedCount = allSkills.filter((s) => s.status === 'learned').length
+  const progressPercent = Math.round((learnedCount / totalSkills) * 100)
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      {/* Roadmap Metrics Bar */}
-      <div className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-hairline bg-surface-card p-5 shadow-sm">
-        <div className="flex items-center gap-3.5">
-          <div className="grid h-10 w-10 place-items-center rounded-pill border border-hairline bg-canvas-soft text-ink">
-            <BookOpen className="h-5 w-5 text-ink" />
+    <div className="w-full select-none">
+      {/* 
+        ============================================================
+        MINIMAL TOP PROGRESS BAR
+        Clean, uncluttered, high-contrast status strip
+        ============================================================
+      */}
+      <div className="mb-8 rounded-2xl border border-cream/15 bg-[#14213D]/60 backdrop-blur-xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-2.5 w-2.5 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-coral" />
           </div>
           <div>
-            <h4 className="text-body-strong font-medium text-ink">Curriculum Tracking</h4>
-            <p className="text-[11px] text-muted font-mono uppercase tracking-wider mt-0.5">
-              Structured Developer Roadmap
+            <h3 className="text-sm font-medium text-cream tracking-tight">
+              Curriculum &amp; Technical Competencies
+            </h3>
+            <p className="text-[11px] text-cream/55 font-mono">
+              Systems · Web Architecture · Core CS · Tooling
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-5">
-          <div className="text-right">
-            <span className="font-display text-2xl font-light text-ink">{learnedSkills} / {totalSkills}</span>
-            <span className="text-caption text-muted ml-2">skills mastered</span>
-          </div>
-          <div className="h-8 w-px bg-hairline" />
-          <div className="relative flex h-12 w-12 items-center justify-center">
-            {/* Circular Progress SVG */}
-            <svg className="absolute inset-0 h-full w-full -rotate-90">
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                className="stroke-hairline fill-none"
-                strokeWidth="3"
+        {/* Minimal Progress Indicator */}
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:items-end">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-semibold text-cream">
+                {learnedCount} / {totalSkills}
+              </span>
+              <span className="text-[11px] text-cream/60">mastered</span>
+            </div>
+            <div className="w-36 h-1.5 bg-cream/10 rounded-full overflow-hidden mt-1.5">
+              <div
+                className="h-full bg-coral rounded-full transition-all duration-700"
+                style={{ width: `${progressPercent}%` }}
               />
-              <motion.circle
-                cx="24"
-                cy="24"
-                r="20"
-                className="stroke-primary fill-none"
-                strokeWidth="3"
-                strokeDasharray={`${2 * Math.PI * 20}`}
-                initial={{ strokeDashoffset: 2 * Math.PI * 20 }}
-                animate={{ strokeDashoffset: 2 * Math.PI * 20 * (1 - progressPercent / 100) }}
-                transition={{ duration: 1, ease: 'easeOut' }}
-              />
-            </svg>
-            <span className="text-[11px] font-mono font-medium text-ink">{progressPercent}%</span>
+            </div>
           </div>
+          <span className="text-xs font-mono font-medium text-coral bg-coral/10 border border-coral/20 px-2 py-1 rounded-md">
+            {progressPercent}%
+          </span>
         </div>
       </div>
 
-      {/* SVG Canvas overlay for connecting lines */}
-      <svg className="absolute inset-0 pointer-events-none z-0 h-full w-full">
-        {connections.map(({ from, to }) => {
-          const pathD = drawStepPath(from, to)
-          if (!pathD) return null
-          
-          const pathStyles = getPathStyles(from, to)
+      {/* 
+        ============================================================
+        MINIMAL 4-PILLAR CATEGORY GRID (Zero glitchy SVG lines)
+        Clean, responsive, frosted glass cards with clear hierarchy
+        ============================================================
+      */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {skillCategories.map((category) => {
+          const CategoryIcon = category.icon
+
           return (
-            <path
-              key={`${from}-${to}`}
-              d={pathD}
-              fill="none"
-              {...pathStyles}
-              style={{ transition: 'stroke 0.2s, stroke-width 0.2s' }}
-            />
+            <div
+              key={category.title}
+              className="flex flex-col rounded-2xl border border-cream/15 bg-[#14213D]/50 backdrop-blur-xl p-5 shadow-md transition-all duration-300 hover:border-cream/30 hover:bg-[#14213D]/70"
+            >
+              {/* Category Header */}
+              <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-cream/10">
+                <div className="flex items-center gap-2.5">
+                  <div className="grid h-7 w-7 place-items-center rounded-lg bg-white/[0.06] text-coral border border-cream/10">
+                    <CategoryIcon className="h-4 w-4" />
+                  </div>
+                  <h4 className="text-sm font-semibold text-cream tracking-tight">
+                    {category.title}
+                  </h4>
+                </div>
+                <span className="text-[10px] font-mono text-cream/50 uppercase">
+                  {category.skills.length} skills
+                </span>
+              </div>
+
+              {/* Skills List */}
+              <div className="flex flex-col gap-2">
+                {category.skills.map((skill) => {
+                  const SkillIcon = skill.icon
+                  const isLearned = skill.status === 'learned'
+                  const isSelected = selectedSkill?.name === skill.name
+
+                  return (
+                    <div key={skill.name} className="flex flex-col">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelectedSkill(isSelected ? null : skill)
+                        }
+                        className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl border text-left text-xs transition duration-200 cursor-pointer ${
+                          isSelected
+                            ? 'bg-white/[0.10] border-coral/60 text-cream shadow-sm'
+                            : 'bg-white/[0.03] hover:bg-white/[0.07] border-white/[0.05] hover:border-cream/20 text-cream/90'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <SkillIcon
+                            className={`h-3.5 w-3.5 shrink-0 ${
+                              isLearned ? 'text-coral' : 'text-cream/50'
+                            }`}
+                          />
+                          <span className="font-medium truncate text-xs text-cream">
+                            {skill.name}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {isLearned ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] text-cream/80 font-mono">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-coral" />
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[10px] text-coral font-mono bg-coral/15 px-1.5 py-0.5 rounded">
+                              <Clock className="h-3 w-3" />
+                              <span>Active</span>
+                            </span>
+                          )}
+                          <ChevronDown
+                            className={`h-3 w-3 text-cream/40 transition-transform duration-200 ${
+                              isSelected ? 'rotate-180 text-coral' : ''
+                            }`}
+                          />
+                        </div>
+                      </button>
+
+                      {/* Expandable Topics Drawer */}
+                      <AnimatePresence>
+                        {isSelected && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden mt-1.5 px-3 py-2.5 rounded-lg bg-black/30 border border-cream/10 text-[11px]"
+                          >
+                            <span className="text-[10px] font-mono uppercase text-coral block mb-1.5">
+                              Topics Covered:
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                              {skill.topics.map((t) => (
+                                <span
+                                  key={t}
+                                  className="px-1.5 py-0.5 rounded bg-white/[0.05] text-cream/70 text-[10px]"
+                                >
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           )
         })}
-      </svg>
-
-      {/* Tree Node Structure */}
-      <div className="relative z-10 flex flex-col items-center gap-14">
-        
-        {/* Root Node */}
-        <div
-          id="roadmap-root"
-          data-roadmap-node
-          className="flex flex-col items-center justify-center px-6 py-3.5 rounded-pill border border-hairline-strong bg-surface-card text-ink text-center select-none shadow-sm hover:shadow-soft-drop transition-all duration-200"
-        >
-          <span className="text-caption-mono font-mono text-[10px] uppercase tracking-widest text-muted mb-0.5">
-            Core Curriculum
-          </span>
-          <h3 className="text-body-strong font-medium text-ink">
-            Technical Stack Architecture
-          </h3>
-        </div>
-
-        {/* Categories Grid (2 Cols on Desktop/Tablet, 1 Col on Mobile) */}
-        <div className="grid w-full gap-x-10 gap-y-14 grid-cols-1 md:grid-cols-2">
-          {skillCategories.map((category) => {
-            const catId = `cat-${category.title.replace(/\s+/g, '-').toLowerCase()}`
-            const CategoryIcon = category.icon
-
-            return (
-              <div key={category.title} className="flex flex-col items-center gap-8">
-                {/* Category Node Header */}
-                <div
-                  id={catId}
-                  data-roadmap-node
-                  onMouseEnter={() => setHoveredNode(catId)}
-                  onMouseLeave={() => setHoveredNode(null)}
-                  className="flex items-center gap-3 px-5 py-2.5 rounded-pill border border-hairline bg-surface-card text-ink font-medium hover:border-hairline-strong shadow-sm hover:shadow-soft-drop transition-all duration-200 cursor-default"
-                >
-                  <div className="grid h-7 w-7 place-items-center rounded-full bg-surface-strong text-ink">
-                    <CategoryIcon className="h-3.5 w-3.5" />
-                  </div>
-                  <h4 className="text-body-sm-strong font-medium tracking-tight text-ink">{category.title}</h4>
-                </div>
-
-                {/* Sub-skills grid (2 columns) */}
-                <div className="grid w-full gap-3 grid-cols-2">
-                  {category.skills.map((skill) => {
-                    const skillId = `skill-${skill.name.replace(/\s+/g, '-').toLowerCase()}`
-                    const skillStatus = skillStatuses[skill.name] || 'future'
-                    const SkillIcon = skill.icon
-
-                    let statusClasses = 'bg-surface-card border-hairline text-ink hover:border-hairline-strong shadow-sm hover:shadow-soft-drop'
-                    let StatusIcon = Circle
-
-                    if (skillStatus === 'learned') {
-                      statusClasses = 'bg-surface-card border-hairline-strong text-ink hover:border-primary shadow-sm hover:shadow-soft-drop'
-                      StatusIcon = CheckCircle2
-                    } else if (skillStatus === 'in-progress') {
-                      statusClasses = 'bg-canvas-soft border-hairline-strong text-ink'
-                      StatusIcon = Clock
-                    }
-
-                    return (
-                      <div
-                        key={skill.name}
-                        id={skillId}
-                        data-roadmap-node
-                        onMouseEnter={() => setHoveredNode(skillId)}
-                        onMouseLeave={() => setHoveredNode(null)}
-                        className={`flex items-center justify-between p-3.5 rounded-xl border text-left text-xs gap-2.5 transition-all duration-200 cursor-default ${statusClasses}`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <SkillIcon className={`h-4 w-4 shrink-0 ${skillStatus === 'learned' ? 'text-primary' : 'text-muted'}`} />
-                          <span className="font-medium truncate text-[13px]">{skill.name}</span>
-                        </div>
-                        <StatusIcon className={`h-3.5 w-3.5 shrink-0 ${skillStatus === 'learned' ? 'text-primary' : 'text-muted-soft'}`} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )
-          })}
-        </div>
       </div>
     </div>
   )

@@ -5,6 +5,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Client Brand Tokens
+        navy: '#14213D',
+        'navy-dark': '#0B1222',
+        'navy-light': '#1C2D52',
+        'navy-card': 'rgba(20, 33, 61, 0.72)',
+        cream: '#F4EDE0',
+        'cream-muted': 'rgba(244, 237, 224, 0.70)',
+        'cream-line': 'rgba(244, 237, 224, 0.14)',
+        coral: '#FF6B5B',
+        'coral-glow': 'rgba(255, 107, 91, 0.35)',
+        'coral-hover': '#F05847',
+        'coral-badge': 'rgba(255, 107, 91, 0.20)',
+
         // Dynamic tokens supporting black theme & light mode
         primary: 'var(--color-primary)',
         'primary-active': 'var(--color-primary-active)',
@@ -45,11 +58,11 @@ export default {
         error: '#dc2626',
         'error-soft': 'var(--color-error-soft)',
 
-        // Sunny Patel Inspired Palette Tokens
-        ember: '#d9663d',
-        'ember-glow': 'rgba(217, 102, 61, 0.25)',
-        bone: '#ede8dc',
-        'bone-dim': '#a19d93',
+        // Brand Tokens (Backward Compatible Aliases)
+        ember: '#FF6B5B',
+        'ember-glow': 'rgba(255, 107, 91, 0.32)',
+        bone: '#F4EDE0',
+        'bone-dim': 'rgba(244, 237, 224, 0.70)',
         line: 'var(--color-hairline)',
       },
       fontFamily: {

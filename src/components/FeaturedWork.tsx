@@ -110,8 +110,8 @@ export default function FeaturedWork() {
                       {project.year}
                     </span>
 
-                    {/* Headline: EB Garamond weight 300 */}
-                    <h3 className="font-display font-light text-display-sm text-ink tracking-tight transition group-hover:text-primary">
+                    {/* Clean architectural title */}
+                    <h3 className="font-sans font-medium text-lg sm:text-xl text-cream tracking-tight transition group-hover:text-coral">
                       <a href={primaryUrl} target={primaryUrl.startsWith('http') ? '_blank' : undefined} rel={primaryUrl.startsWith('http') ? 'noopener noreferrer' : undefined}>
                         {project.title}
                       </a>

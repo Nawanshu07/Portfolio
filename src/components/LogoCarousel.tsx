@@ -45,10 +45,10 @@ export default function LogoCarousel() {
       className="relative w-full border-y border-hairline bg-canvas-soft/80 py-8 overflow-hidden select-none"
     >
       <div className="container-shell mb-4 flex items-center justify-between">
-        <p className="text-caption-uppercase text-muted text-[11px] tracking-[0.18em]">
-          Technologies & Core Tooling
+        <p className="text-caption-uppercase text-cream/75 text-[11px] tracking-[0.18em]">
+          Technologies &amp; Core Tooling
         </p>
-        <span className="hidden sm:inline-block text-caption-mono text-muted-soft text-[11px]">
+        <span className="hidden sm:inline-block text-caption-mono text-cream/50 text-[11px]">
           Continuous Learning Stack
         </span>
       </div>

@@ -31,10 +31,10 @@ export default function SectionHeading({
         // {eyebrow}
       </p>
 
-      {/* Display headline runs at weight 300 (font-light font-display) — never bold per DESIGN.md */}
+      {/* Modern architectural sans headline matching Tidewell specification */}
       <h2
-        className={`mt-3 font-display font-light text-display-lg md:text-display-xl tracking-tight text-pretty ${
-          dark ? 'text-on-dark' : 'text-ink'
+        className={`mt-3 font-sans font-medium text-2xl sm:text-3xl md:text-4xl tracking-tight text-pretty ${
+          dark ? 'text-on-dark' : 'text-cream'
         }`}
       >
         {title}

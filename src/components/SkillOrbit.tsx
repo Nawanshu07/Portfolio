@@ -49,9 +49,9 @@ const orbitItems: OrbitItem[] = [
     category: 'Algorithms & Logic',
     icon: DsaIcon,
     badge: 'In Progress',
-    brandColor: '#d9663d',
-    hoverBorder: 'rgba(217, 102, 61, 0.5)',
-    hoverShadow: '0 0 20px rgba(217, 102, 61, 0.25)',
+    brandColor: '#FF6B5B',
+    hoverBorder: 'rgba(255, 107, 91, 0.5)',
+    hoverShadow: '0 0 20px rgba(255, 107, 91, 0.25)',
   },
   {
     id: 'c',
@@ -153,22 +153,20 @@ export default function SkillOrbit() {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="container-shell text-center mb-12 sm:mb-16 relative z-30"
       >
-        <p className="text-caption-mono uppercase tracking-widest text-muted text-[11px]">
+        <p className="text-caption-mono uppercase tracking-widest text-cream/50 text-[11px]">
           // Interactive Arsenal
         </p>
-        <h2 className="mt-3 text-display-lg md:text-display-xl font-light text-ink tracking-tight text-pretty">
+        <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-sans font-medium text-cream tracking-tight text-pretty">
           Core Tech Stack
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-body-md text-body leading-relaxed text-pretty">
+        <p className="mt-4 max-w-xl mx-auto text-body-md text-cream/70 leading-relaxed text-pretty">
           Foundational tools and languages revolving around modern software engineering and computer science principles.
         </p>
       </motion.div>
 
-      {/* Atmospheric Pastel Glow Orbs (GPU-composited) */}
+      {/* Atmospheric Radiant Coral Glow */}
       <div className="absolute inset-0 pointer-events-none select-none flex items-center justify-center overflow-hidden" aria-hidden="true">
-        <div className="orb-mint absolute h-[420px] w-[420px] -translate-x-32 -translate-y-16 rounded-full opacity-70 transform-gpu" />
-        <div className="orb-lavender absolute h-[440px] w-[440px] translate-x-32 translate-y-16 rounded-full opacity-60 transform-gpu" />
-        <div className="orb-peach absolute h-[340px] w-[340px] translate-y-24 rounded-full opacity-50 transform-gpu" />
+        <div className="absolute h-[500px] w-[500px] rounded-full bg-coral/15 blur-[120px] transform-gpu" />
       </div>
 
       {/* Main Orbit Stage Container */}

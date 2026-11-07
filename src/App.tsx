@@ -12,7 +12,6 @@ import Navbar from './components/Navbar'
 import Goals from './components/Goals'
 import Skills from './components/Skills'
 import LogoCarousel from './components/LogoCarousel'
-import SkillOrbit from './components/SkillOrbit'
 import CustomCursor from './components/CustomCursor'
 
 export default function App() {
@@ -84,7 +83,6 @@ export default function App() {
               <Hero />
               <LogoCarousel />
               <FeaturedWork />
-              <SkillOrbit />
               <Skills />
               <About />
               <Goals />

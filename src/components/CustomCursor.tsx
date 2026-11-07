@@ -9,13 +9,13 @@ export default function CustomCursor() {
     return hasFinePointer && !prefersReducedMotion
   })
 
-  // Track hover/press/visible via refs so the effect never needs to re-run
+  // Track hover/press/visible via refs
   const isHoveredRef = useRef(false)
   const isTextHoveredRef = useRef(false)
   const isPressedRef = useRef(false)
   const isVisibleRef = useRef(false)
 
-  // Reactive state only for rendering the cursor appearance
+  // Reactive state for cursor appearance
   const [cursorState, setCursorState] = useState({
     isHovered: false,
     isTextHovered: false,
@@ -23,17 +23,17 @@ export default function CustomCursor() {
     isVisible: false,
   })
 
-  // Raw mouse coordinates via motion values (never causes re-render)
+  // Raw mouse coordinates
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
 
-  // Inner dot: ultra-fast, tight tracking
-  const dotX = useSpring(mouseX, { stiffness: 850, damping: 45, mass: 0.2 })
-  const dotY = useSpring(mouseY, { stiffness: 850, damping: 45, mass: 0.2 })
+  // Cursor pointer tracking: ultra-fast, responsive tracking
+  const cursorX = useSpring(mouseX, { stiffness: 950, damping: 50, mass: 0.15 })
+  const cursorY = useSpring(mouseY, { stiffness: 950, damping: 50, mass: 0.15 })
 
-  // Outer ring: smooth trailing inertia (always same spring — the animate prop drives appearance)
-  const ringX = useSpring(mouseX, { stiffness: 220, damping: 24, mass: 0.8 })
-  const ringY = useSpring(mouseY, { stiffness: 220, damping: 24, mass: 0.8 })
+  // Trailing ambient halo: smooth lag
+  const haloX = useSpring(mouseX, { stiffness: 240, damping: 25, mass: 0.6 })
+  const haloY = useSpring(mouseY, { stiffness: 240, damping: 25, mass: 0.6 })
 
   useEffect(() => {
     if (!enabled) return
@@ -108,54 +108,68 @@ export default function CustomCursor() {
       document.removeEventListener('mouseenter', handleMouseEnter)
       document.documentElement.classList.remove('cursor-active')
     }
-  }, [enabled, mouseX, mouseY]) // stable deps only — no isHovered/isVisible
+  }, [enabled, mouseX, mouseY])
 
   if (!enabled || !cursorState.isVisible) return null
 
-  const { isHovered, isTextHovered, isPressed } = cursorState
-
-  // Ring appearance based on state
-  const ringScale = isPressed ? 0.8 : isHovered ? 1.9 : isTextHovered ? 1.35 : 1
-  const ringOpacity = isHovered || isPressed ? 1 : isTextHovered ? 0.8 : 0.6
-  const ringBorderColor = isPressed || isHovered ? '#d9663d' : isTextHovered ? 'rgba(237,232,220,0.65)' : 'rgba(237,232,220,0.4)'
-  const ringBg = isHovered ? 'rgba(217,102,61,0.08)' : 'transparent'
+  const { isHovered, isPressed } = cursorState
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[999] overflow-hidden select-none">
-      {/* Outer trailing ring */}
+      {/* Soft trailing coral halo that expands on interactive hover */}
       <motion.div
         style={{
-          x: ringX,
-          y: ringY,
+          x: haloX,
+          y: haloY,
           translateX: '-50%',
           translateY: '-50%',
         }}
         animate={{
-          scale: ringScale,
-          opacity: ringOpacity,
-          borderColor: ringBorderColor,
-          backgroundColor: ringBg,
+          scale: isPressed ? 0.7 : isHovered ? 1.6 : 0.9,
+          opacity: isHovered ? 0.35 : 0.15,
         }}
         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 h-[38px] w-[38px] rounded-full border border-solid pointer-events-none will-change-transform"
+        className="fixed top-0 left-0 h-8 w-8 rounded-full bg-coral blur-[6px] pointer-events-none will-change-transform"
         aria-hidden="true"
       />
 
-      {/* Inner precise dot */}
+      {/* 
+        Sleek Curvy Arrow Cursor in Coral Color (#FF6B5B)
+        Features smooth rounded corners, curved joints, and subtle white boundary outline
+      */}
       <motion.div
         style={{
-          x: dotX,
-          y: dotY,
-          translateX: '-50%',
-          translateY: '-50%',
+          x: cursorX,
+          y: cursorY,
+          translateX: '-3px',
+          translateY: '-3px',
         }}
         animate={{
-          scale: isPressed ? 1.5 : isHovered ? 1.2 : 1,
+          scale: isPressed ? 0.88 : isHovered ? 1.15 : 1,
+          rotate: isHovered ? -8 : 0,
         }}
-        transition={{ duration: 0.12, ease: 'easeOut' }}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-ember pointer-events-none will-change-transform shadow-[0_0_8px_rgba(217,102,61,0.6)]"
+        transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 pointer-events-none will-change-transform drop-shadow-[0_2px_8px_rgba(255,107,91,0.55)]"
         aria-hidden="true"
-      />
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Smooth Curvy Pointer Path */}
+          <path
+            d="M3.8 2.2C2.9 1.4 1.5 2.1 1.5 3.3V19.7C1.5 20.8 2.9 21.4 3.7 20.6L8.4 15.9C8.7 15.6 9.2 15.4 9.6 15.4H17.8C18.9 15.4 19.5 14 18.7 13.2L3.8 2.2Z"
+            fill="#FF6B5B"
+            stroke="#FFFFFF"
+            strokeWidth="1.25"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </svg>
+      </motion.div>
     </div>
   )
 }
