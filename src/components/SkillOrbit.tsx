@@ -109,8 +109,8 @@ export default function SkillOrbit() {
   const containerRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
-  // Triggers pop-out from center when scrolled into view, collapses back when scrolled away
-  const isInView = useInView(containerRef, { amount: 0.3, once: false })
+  // Fires once when section enters view — no collapse back
+  const isInView = useInView(containerRef, { amount: 0.25, once: true })
 
   // Responsive radius calculation
   const [orbitRadius, setOrbitRadius] = useState(220)
@@ -254,18 +254,13 @@ export default function SkillOrbit() {
                     : { x: 0, y: 0, scale: 0, opacity: 0 }
                 }
                 transition={
-                  isInView
-                    ? {
-                        type: 'spring',
-                        stiffness: 240,
-                        damping: 20,
-                        mass: 0.5,
-                        delay: shouldReduceMotion ? 0 : 0.04 * index + 0.08,
-                      }
+                  shouldReduceMotion
+                    ? { duration: 0 }
                     : {
-                        duration: shouldReduceMotion ? 0 : 0.25,
+                        type: 'tween',
+                        duration: 0.55,
                         ease: [0.16, 1, 0.3, 1],
-                        delay: shouldReduceMotion ? 0 : 0.02 * (orbitItems.length - 1 - index),
+                        delay: 0.05 * index + 0.1,
                       }
                 }
                 className="absolute pointer-events-auto z-15"
@@ -277,7 +272,7 @@ export default function SkillOrbit() {
                   whileHover={{ scale: 1.15, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="group relative grid h-12 w-12 sm:h-14 sm:w-14 place-items-center rounded-full border transition-all duration-200 bg-[#14213D]/85 backdrop-blur-xl border-cream/20 hover:bg-white/[0.08] cursor-pointer focus-visible:ring-2 focus-visible:ring-coral focus:outline-none shadow-lg"
+                  className="group relative grid h-12 w-12 sm:h-14 sm:w-14 place-items-center rounded-full border transition-all duration-200 bg-[#1C2D52] border-cream/20 hover:bg-white/[0.08] cursor-pointer focus-visible:ring-2 focus-visible:ring-coral focus:outline-none shadow-lg"
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = item.hoverBorder
                     e.currentTarget.style.boxShadow = item.hoverShadow
@@ -296,7 +291,7 @@ export default function SkillOrbit() {
 
                   {/* Minimal Label Pill Underneath */}
                   <span
-                    className="absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] sm:text-[11px] font-mono tracking-tight text-cream bg-[#14213D]/95 backdrop-blur-md border border-cream/15 px-2.5 py-0.5 rounded-full shadow-md pointer-events-none z-30 group-hover:border-coral/60 transition-colors duration-200"
+                    className="absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] sm:text-[11px] font-mono tracking-tight text-cream bg-[#1C2D52] border border-cream/15 px-2.5 py-0.5 rounded-full shadow-md pointer-events-none z-30 group-hover:border-coral/60 transition-colors duration-200"
                   >
                     {item.name}
                   </span>

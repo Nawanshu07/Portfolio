@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react'
+import { Menu, X, Sparkles } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 import { GithubIcon } from './Icons'
 
@@ -18,26 +18,7 @@ export default function Navbar() {
   const navRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
-  // Default to Dark Navy Theme (isDark = true)
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('portfolio-theme')
-      if (saved) return saved === 'dark'
-    }
-    return true
-  })
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.remove('light')
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('portfolio-theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      document.documentElement.classList.add('light')
-      localStorage.setItem('portfolio-theme', 'light')
-    }
-  }, [isDark])
+  const toggleMenu = () => setIsOpen((prev) => !prev)
 
   // Close mobile nav on Escape key press or resize
   useEffect(() => {
@@ -98,9 +79,6 @@ export default function Navbar() {
 
     return () => observers.forEach((obs) => obs.disconnect())
   }, [])
-
-  const toggleTheme = () => setIsDark((prev) => !prev)
-  const toggleMenu = () => setIsOpen((prev) => !prev)
 
   return (
     <>
@@ -205,16 +183,6 @@ export default function Navbar() {
           >
             <GithubIcon className="h-4 w-4" />
           </a>
-
-          {/* Theme Toggle Button */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light theme' : 'Switch to navy theme'}
-            className="h-9 w-9 grid place-items-center rounded-full bg-[#14213D]/65 backdrop-blur-xl border border-cream/15 text-cream/80 hover:text-cream hover:border-coral/50 hover:bg-white/[0.08] transition duration-200 shadow-md cursor-pointer focus-visible:ring-2 focus-visible:ring-coral focus:outline-none"
-          >
-            {isDark ? <Sun className="h-4 w-4" aria-hidden="true" /> : <Moon className="h-4 w-4" aria-hidden="true" />}
-          </button>
 
           {/* Mobile Menu / Contact Toggle Button */}
           <button

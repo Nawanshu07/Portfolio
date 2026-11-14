@@ -8,6 +8,7 @@ import {
   MapPin,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './Icons'
+import MagneticWrap from './MagneticWrap'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
@@ -82,17 +83,19 @@ export default function Contact() {
           >
             {/* Primary Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
-              {/* Direct Mail Link */}
-              <a
-                href={`mailto:${email}`}
-                className="group inline-flex items-center gap-2 rounded-full bg-coral px-8 py-3.5 text-sm font-medium text-white shadow-[0_8px_24px_rgba(255,107,91,0.32)] transition-all duration-300 hover:bg-coral-hover hover:shadow-[0_12px_32px_rgba(255,107,91,0.45)] hover:-translate-y-0.5"
-              >
-                <Mail className="h-4 w-4" />
-                <span>Say Hello</span>
-                <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">
-                  »
-                </span>
-              </a>
+              {/* Direct Mail Link — magnetic */}
+              <MagneticWrap strength={0.3}>
+                <a
+                  href={`mailto:${email}`}
+                  className="group inline-flex items-center gap-2 rounded-full bg-coral px-8 py-3.5 text-sm font-medium text-white shadow-[0_8px_24px_rgba(255,107,91,0.32)] transition-all duration-300 hover:bg-coral-hover hover:shadow-[0_12px_32px_rgba(255,107,91,0.45)] hover:-translate-y-0.5"
+                >
+                  <Mail className="h-4 w-4" />
+                  <span>Say Hello</span>
+                  <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">
+                    »
+                  </span>
+                </a>
+              </MagneticWrap>
 
               {/* Copy Email Pill Button */}
               <button
