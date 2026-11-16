@@ -2,10 +2,9 @@ import { motion } from 'framer-motion'
 
 type SectionHeadingProps = {
   compact?: boolean
-  description: string
+  description?: string
   eyebrow: string
   title: string
-  dark?: boolean
 }
 
 export default function SectionHeading({
@@ -13,40 +12,26 @@ export default function SectionHeading({
   description,
   eyebrow,
   title,
-  dark = false,
 }: SectionHeadingProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={compact ? 'max-w-3xl' : 'mb-12 max-w-4xl md:mb-16'}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className={compact ? 'max-w-2xl' : 'mb-8 max-w-3xl md:mb-10'}
     >
-      <p
-        className={`text-caption-mono uppercase tracking-widest text-[11px] select-none ${
-          dark ? 'text-muted-soft' : 'text-muted'
-        }`}
-      >
+      <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-zinc-500 select-none">
         // {eyebrow}
       </p>
-
-      {/* Modern architectural sans headline matching Tidewell specification */}
-      <h2
-        className={`mt-3 font-sans font-medium text-2xl sm:text-3xl md:text-4xl tracking-tight text-pretty ${
-          dark ? 'text-on-dark' : 'text-cream'
-        }`}
-      >
+      <h2 className="mt-2 font-sans font-medium text-xl sm:text-2xl md:text-3xl tracking-tight text-zinc-50">
         {title}
       </h2>
-
-      <p
-        className={`mt-4 text-body-md md:text-body-lg leading-relaxed text-pretty ${
-          dark ? 'text-on-dark-soft' : 'text-body'
-        }`}
-      >
-        {description}
-      </p>
+      {description && (
+        <p className="mt-2.5 text-sm sm:text-base leading-relaxed text-zinc-400">
+          {description}
+        </p>
+      )}
     </motion.div>
   )
 }

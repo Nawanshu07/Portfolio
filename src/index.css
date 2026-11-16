@@ -3,50 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-
-  /* Navy + Cream + Coral Theme (:root) */
   :root {
-    --color-canvas: #14213D;
-    --color-canvas-soft: #182747;
-    --color-canvas-deep: #0B1222;
-    --color-surface-card: rgba(20, 33, 61, 0.75);
-    --color-surface-strong: #1C2D52;
-    --color-surface-dark: #0B1222;
-    --color-surface-dark-elevated: #19294B;
-
-    --color-hairline: rgba(244, 237, 224, 0.14);
-    --color-hairline-soft: rgba(244, 237, 224, 0.08);
-    --color-hairline-strong: rgba(244, 237, 224, 0.28);
-
-    --color-ink: #F4EDE0;
-    --color-body: rgba(244, 237, 224, 0.85);
-    --color-body-strong: #F4EDE0;
-    --color-muted: rgba(244, 237, 224, 0.65);
-    --color-muted-soft: rgba(244, 237, 224, 0.45);
-    --color-on-dark: #F4EDE0;
-    --color-on-dark-soft: rgba(244, 237, 224, 0.75);
-
-    --color-primary: #FF6B5B;
-    --color-primary-active: #F05847;
-    --color-on-primary: #FFFFFF;
-
+    --color-canvas: #050505;
+    --color-surface-card: #0a0a0a;
+    --color-surface-strong: #111111;
+    --color-hairline: #27272a;
+    --color-hairline-soft: #1a1a1e;
+    --color-hairline-strong: #3f3f46;
+    --color-ink: #e4e4e7;
+    --color-body: #a1a1aa;
+    --color-muted: #71717a;
+    --color-muted-soft: #52525b;
+    --color-primary: #fafafa;
+    --color-on-primary: #050505;
     --color-error-soft: rgba(220, 38, 38, 0.15);
   }
 
-
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   html {
-    scroll-behavior: auto;
-    background-color: var(--color-canvas);
-    color: var(--color-ink);
+    scroll-behavior: smooth;
+    background-color: #050505;
+    color: #e4e4e7;
   }
 
-  /* Custom cursor hiding for fine pointer devices when CustomCursor is active */
   @media (pointer: fine) {
-
     html.cursor-active,
     html.cursor-active body,
     html.cursor-active a,
@@ -59,343 +40,63 @@
   }
 
   body {
-    background-color: var(--color-canvas);
-    color: var(--color-ink);
+    background-color: #050505;
+    color: #e4e4e7;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    letter-spacing: 0.012em;
+    letter-spacing: 0.01em;
     margin: 0;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    background-color: #fafafa;
+    color: #050505;
   }
 
-  img,
-  video,
-  canvas,
-  svg {
-    display: block;
-  }
+  img, video, canvas, svg { display: block; }
+  section[id] { scroll-margin-top: 5rem; }
+  a { color: inherit; text-decoration: none; }
+  button, a { -webkit-tap-highlight-color: transparent; }
 
-  section[id] {
-    scroll-margin-top: 5rem;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Accessible visible focus ring */
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 1px solid #fafafa;
     outline-offset: 2px;
   }
 }
 
 @layer components {
-
-  /* Layout utilities (1200px max width) */
   .container-shell {
-    @apply mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1120px] px-5 sm:px-6 lg:px-8;
   }
-
-  /* 96px section rhythm */
   .section-padding {
-    @apply py-20 md:py-24;
-  }
-
-  /* Typography utilities */
-  .font-display {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-weight: 300;
-  }
-
-  .text-display-mega {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-size: clamp(40px, 6vw, 64px);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-
-  .text-display-xl {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-  }
-
-  .text-display-lg {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-size: clamp(26px, 3.5vw, 36px);
-    font-weight: 300;
-    line-height: 1.17;
-    letter-spacing: -0.015em;
-  }
-
-  .text-display-md {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1.13;
-    letter-spacing: -0.01em;
-  }
-
-  .text-display-sm {
-    font-family: 'EB Garamond', 'Times New Roman', serif;
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 1.2;
-    letter-spacing: 0;
-  }
-
-  .text-title-md {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.35;
-  }
-
-  .text-title-sm {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.44;
-    letter-spacing: 0.012em;
-  }
-
-  .text-body-md {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: 0.012em;
-  }
-
-  .text-body-strong {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: 0.012em;
-  }
-
-  .text-body-sm {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.47;
-    letter-spacing: 0.01em;
-  }
-
-  .text-body-sm-strong {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.47;
-    letter-spacing: 0.01em;
-  }
-
-  .text-caption {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
-  .text-caption-uppercase {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .text-caption-mono {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: 0.05em;
-  }
-
-  .text-button {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.0;
-  }
-
-  /* Hairlines */
-  .border-hairline {
-    border-color: var(--color-hairline);
-  }
-
-  .border-hairline-soft {
-    border-color: var(--color-hairline-soft);
-  }
-
-  .border-hairline-strong {
-    border-color: var(--color-hairline-strong);
-  }
-
-  /* Fluted Ribbed Glass Texture (Tidewell Signature) */
-  .bg-fluted-glass {
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgba(244, 237, 224, 0.035) 0px,
-      rgba(244, 237, 224, 0.035) 1px,
-      transparent 1px,
-      transparent 7px,
-      rgba(0, 0, 0, 0.22) 7px,
-      rgba(0, 0, 0, 0.22) 8px,
-      transparent 8px,
-      transparent 14px
-    );
-  }
-
-  .glow-coral-bloom {
-    background: radial-gradient(
-      ellipse 62% 52% at 58% 46%,
-      rgba(255, 107, 91, 0.36) 0%,
-      rgba(255, 107, 91, 0.16) 38%,
-      rgba(20, 33, 61, 0.70) 72%,
-      #0B1222 100%
-    );
-  }
-
-  /* Atmospheric Orbs */
-  .orb-mint {
-    background: radial-gradient(circle, rgba(167, 229, 211, 0.35) 0%, rgba(167, 229, 211, 0.08) 50%, transparent 70%);
-  }
-
-  .orb-peach {
-    background: radial-gradient(circle, rgba(244, 197, 168, 0.35) 0%, rgba(244, 197, 168, 0.08) 50%, transparent 70%);
-  }
-
-  .orb-lavender {
-    background: radial-gradient(circle, rgba(200, 184, 224, 0.35) 0%, rgba(200, 184, 224, 0.08) 50%, transparent 70%);
-  }
-
-  .orb-sky {
-    background: radial-gradient(circle, rgba(168, 200, 232, 0.35) 0%, rgba(168, 200, 232, 0.08) 50%, transparent 70%);
-  }
-
-  .orb-rose {
-    background: radial-gradient(circle, rgba(232, 184, 196, 0.35) 0%, rgba(232, 184, 196, 0.08) 50%, transparent 70%);
+    @apply py-16 md:py-20;
   }
 }
 
-/* ─────────────────────────────────────────
-   Marquee
-───────────────────────────────────────── */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
-
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 32s linear infinite;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
-
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* ─────────────────────────────────────────
-   Hero Ambient Orb Drift
-   Slow breathe + float — makes the hero feel alive
-───────────────────────────────────────── */
-@keyframes orb-drift {
-
-  0%,
-  100% {
-    opacity: 0.8;
-    transform: translate(25%, -50%) scale(1);
-  }
-
-  33% {
-    opacity: 0.6;
-    transform: translate(28%, -54%) scale(1.04);
-  }
-
-  66% {
-    opacity: 0.9;
-    transform: translate(22%, -46%) scale(0.97);
-  }
-}
-
-@keyframes orb-drift-reverse {
-
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: translate(-25%, -50%) scale(1);
-  }
-
-  33% {
-    opacity: 0.8;
-    transform: translate(-22%, -46%) scale(1.03);
-  }
-
-  66% {
-    opacity: 0.5;
-    transform: translate(-28%, -54%) scale(0.96);
-  }
-}
-
-.animate-orb-drift {
-  animation: orb-drift 10s ease-in-out infinite;
-}
-
-.animate-orb-drift-reverse {
-  animation: orb-drift-reverse 12s ease-in-out infinite;
-}
-
-/* ─────────────────────────────────────────
-   Reduced motion overrides
-───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
-
-  .animate-marquee {
-    animation: none;
-    overflow-x: auto;
-  }
-
-  .animate-orb-drift,
-  .animate-orb-drift-reverse {
-    animation: none;
-  }
+  .animate-marquee { animation: none; overflow-x: auto; }
 }

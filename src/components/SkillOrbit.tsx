@@ -16,75 +16,17 @@ type SkillItem = {
   name: string
   category: string
   icon: React.ComponentType<{ className?: string }>
-  badge: string
-  brandColor: string
 }
 
 const skills: SkillItem[] = [
-  {
-    id: 'cpp',
-    name: 'C++',
-    category: 'OOP & Architecture',
-    icon: CppIcon,
-    badge: 'Core',
-    brandColor: '#00599C',
-  },
-  {
-    id: 'python',
-    name: 'Python',
-    category: 'Automation & Systems',
-    icon: PythonIcon,
-    badge: 'Proficient',
-    brandColor: '#387EB8',
-  },
-  {
-    id: 'dsa',
-    name: 'DSA',
-    category: 'Algorithms & Logic',
-    icon: DsaIcon,
-    badge: 'Active',
-    brandColor: '#FF6B5B',
-  },
-  {
-    id: 'c',
-    name: 'C Language',
-    category: 'Pointers & Memory',
-    icon: CIcon,
-    badge: 'Fundamentals',
-    brandColor: '#659AD2',
-  },
-  {
-    id: 'js',
-    name: 'JavaScript',
-    category: 'Modern ES6+',
-    icon: JavaScriptIcon,
-    badge: 'Web Logic',
-    brandColor: '#F7DF1E',
-  },
-  {
-    id: 'react',
-    name: 'React',
-    category: 'Component Interfaces',
-    icon: ReactIcon,
-    badge: 'UI & State',
-    brandColor: '#61DAFB',
-  },
-  {
-    id: 'git',
-    name: 'Git / GitHub',
-    category: 'Version Control',
-    icon: GitIcon,
-    badge: 'Workflow',
-    brandColor: '#F05032',
-  },
-  {
-    id: 'dbms',
-    name: 'DBMS / SQL',
-    category: 'Relational Models',
-    icon: SqlIcon,
-    badge: 'Data',
-    brandColor: '#336791',
-  },
+  { id: 'c', name: 'C Language', category: 'Memory & Pointers', icon: CIcon },
+  { id: 'cpp', name: 'C++', category: 'OOP & Architecture', icon: CppIcon },
+  { id: 'dsa', name: 'DSA in C++', category: 'Algorithms & Complexity', icon: DsaIcon },
+  { id: 'python', name: 'Python', category: 'Automation & CLI', icon: PythonIcon },
+  { id: 'js', name: 'JavaScript', category: 'ES6+ Logic', icon: JavaScriptIcon },
+  { id: 'react', name: 'React', category: 'UI Components', icon: ReactIcon },
+  { id: 'dbms', name: 'SQL & DBMS', category: 'Relational Databases', icon: SqlIcon },
+  { id: 'git', name: 'Git & GitHub', category: 'Version Control', icon: GitIcon },
 ]
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -98,82 +40,53 @@ export default function SkillOrbit() {
       ref={containerRef}
       id="ecosystem"
       aria-label="Core Tech Stack"
-      className="relative bg-navy py-20 sm:py-28 overflow-hidden border-b border-cream/10"
+      className="bg-[#050505] py-16 sm:py-20 border-b border-zinc-800"
     >
-      {/* Faint atmospheric glow */}
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full bg-coral/8 blur-[120px] pointer-events-none"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-10">
-
-        {/* Section Heading */}
+      <div className="container-shell">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, ease: EASE }}
-          className="mb-12 sm:mb-16"
+          transition={{ duration: 0.4, ease: EASE }}
+          className="mb-8 sm:mb-10"
         >
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/45 mb-3">
-            // Technical Stack
+          <p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mb-1.5">
+            // Stack
           </p>
-          <h2 className="font-sans text-2xl sm:text-4xl lg:text-5xl font-medium text-cream tracking-tight max-w-2xl">
-            Core Tech Stack
+          <h2 className="font-sans text-xl sm:text-2xl md:text-3xl font-medium text-zinc-50 tracking-tight">
+            Languages &amp; Tooling
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-cream/65 max-w-lg leading-relaxed">
-            Foundational tools and languages I build with every day.
-          </p>
         </motion.div>
 
-        {/* ── Bento Grid ────────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* 1px grid divider layout — zero fluff, zero lag */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-zinc-800 border border-zinc-800 rounded-sm overflow-hidden">
           {skills.map((skill, index) => {
             const Icon = skill.icon
             return (
               <motion.div
                 key={skill.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
                 transition={{
-                  duration: 0.5,
-                  ease: EASE,
-                  delay: 0.04 * index + 0.12,
+                  duration: 0.3,
+                  delay: 0.03 * index + 0.05,
                 }}
-                className="group relative rounded-2xl border border-cream/10 bg-[#1C2D52]/60 p-5 sm:p-6 transition-all duration-300 hover:border-cream/25 hover:bg-[#1C2D52]/90 hover:-translate-y-1"
-                style={{
-                  // CSS custom property for the brand glow on hover
-                  '--brand': skill.brandColor,
-                } as React.CSSProperties}
+                className="group bg-[#050505] p-4 sm:p-5 flex flex-col justify-between min-h-[120px] hover:bg-[#0c0c0c] transition-colors duration-150"
               >
-                {/* Brand color top-edge accent on hover */}
-                <div
-                  className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: `linear-gradient(90deg, transparent, ${skill.brandColor}, transparent)` }}
-                  aria-hidden="true"
-                />
-
-                {/* Icon */}
-                <div
-                  className="mb-4 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-cream/10 bg-white/[0.04] transition-all duration-300 group-hover:border-cream/20 group-hover:scale-105"
-                >
-                  <div style={{ color: skill.brandColor }} className="transition-transform duration-300 group-hover:scale-110">
-                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
-                  </div>
+                <div className="flex items-center justify-between text-zinc-500 group-hover:text-zinc-50 transition-colors">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                  <span className="font-mono text-[10px] text-zinc-600 group-hover:text-zinc-400">
+                    0{index + 1}
+                  </span>
                 </div>
 
-                {/* Name & Category */}
-                <h3 className="font-sans text-sm sm:text-base font-medium text-cream tracking-tight">
-                  {skill.name}
-                </h3>
-                <p className="mt-1 text-[11px] sm:text-xs text-cream/50 font-mono tracking-wide">
-                  {skill.category}
-                </p>
-
-                {/* Badge */}
-                <span className="mt-3 inline-block rounded-full border border-cream/10 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-mono text-cream/55 tracking-wider uppercase group-hover:border-coral/30 group-hover:text-cream/70 transition-colors duration-300">
-                  {skill.badge}
-                </span>
+                <div className="mt-4">
+                  <h3 className="font-mono text-sm font-medium text-zinc-200 group-hover:text-zinc-50 transition-colors">
+                    {skill.name}
+                  </h3>
+                  <p className="mt-1 font-mono text-[11px] text-zinc-500">
+                    {skill.category}
+                  </p>
+                </div>
               </motion.div>
             )
           })}

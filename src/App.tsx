@@ -1,7 +1,5 @@
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
+import { AnimatePresence, motion, useScroll } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import Lenis from 'lenis'
-import 'lenis/dist/lenis.css'
 import About from './components/About'
 import Contact from './components/Contact'
 import ExperienceTimeline from './components/ExperienceTimeline'
@@ -16,43 +14,11 @@ import CustomCursor from './components/CustomCursor'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
-
   const { scrollYProgress } = useScroll()
-  const progressScale = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  })
 
-  // Initialize Lenis smooth scroll with exact Sunny Patel sensitivity & inertia
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.1, // Exact Sunny Patel sensitivity (10% movement per frame)
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.0,
-      smoothWheel: true,
-      syncTouch: false,
-      syncTouchLerp: 0.075,
-      touchInertiaExponent: 1.7,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      anchors: true,
-    })
-
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    const rafId = requestAnimationFrame(raf)
-
-    const timeout = window.setTimeout(() => setIsLoading(false), 900)
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      lenis.destroy()
-      window.clearTimeout(timeout)
-    }
+    const timeout = window.setTimeout(() => setIsLoading(false), 250)
+    return () => window.clearTimeout(timeout)
   }, [])
 
   return (
@@ -61,10 +27,10 @@ export default function App() {
         {isLoading && <Loader />}
       </AnimatePresence>
 
-      {/* Top Page Scroll Progress Indicator (Primary Ink) */}
+      {/* Top Page Scroll Progress Indicator — Direct compositor transform */}
       <motion.div
-        className="fixed left-0 top-0 z-[100] h-[2px] origin-left bg-primary"
-        style={{ scaleX: progressScale, width: '100%' }}
+        className="fixed left-0 top-0 z-[100] h-px origin-left bg-zinc-400 will-change-transform"
+        style={{ scaleX: scrollYProgress, width: '100%' }}
         aria-hidden="true"
       />
 
@@ -73,13 +39,13 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col min-h-screen bg-canvas text-ink"
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col min-h-screen bg-[#050505] text-zinc-200"
           >
             <CustomCursor />
             <Navbar />
 
-            <main id="main-content" className="relative z-10 flex-1 w-full bg-canvas">
+            <main id="main-content" className="relative z-10 flex-1 w-full bg-[#050505]">
               <Hero />
               <LogoCarousel />
               <FeaturedWork />

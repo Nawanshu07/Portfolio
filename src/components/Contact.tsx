@@ -1,14 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  Mail,
-  Copy,
-  Check,
-  ArrowUpRight,
-  MapPin,
-} from 'lucide-react'
+import { Copy, Check, ArrowUpRight } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './Icons'
-import MagneticWrap from './MagneticWrap'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
@@ -17,157 +10,113 @@ export default function Contact() {
   const copyEmail = () => {
     navigator.clipboard.writeText(email)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2200)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
-    <div id="contact" className="relative w-full bg-navy text-cream overflow-hidden">
-      {/* Subtle radiant coral atmospheric glow */}
-      <div
-        className="pointer-events-none absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 h-[500px] w-[600px] rounded-full bg-coral/10 blur-[130px] select-none"
-        aria-hidden="true"
-      />
-
+    <div id="contact" className="relative w-full bg-[#050505] text-zinc-200">
       <section
-        aria-label="Contact and Collaboration"
-        className="relative z-10 py-24 sm:py-32 border-b border-cream/10"
+        aria-label="Contact Information"
+        className="relative z-10 py-16 sm:py-24 border-b border-zinc-800"
       >
-        <div className="w-full max-w-5xl mx-auto px-6 sm:px-10 text-center flex flex-col items-center">
-          
-          {/* Status Badge */}
+        <div className="container-shell max-w-2xl">
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#14213D]/70 backdrop-blur-md border border-cream/15 text-xs text-cream/80 font-mono tracking-tight select-none mb-6 shadow-sm"
+            transition={{ duration: 0.4 }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-coral opacity-80" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-coral" />
-            </span>
-            <span>Open for 2026 roles &amp; technical internships</span>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mb-2">
+              // Contact
+            </p>
+            <h2 className="font-sans text-2xl sm:text-4xl font-medium text-zinc-50 tracking-tight">
+              Get in touch.
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-zinc-400 leading-relaxed">
+              Available for software engineering internships and technical opportunities for 2026. Direct email is the most reliable way to reach me.
+            </p>
           </motion.div>
 
-          {/* Heading */}
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="font-sans font-medium text-3xl sm:text-5xl lg:text-6xl text-cream tracking-[-0.03em] max-w-3xl leading-[1.1]"
-          >
-            Let&#39;s build something <br className="hidden sm:inline" />
-            <span className="text-coral">thoughtful together.</span>
-          </motion.h2>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-6 text-base sm:text-lg text-cream/70 max-w-xl leading-relaxed"
-          >
-            Always excited to discuss software systems, low-level code, web architecture,
-            or potential engineering opportunities.
-          </motion.p>
-
-          {/* Direct Action Hub (Replaces the clunky form) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-10 sm:mt-12 w-full max-w-xl flex flex-col items-center gap-4"
+            transition={{ duration: 0.4, delay: 0.08 }}
+            className="mt-8 flex flex-col gap-4"
           >
             {/* Primary Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
-              {/* Direct Mail Link — magnetic */}
-              <MagneticWrap strength={0.3}>
-                <a
-                  href={`mailto:${email}`}
-                  className="group inline-flex items-center gap-2 rounded-full bg-coral px-8 py-3.5 text-sm font-medium text-white shadow-[0_8px_24px_rgba(255,107,91,0.32)] transition-all duration-300 hover:bg-coral-hover hover:shadow-[0_12px_32px_rgba(255,107,91,0.45)] hover:-translate-y-0.5"
-                >
-                  <Mail className="h-4 w-4" />
-                  <span>Say Hello</span>
-                  <span className="text-xs transition-transform duration-300 group-hover:translate-x-1">
-                    »
-                  </span>
-                </a>
-              </MagneticWrap>
+            <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+              <a
+                href={`mailto:${email}`}
+                className="inline-flex items-center gap-2 bg-zinc-50 text-black px-4 py-2.5 rounded-sm font-medium hover:bg-white transition-colors"
+              >
+                <span>send email</span>
+                <span>→</span>
+              </a>
 
-              {/* Copy Email Pill Button */}
               <button
                 type="button"
                 onClick={copyEmail}
-                className="group inline-flex items-center gap-2 rounded-full border border-cream/20 bg-white/[0.04] px-6 py-3.5 text-sm font-medium text-cream hover:text-white hover:border-coral/50 hover:bg-white/[0.08] transition duration-200 cursor-pointer shadow-sm"
+                className="inline-flex items-center gap-2 border border-zinc-800 bg-[#080808] px-4 py-2.5 rounded-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    <span className="text-emerald-400 font-mono text-xs">Email Copied!</span>
+                    <Check className="h-3.5 w-3.5 text-zinc-50" />
+                    <span className="text-zinc-50">copied to clipboard</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="h-4 w-4 text-coral transition-transform duration-200 group-hover:scale-110" />
-                    <span className="font-mono text-xs">{email}</span>
+                    <Copy className="h-3.5 w-3.5 text-zinc-400" />
+                    <span>{email}</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* Social & Meta Details */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-cream/70">
+            {/* Profile Links & Metadata */}
+            <div className="mt-4 pt-4 border-t border-zinc-800 flex flex-wrap items-center gap-4 font-mono text-xs text-zinc-400">
               <a
                 href="https://github.com/nawanshu07"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cream/10 bg-white/[0.03] hover:border-cream/25 hover:text-cream transition"
+                className="inline-flex items-center gap-1.5 hover:text-zinc-50 transition-colors"
               >
                 <GithubIcon className="h-3.5 w-3.5" />
-                <span>GitHub Profile</span>
-                <ArrowUpRight className="h-3 w-3 text-coral" />
+                <span>github.com/nawanshu07</span>
+                <ArrowUpRight className="h-3 w-3 text-zinc-500" />
               </a>
 
               <a
                 href="https://www.linkedin.com/in/nawanshu-sharma-104619351"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cream/10 bg-white/[0.03] hover:border-cream/25 hover:text-cream transition"
+                className="inline-flex items-center gap-1.5 hover:text-zinc-50 transition-colors"
               >
                 <LinkedinIcon className="h-3.5 w-3.5" />
-                <span>LinkedIn</span>
-                <ArrowUpRight className="h-3 w-3 text-coral" />
+                <span>linkedin</span>
+                <ArrowUpRight className="h-3 w-3 text-zinc-500" />
               </a>
 
-              <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-cream/10 bg-white/[0.03] text-cream/60">
-                <MapPin className="h-3.5 w-3.5 text-coral" />
-                <span>New Delhi, India</span>
-              </div>
+              <span className="text-zinc-600">|</span>
+              <span className="text-zinc-500">New Delhi, India (UTC+05:30)</span>
             </div>
           </motion.div>
-
         </div>
       </section>
 
-      {/* Minimal Editorial Footer */}
-      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-10 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/50 select-none">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-cream/80 text-sm">Nawanshu</span>
-          <span>·</span>
-          <span>Software Developer &amp; Systems Builder</span>
+      {/* Brutalist Minimalist Footer */}
+      <footer className="container-shell py-6 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[11px] text-zinc-600 select-none">
+        <div>
+          <span>nawanshu_ · BCA student · 2026</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <a href="#work" className="hover:text-cream transition">Works</a>
-          <a href="#skills" className="hover:text-cream transition">Curriculum</a>
-          <a href="#about" className="hover:text-cream transition">About</a>
-          <a href="#contact" className="hover:text-cream transition">Contact</a>
-        </div>
-
-        <div>
-          <span>© 2026 · Built with minimal precision</span>
+          <a href="#work" className="hover:text-zinc-300 transition-colors">work</a>
+          <a href="#ecosystem" className="hover:text-zinc-300 transition-colors">stack</a>
+          <a href="#about" className="hover:text-zinc-300 transition-colors">about</a>
+          <a href="#goals" className="hover:text-zinc-300 transition-colors">goals</a>
+          <a href="#experience" className="hover:text-zinc-300 transition-colors">timeline</a>
+          <a href="#contact" className="hover:text-zinc-300 transition-colors">contact</a>
         </div>
       </footer>
     </div>

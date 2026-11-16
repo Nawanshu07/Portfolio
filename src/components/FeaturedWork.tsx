@@ -6,34 +6,29 @@ import { projects } from '../data/portfolio'
 
 export default function FeaturedWork() {
   return (
-    <section id="work" className="section-padding bg-canvas border-b border-hairline">
+    <section id="work" className="section-padding bg-[#050505] text-zinc-200 border-b border-zinc-800">
       <div className="container-shell">
-        <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+        <div className="mb-6 flex flex-col gap-3 md:mb-8 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Selected Works"
-            title="Practical applications shaped with editorial discipline."
-            description="A focused series of Python applications, systems tools, and web development projects demonstrating real coding craftsmanship."
+            eyebrow="Work"
+            title="Projects."
+            description="CLI tools, audio applications, and web clones."
             compact
           />
 
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="group inline-flex w-fit items-center gap-1.5 border-b border-hairline-strong pb-1 text-body-sm-strong text-ink transition hover:border-ink hover:text-ink/80 select-none"
+          <a
+            href="https://github.com/nawanshu07"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-zinc-400 hover:text-zinc-50 transition-colors inline-flex items-center gap-1.5 pb-0.5 border-b border-zinc-800 hover:border-zinc-500 w-fit"
           >
-            <span>Have a project in mind?</span>
-            <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </motion.a>
+            <span>all repositories</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
         </div>
 
-        {/* 
-          Grid layout matching DESIGN.md feature-card specs:
-          Background surface-card (#ffffff), rounded.xl (16px), 1px hairline border, soft drop on hover.
-        */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Minimalist Brutalist Project List — Compact & mobile-optimized */}
+        <div className="border border-zinc-800 bg-[#080808] rounded-sm divide-y divide-zinc-800 overflow-hidden">
           {projects.map((project, index) => {
             const hasLive = Boolean(project.liveUrl)
             const hasGithub = Boolean(project.githubUrl)
@@ -42,96 +37,79 @@ export default function FeaturedWork() {
             return (
               <motion.article
                 key={project.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                whileHover={{ y: -5 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.06,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="group flex flex-col overflow-hidden bg-surface-card border border-hairline rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-hairline-strong hover:shadow-soft-hover transition-[border-color,box-shadow] duration-300"
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="group p-4 sm:p-5 hover:bg-[#0c0c0c] transition-colors duration-150"
               >
-                {/* 16:9 Thumbnail Container */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-canvas-soft border-b border-hairline">
-                  <img
-                    src={project.image}
-                    alt={project.alt}
-                    width={800}
-                    height={450}
-                    className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-105 ${
-                      project.objectFit === 'contain'
-                        ? 'object-contain p-8 bg-canvas-soft'
-                        : 'object-cover'
-                    }`}
-                    loading={index < 2 ? 'eager' : 'lazy'}
-                    decoding="async"
-                  />
-
-                  {/* Category Pill Tag */}
-                  <div className="absolute left-3 top-3">
-                    <span className="inline-flex items-center text-caption-mono bg-surface-card/90 text-ink border border-hairline px-2.5 py-0.5 rounded-pill backdrop-blur-sm uppercase text-[10px] shadow-sm">
-                      {project.category}
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                  {/* Left: Index + Main Content */}
+                  <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                    <span className="font-mono text-xs text-zinc-600 pt-0.5 select-none shrink-0">
+                      0{index + 1}
                     </span>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 font-mono text-[10px] text-zinc-500 mb-1">
+                        <span className="text-zinc-400">[{project.category}]</span>
+                      </div>
+
+                      <h3 className="font-sans font-medium text-base sm:text-lg text-zinc-100 tracking-tight group-hover:text-white transition-colors">
+                        <a
+                          href={primaryUrl}
+                          target={primaryUrl.startsWith('http') ? '_blank' : undefined}
+                          rel={primaryUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        >
+                          {project.title}
+                        </a>
+                      </h3>
+
+                      <p className="mt-1 text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-2xl">
+                        {project.description}
+                      </p>
+
+                      {/* Tech Stack Tags */}
+                      <div className="mt-2.5 flex flex-wrap gap-1.5 font-mono text-[10px]">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-block rounded-sm bg-zinc-950 border border-zinc-800 text-zinc-400 px-2 py-0.5"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Corner Link Indicator */}
-                  <div className="absolute right-3 top-3 flex items-center gap-1.5">
-                    {hasLive && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open live demo of ${project.title}`}
-                        className="grid h-7 w-7 place-items-center rounded-full border border-hairline bg-surface-card text-ink opacity-90 shadow-sm transition hover:scale-105 hover:bg-primary hover:text-on-primary"
-                      >
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </a>
-                    )}
+                  {/* Right: Action Buttons */}
+                  <div className="flex items-center gap-2 font-mono text-xs shrink-0 self-start sm:self-center pt-2 sm:pt-0">
                     {hasGithub && (
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View GitHub source code for ${project.title}`}
-                        className="grid h-7 w-7 place-items-center rounded-full border border-hairline bg-surface-card text-ink opacity-90 shadow-sm transition hover:scale-105 hover:bg-primary hover:text-on-primary"
+                        className="inline-flex items-center gap-1.5 border border-zinc-800 bg-[#050505] text-zinc-300 hover:text-white hover:border-zinc-500 px-3 py-1.5 rounded-sm transition-colors"
+                        aria-label={`Source code for ${project.title}`}
                       >
-                        <GithubIcon className="h-3.5 w-3.5" />
+                        <GithubIcon className="h-3 w-3" />
+                        <span>code</span>
+                        <ArrowUpRight className="h-3 w-3 text-zinc-500" />
                       </a>
                     )}
-                  </div>
-                </div>
-
-                {/* Card Content */}
-                <div className="flex flex-1 flex-col justify-between p-6">
-                  <div>
-                    <span className="text-caption-mono text-muted text-[11px] block mb-1.5">
-                      {project.year}
-                    </span>
-
-                    {/* Clean architectural title */}
-                    <h3 className="font-sans font-medium text-lg sm:text-xl text-cream tracking-tight transition group-hover:text-coral">
-                      <a href={primaryUrl} target={primaryUrl.startsWith('http') ? '_blank' : undefined} rel={primaryUrl.startsWith('http') ? 'noopener noreferrer' : undefined}>
-                        {project.title}
-                      </a>
-                    </h3>
-
-                    <p className="mt-2.5 text-body-sm text-body line-clamp-3 leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-hairline-soft">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center rounded-pill bg-surface-strong border border-hairline px-2.5 py-0.5 text-caption-mono text-[10px] text-body uppercase font-mono tracking-wider"
+                    {hasLive && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 border border-zinc-700 bg-zinc-950 text-zinc-100 hover:text-white hover:border-zinc-400 px-3 py-1.5 rounded-sm transition-colors"
+                        aria-label={`Live demo for ${project.title}`}
                       >
-                        {tag}
-                      </span>
-                    ))}
+                        <span>demo</span>
+                        <ArrowUpRight className="h-3 w-3 text-zinc-400" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.article>

@@ -4,86 +4,62 @@ import { goals } from '../data/portfolio'
 
 export default function Goals() {
   return (
-    <section id="goals" className="section-padding bg-canvas border-b border-hairline" aria-label="My Current Goals">
+    <section id="goals" className="section-padding bg-[#050505] text-zinc-200 border-b border-zinc-800" aria-label="Current Targets">
       <div className="container-shell">
         <SectionHeading
-          eyebrow="Current Milestones"
-          title="The milestones I am actively working toward."
-          description="My focus is directed toward deepening computer science principles, building production-grade software, and preparing for engineering opportunities."
+          eyebrow="Targets"
+          title="Current technical goals."
+          description="Specific areas of focus and practical targets for 2026."
         />
 
         <motion.div
           variants={{
             hidden: {},
             visible: {
-              transition: { staggerChildren: 0.1 },
+              transition: { staggerChildren: 0.05 },
             },
           }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          viewport={{ once: true, margin: '-40px' }}
+          className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8"
         >
           {goals.map((goal, index) => {
             const Icon = goal.icon
-            
-            // First milestone features dark surface inversion per DESIGN.md ({colors.surface-dark})
-            const isFeatured = index === 0
 
             return (
               <motion.article
                 key={goal.title}
                 variants={{
-                  hidden: { opacity: 0, y: 16 },
+                  hidden: { opacity: 0, y: 12 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+                    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className={`group flex flex-col justify-between rounded-xl p-7 border min-h-[280px] cursor-default ${
-                  isFeatured
-                    ? 'bg-surface-dark text-on-dark border-surface-dark shadow-level2 hover:shadow-level3'
-                    : 'bg-surface-card text-ink border-hairline shadow-sm hover:border-hairline-strong hover:shadow-soft-drop'
-                }`}
+                className="group flex flex-col justify-between rounded-sm p-5 border border-zinc-800 bg-[#080808] hover:border-zinc-500 hover:bg-[#0c0c0c] transition-colors duration-150"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-4">
-                    <div className={`grid h-9 w-9 place-items-center rounded-full border ${
-                      isFeatured 
-                        ? 'border-white/20 bg-white/10 text-on-dark' 
-                        : 'border-hairline bg-canvas-soft text-ink'
-                    }`}>
-                      <Icon className="h-4 w-4" aria-hidden="true" />
+                  <div className="flex items-center justify-between gap-3 text-zinc-500 font-mono text-xs">
+                    <div className="flex items-center gap-2">
+                      <Icon className="h-4 w-4 text-zinc-400 group-hover:text-zinc-50 transition-colors" aria-hidden="true" />
+                      <span>TARGET_0{index + 1}</span>
                     </div>
-                    {isFeatured && (
-                      <span className="inline-flex items-center text-caption-mono bg-coral/20 text-coral border border-coral/30 px-2.5 py-0.5 rounded-pill uppercase text-[10px] tracking-wider select-none font-medium">
-                        Active Focus
-                      </span>
-                    )}
                   </div>
 
-                  <h3 className="mt-6 font-sans font-medium text-lg sm:text-xl tracking-tight leading-snug text-cream">
+                  <h3 className="mt-4 font-mono text-sm sm:text-base font-medium tracking-tight text-zinc-100 group-hover:text-zinc-50 transition-colors">
                     {goal.title}
                   </h3>
-                  
-                  <p className={`mt-2.5 text-body-sm leading-relaxed ${
-                    isFeatured ? 'text-on-dark-soft' : 'text-body'
-                  }`}>
+
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-400">
                     {goal.description}
                   </p>
                 </div>
 
-                <div className={`mt-6 pt-4 border-t ${
-                  isFeatured ? 'border-white/10' : 'border-hairline-soft'
-                }`}>
-                  <p className={`text-caption-mono font-mono text-[10px] uppercase tracking-wider ${
-                    isFeatured ? 'text-on-dark-soft/70' : 'text-muted'
-                  }`}>
-                    // Target: {goal.outcome}
-                  </p>
+                <div className="mt-5 pt-3 border-t border-zinc-900 font-mono text-[11px] text-zinc-500 flex items-center justify-between">
+                  <span>OUTCOME:</span>
+                  <span className="text-zinc-300">{goal.outcome}</span>
                 </div>
               </motion.article>
             )

@@ -7,154 +7,128 @@ import { useState } from 'react'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-const staggerContainer: Variants = {
+const stagger: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.15,
-    },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 }
 
 const itemVariant: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 14 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.75, ease: EASE },
+    transition: { duration: 0.5, ease: EASE },
   },
 }
 
-const HEADING_LINE1 = 'I engineer software from'
-const HEADING_LINE2 = 'low-level systems'
-const HEADING_LINE3 = 'to the interface.'
+const LINE1 = 'Nawanshu Sharma'
+const LINE2 = 'BCA Student. Systems & Web.'
 
 export default function Hero() {
-  // Scramble triggers after the initial stagger animation fires (~0.3s)
   const [scrambleActive, setScrambleActive] = useState(false)
-
-  const line1 = useScramble(HEADING_LINE1, scrambleActive, 26, 32)
-  const line2 = useScramble(HEADING_LINE2, scrambleActive, 26, 42)
-  const line3 = useScramble(HEADING_LINE3, scrambleActive, 26, 42)
+  const nameScramble = useScramble(LINE1, scrambleActive, 24, 28)
+  const roleScramble = useScramble(LINE2, scrambleActive, 24, 28)
 
   return (
     <section
-      aria-label="Hero Introduction"
-      className="relative isolate overflow-hidden bg-navy-dark text-cream min-h-[92svh] flex flex-col justify-center pt-28 pb-16 lg:pt-36 lg:pb-24 border-b border-cream/10"
+      aria-label="Introduction"
+      className="relative bg-[#050505] text-zinc-200 min-h-[85svh] flex flex-col justify-center pt-24 pb-16 lg:pt-32 lg:pb-20 border-b border-zinc-800"
     >
-      {/* ── 1. Base Navy Canvas Floor ── */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-30 bg-gradient-to-b from-[#0B1222] via-[#14213D] to-[#0B1222]"
-        aria-hidden="true"
-      />
-
-      {/* ── 2. Subtle radial coral glow — just a soft bloom, no aurora ── */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-20 glow-coral-bloom opacity-50"
-        aria-hidden="true"
-      />
-
-      {/* ── 3. Fluted Ribbed Glass Overlay ── */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-fluted-glass opacity-60 mix-blend-overlay"
-        aria-hidden="true"
-      />
-
-      {/* ── 4. Edge Vignette ── */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(11,18,34,0.90)_100%)]"
-        aria-hidden="true"
-      />
-
-      {/* ── HERO CONTENT ── */}
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10 flex flex-col justify-center">
+      <div className="container-shell relative z-10">
         <motion.div
-          variants={staggerContainer}
+          variants={stagger}
           initial="hidden"
           animate="visible"
-          className="flex flex-col items-start text-left max-w-4xl"
+          className="flex flex-col items-start max-w-3xl"
           onAnimationComplete={() => setScrambleActive(true)}
         >
+          {/* Status Metadata */}
+          <motion.div variants={itemVariant} className="mb-6 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" aria-hidden="true" />
+            <p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500 select-none">
+              New Delhi, India // Open for 2026 internships
+            </p>
+          </motion.div>
 
-          {/* ── Eyebrow label ── */}
-          <motion.p
-            variants={itemVariant}
-            className="mb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-coral/80 select-none"
-          >
-            // New Delhi, India · Software Developer
-          </motion.p>
-
-          {/* ── Scrambled Hero Heading ── */}
+          {/* Primary Name / Identity */}
           <motion.h1
             variants={itemVariant}
-            className="font-sans text-4xl sm:text-6xl lg:text-7xl font-medium leading-[1.04] tracking-[-0.035em] text-cream"
+            className="font-sans text-3xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-50 leading-[1.08]"
           >
-            {/* Each line scrambles independently */}
-            <span className="block">{line1}</span>
-            <span className="block text-coral">{line2}</span>
-            <span className="block">{line3}</span>
+            {nameScramble}
           </motion.h1>
 
-          {/* ── Description ── */}
+          {/* Subheading */}
           <motion.p
             variants={itemVariant}
-            className="mt-6 sm:mt-8 text-base sm:text-xl leading-relaxed text-cream/70 max-w-2xl font-normal"
+            className="mt-3 font-mono text-base sm:text-xl text-zinc-400"
           >
-            A software developer focused on C, C++, Python, Data Structures &amp; Algorithms,
-            and modern web architectures. Building software with rigorous engineering
-            discipline from the fundamentals up.
+            {roleScramble}
           </motion.p>
 
-          {/* ── Action Buttons (Magnetic) ── */}
+          {/* Blunt Factual Summary */}
+          <motion.p
+            variants={itemVariant}
+            className="mt-5 text-sm sm:text-base text-zinc-400 max-w-lg leading-relaxed"
+          >
+            Building command-line tools, algorithmic implementations in C++, and responsive web applications.
+          </motion.p>
+
+          {/* Action Links */}
           <motion.div
             variants={itemVariant}
-            className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-6"
+            className="mt-7 flex flex-wrap items-center gap-3 font-mono text-xs"
           >
-            {/* Primary Coral CTA — magnetic */}
-            <MagneticWrap strength={0.4}>
+            <MagneticWrap strength={0.35}>
               <a
                 href="#work"
-                className="group inline-flex items-center gap-2 rounded-full bg-coral px-8 py-3.5 text-sm font-medium text-white shadow-[0_8px_28px_rgba(255,107,91,0.38)] transition-all duration-300 hover:bg-coral-hover hover:shadow-[0_14px_38px_rgba(255,107,91,0.52)] hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-cream focus:outline-none"
+                className="inline-flex items-center gap-2 bg-zinc-50 text-black px-4 py-2.5 rounded-sm font-medium hover:bg-white transition-colors"
               >
-                <span>Explore Work</span>
-                <span className="text-xs font-bold transition-transform duration-300 group-hover:translate-x-1">
-                  »
-                </span>
+                <span>view projects</span>
+                <span>→</span>
               </a>
             </MagneticWrap>
 
-            {/* Secondary ghost link */}
             <a
-              href="#contact"
-              className="group inline-flex items-center gap-1.5 text-sm font-medium text-cream/85 transition-colors duration-200 hover:text-cream focus-visible:ring-2 focus-visible:ring-coral focus:outline-none rounded-full px-3 py-1.5"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 border border-zinc-700 bg-zinc-950 text-zinc-200 hover:text-white hover:border-zinc-400 px-4 py-2.5 rounded-sm transition-colors"
             >
-              <span>Get in touch</span>
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 text-coral" />
+              <span>resume.pdf</span>
+              <ArrowUpRight className="h-3.5 w-3.5 text-zinc-400" />
             </a>
 
-            {/* Social Icons — magnetic each */}
-            <div className="flex items-center gap-2 sm:pl-3 sm:border-l sm:border-cream/15">
-              <MagneticWrap strength={0.5}>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-1.5 border border-zinc-800 text-zinc-400 hover:text-zinc-50 hover:border-zinc-600 px-4 py-2.5 rounded-sm transition-colors"
+            >
+              <span>contact</span>
+            </a>
+
+            <div className="flex items-center gap-2 ml-1">
+              <MagneticWrap strength={0.4}>
                 <a
                   href="https://github.com/nawanshu07"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub Profile"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 bg-white/[0.04] text-cream/70 hover:text-cream hover:border-coral/50 hover:bg-white/[0.08] transition duration-200 shadow-sm"
+                  className="grid h-9 w-9 place-items-center border border-zinc-800 text-zinc-400 hover:text-zinc-50 hover:border-zinc-600 rounded-sm transition-colors"
                 >
                   <GithubIcon className="h-4 w-4" />
                 </a>
               </MagneticWrap>
 
-              <MagneticWrap strength={0.5}>
+              <MagneticWrap strength={0.4}>
                 <a
                   href="https://www.linkedin.com/in/nawanshu-sharma-104619351"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn Profile"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-cream/15 bg-white/[0.04] text-cream/70 hover:text-cream hover:border-coral/50 hover:bg-white/[0.08] transition duration-200 shadow-sm"
+                  className="grid h-9 w-9 place-items-center border border-zinc-800 text-zinc-400 hover:text-zinc-50 hover:border-zinc-600 rounded-sm transition-colors"
                 >
                   <LinkedinIcon className="h-4 w-4" />
                 </a>
@@ -162,17 +136,28 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ── Availability badge ── */}
+          {/* Quick Spec Matrix */}
           <motion.div
             variants={itemVariant}
-            className="mt-10 sm:mt-14 flex items-center gap-3"
+            className="mt-12 pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl font-mono text-xs"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-cream/12 bg-white/[0.04] px-4 py-1.5 text-[12px] font-mono text-cream/60 tracking-wide backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-coral animate-pulse" aria-hidden="true" />
-              Available for 2026 internships &amp; roles
-            </span>
+            <div>
+              <span className="text-zinc-600 block text-[10px] uppercase tracking-wider">Degree</span>
+              <span className="text-zinc-300 mt-1 block">BCA (Undergrad)</span>
+            </div>
+            <div>
+              <span className="text-zinc-600 block text-[10px] uppercase tracking-wider">Core Lang</span>
+              <span className="text-zinc-300 mt-1 block">C, C++, Python</span>
+            </div>
+            <div>
+              <span className="text-zinc-600 block text-[10px] uppercase tracking-wider">Focus</span>
+              <span className="text-zinc-300 mt-1 block">DSA &amp; Systems</span>
+            </div>
+            <div>
+              <span className="text-zinc-600 block text-[10px] uppercase tracking-wider">Location</span>
+              <span className="text-zinc-300 mt-1 block">New Delhi, IN</span>
+            </div>
           </motion.div>
-
         </motion.div>
       </div>
     </section>
