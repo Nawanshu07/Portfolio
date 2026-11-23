@@ -8,13 +8,14 @@ interface NavigationDrawerProps {
 export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
   
   const drawerRef = useRef<HTMLElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const animFrameRef = useRef<number | null>(null)
-  const isFirstRender = useRef(true)
+  const hasOpenedRef = useRef(false)
 
   // Scroll tracking: on home page, appear after hero (scrollY > 220px)
   useEffect(() => {
@@ -75,8 +76,8 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
 
   // Animated curved wave drawer entry & exit
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    // If drawer is closed and has never been opened in this lifecycle, do nothing
+    if (!isOpen && !hasOpenedRef.current) {
       return
     }
 
@@ -84,42 +85,48 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
     const path = pathRef.current
     if (!drawer || !path) return
 
+    if (isOpen) {
+      hasOpenedRef.current = true
+    }
+
+    setIsAnimating(true)
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       drawer.style.transform = isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(100%, 0, 0)'
       path.setAttribute('d', 'M 100 0 L 100 100 Q 100 50 100 0 Z')
+      setIsAnimating(false)
+      if (!isOpen) hasOpenedRef.current = false
       return
     }
 
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
 
     const startTime = performance.now()
-    const duration = isOpen ? 680 : 520
+    const duration = 650
+
+    // Smooth power3 in/out curve for perfectly symmetric organic drawer motion
+    function easeInOutCubic(t: number): number {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+    }
 
     function step(now: number) {
       const elapsed = now - startTime
       const progress = Math.min(1, elapsed / duration)
+      const eased = easeInOutCubic(progress)
+
+      // Identical organic wave curve for both opening and closing:
+      // Reaches peak bulge right in the middle (progress = 0.5) as the drawer sweeps across
+      const bulge = Math.sin(progress * Math.PI) * 180
+      const cx = 100 - bulge
 
       if (isOpen) {
-        // Cubic ease out for drawer slide
-        const eased = 1 - Math.pow(1 - progress, 3)
+        // Slide in from 100% to 0%
         const translateX = (1 - eased) * 100
-
-        // Organic curve wave: bows outwards into the page (negative x in viewBox)
-        // Reaches peak bulge around progress ~ 0.45, then snaps back to flat (100)
-        const bulge = Math.sin(progress * Math.PI) * 180
-        const cx = 100 - bulge
-
         drawer!.style.transform = `translate3d(${translateX}%, 0, 0)`
         path!.setAttribute('d', `M 100 0 L 100 100 Q ${cx} 50 100 0 Z`)
       } else {
-        // Cubic ease in for drawer exit
-        const eased = Math.pow(progress, 2.8)
+        // Slide out from 0% to 100% with identical organic curve dynamics
         const translateX = eased * 100
-
-        // Curve during exit pulls back smoothly
-        const bulge = Math.sin(progress * Math.PI) * 50
-        const cx = 100 + bulge
-
         drawer!.style.transform = `translate3d(${translateX}%, 0, 0)`
         path!.setAttribute('d', `M 100 0 L 100 100 Q ${cx} 50 100 0 Z`)
       }
@@ -127,7 +134,9 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
       if (progress < 1) {
         animFrameRef.current = requestAnimationFrame(step)
       } else {
+        setIsAnimating(false)
         if (!isOpen) {
+          hasOpenedRef.current = false
           drawer!.style.transform = 'translate3d(100%, 0, 0)'
           path!.setAttribute('d', 'M 100 0 L 100 100 Q 100 50 100 0 Z')
         } else {
@@ -186,10 +195,9 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
       {/* Side curved drawer */}
       <aside
         ref={drawerRef}
-        className={`menu-drawer ${isOpen ? 'is-open' : ''}`}
+        className={`menu-drawer ${isOpen ? 'is-open' : ''} ${isAnimating ? 'is-animating' : ''}`}
         aria-label="Side navigation"
         aria-hidden={!isOpen}
-        style={{ transform: 'translate3d(100%, 0, 0)' }}
       >
         {/* SVG curved leading edge for organic slide-in animation */}
         <svg

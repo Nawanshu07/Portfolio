@@ -529,7 +529,14 @@ nav a[aria-current]::after { opacity: 1; }
   color: #fafaf8;
   z-index: 230;
   transform: translate3d(100%, 0, 0);
+  visibility: hidden;
+  pointer-events: none;
   will-change: transform;
+}
+.menu-drawer.is-open,
+.menu-drawer.is-animating {
+  visibility: visible;
+  pointer-events: auto;
 }
 .menu-curve-svg {
   position: absolute;

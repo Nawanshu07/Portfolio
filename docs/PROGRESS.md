@@ -224,10 +224,19 @@ Changed files: `src/App.tsx`, `src/index.css`, `docs/PROGRESS.md`. Production bu
 
 ## 2026-11-23 — Initial Mount Sidebar Flash Bugfix
 
-- **Root Cause**: The drawer animation `useEffect` in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L75-L145) executed on initial mount with `isOpen = false`, triggering the `else` (closing) branch starting at `translateX = 0%`, which caused the sidebar to briefly appear and slide away on page load.
+- **Root Cause**: The drawer animation `useEffect` in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L75-L145) executed when `isOpen = false` on mount (including React 18 `<StrictMode>` remounting), running the exit animation where `translateX = 0%` at the first frame.
 - **Fix**:
-  - Added an `isFirstRender` ref check in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L76-L81) that exits immediately on initial mount, preventing any animation loop from running until user interaction.
-  - Added baseline `transform: translate3d(100%, 0, 0);` to `.menu-drawer` in [src/index.css](file:///a:/Portfolio/src/index.css#L520-L532) so the drawer is strictly positioned off-screen before and during initial render.
-- **Verification**: `npm run build` passed with zero errors. Hot reload confirmed in browser dev server.
+  - Replaced the simple mount ref with `hasOpenedRef` state tracking in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L76-L84): if `!isOpen && !hasOpenedRef.current`, the animation effect returns immediately and never initializes.
+  - Added `isAnimating` state and `.is-animating` class so the drawer stays active during transitions and safely sleeps when closed.
+  - Added `visibility: hidden; pointer-events: none;` on `.menu-drawer` when not active in [src/index.css](file:///a:/Portfolio/src/index.css#L520-L536), making it physically impossible for the closed drawer to render or flash on screen during load or hydration.
+- **Verification**: `npm run build` passed with zero errors. All changes kept locally as requested.
+
+## 2026-11-23 — Symmetric Drawer Closing Animation
+
+- **Unified Dynamics**: Updated the closing animation in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L100-L150) so it matches the opening behavior:
+  - Both open and close now share the same 650ms duration and smooth `easeInOutCubic` translation (`translateX = eased * 100%`).
+  - Both open and close dynamically compute the same organic wave curve (`cx = 100 - Math.sin(progress * Math.PI) * 180`), bowing out toward the viewport at the middle of the transition and flattening back flush.
+- **Verification**: `npm run build` passed with zero errors. Hot reload verified on local development server. Not pushed to remote.
+
 
 
