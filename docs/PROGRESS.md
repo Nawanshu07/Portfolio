@@ -306,3 +306,21 @@ Live delivery requires the sender address in Vercel as GMAIL_SENDER and the send
 Built and staged the portfolio on the existing Vercel production project. The staged contact endpoint returned HTTP 405 for GET and HTTP 200 for a test submission. The owner confirmed receipt in the destination Gmail inbox. Promoted the deployment and checked that the domain serves the contact page with HTTP 200 and the contact endpoint rejects GET with HTTP 405.
 
 Ran npm run build, node --check api/contact.js and git diff --check. Vercel linked the project locally and added .vercel to .gitignore. The commit includes the deployed UI and form changes, dependency and TypeScript updates, .gitignore and the documentation. The two unused, untracked hero images remain local.
+
+## 2026-11-23 — Project hover cursor
+
+Added a circular cobalt View cursor to the project lists on Home and Work. It tracks mouse movement over the project links and yields to the native cursor outside the list and with reduced motion. Touch and keyboard access use the project links directly.
+
+Changed src/App.tsx, src/index.css and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium verified tracking and click-through hit testing on both pages, hiding on exit, keyboard navigation, reduced motion and touch navigation. Deployment remains pending.
+
+## 2026-11-23 — Magnetic project actions and scrollbar
+
+Converted Repository and Live demo into outlined magnetic links with larger arrows. External destinations still open in a new tab. Hid the document scrollbar while preserving page scrolling.
+
+Changed src/App.tsx, src/MagneticLink.tsx, src/index.css and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium verified all three project detail pages at 320px and 1440px, button size, keyboard focus, new-tab attributes and viewport fit. Also checked wheel scrolling and magnetic movement and release. Deployment remains pending.
+
+## 2026-11-23 — Homepage contact buttons and phone details
+
+Added outlined magnetic email and phone buttons to the homepage contact section with the curved cobalt fill rising from the bottom. The buttons use mailto and tel. Added the supplied phone number to the Contact page and content source.
+
+Changed src/App.tsx, src/MagneticLink.tsx, src/index.css, docs/INFO.md and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium checked both destinations, keyboard focus, reduced motion and viewport fit at 320px, 390px and 1440px. A desktop check verified the animated fill and release and that the site leaves native link events to the browser. Mail and dialer apps were not opened during the test. Deployment remains pending.

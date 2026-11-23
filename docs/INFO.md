@@ -16,6 +16,7 @@ This file is the factual source for portfolio content. Update the `Needs confirm
 - **GitHub:** https://github.com/Nawanshu07
 - **LinkedIn:** https://www.linkedin.com/in/nawanshu-sharma-104619351
 - **Email:** nawanshusharma05@gmail.com
+- **Phone:** +91 9509055309
 - **Resume:** Needs confirmation
 
 ## Featured projects

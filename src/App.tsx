@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 
 import { findPage, navigation, projects } from './pages'
 import { PageTransition } from './PageTransition'
 import { MagneticLink } from './MagneticLink'
 import { NavigationDrawer } from './NavigationDrawer'
+
+const contactEmail = 'nawanshusharma05@gmail.com'
+const contactPhone = '+91 9509055309'
+const emailHref = `mailto:${contactEmail}`
+const phoneHref = `tel:${contactPhone.replace(/\s/g, '')}`
 
 type IconName = 'mark' | 'down' | 'up-right' | 'right' | 'mail'
 
@@ -19,20 +24,50 @@ function Icon({ name }: { name: IconName }) {
   return <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={name === 'mark' ? 2.8 : 2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={iconPaths[name]} /></svg>
 }
 
-function Work() {
-  const homeProjects = projects.slice(0, 3)
+function ProjectList({ items }: { items: readonly (typeof projects)[number][] }) {
+  function moveCursor(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== 'mouse') {
+      clearCursor(event)
+      return
+    }
+    const list = event.currentTarget
+    list.style.setProperty('--cursor-x', `${event.clientX}px`)
+    list.style.setProperty('--cursor-y', `${event.clientY}px`)
+    list.dataset.viewCursor = ''
+  }
 
+  function clearCursor(event: PointerEvent<HTMLDivElement>) {
+    delete event.currentTarget.dataset.viewCursor
+  }
+
+  return (
+    <div
+      className="project-list"
+      onPointerEnter={moveCursor}
+      onPointerMove={moveCursor}
+      onPointerLeave={clearCursor}
+      onPointerCancel={clearCursor}
+    >
+      <ul className="project-table" role="list">
+        {items.map(item => (
+          <li key={item.path}>
+            <a href={item.path} className="project-row">
+              <h2 className="project-row-title">{item.title}</h2>
+              <span className="project-row-type">{item.type}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <span className="project-cursor" aria-hidden="true">View</span>
+    </div>
+  )
+}
+
+function Work() {
   return (
     <section className="work wrap" id="work" aria-labelledby="work-title">
       <p className="work-eyebrow" id="work-title">Recent work</p>
-      <div className="project-table" role="list">
-        {homeProjects.map(item => (
-          <a key={item.path} href={item.path} className="project-row" role="listitem">
-            <h2 className="project-row-title">{item.title}</h2>
-            <span className="project-row-type">{item.type}</span>
-          </a>
-        ))}
-      </div>
+      <ProjectList items={projects.slice(0, 3)} />
       <div className="work-more">
         <MagneticLink variant="about-button" href="/work">
           More work <span className="work-more-count">({projects.length})</span>
@@ -97,8 +132,11 @@ function Contact({ standalone = false }: { standalone?: boolean }) {
           )}
         </div>
         <div className="contact-links">
-          <a href="mailto:nawanshusharma05@gmail.com">nawanshusharma05@gmail.com</a>
-          <div>
+          <div className="contact-methods">
+            <MagneticLink variant="contact-method" href={emailHref}>{contactEmail}</MagneticLink>
+            <MagneticLink variant="contact-method" href={phoneHref}>{contactPhone}</MagneticLink>
+          </div>
+          <div className="contact-socials">
             <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer">GitHub <Icon name="up-right" /></a>
             <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer">LinkedIn <Icon name="up-right" /></a>
           </div>
@@ -123,14 +161,7 @@ function WorkPage() {
   return (
     <section className="route-body wrap" aria-labelledby="page-title">
       <h1 className="page-title" id="page-title">Work<span>.</span></h1>
-      <div className="project-table" role="list">
-        {projects.map(item => (
-          <a key={item.path} href={item.path} className="project-row" role="listitem">
-            <h2 className="project-row-title">{item.title}</h2>
-            <span className="project-row-type">{item.type}</span>
-          </a>
-        ))}
-      </div>
+      <ProjectList items={projects} />
     </section>
   )
 }
@@ -146,8 +177,14 @@ function ProjectPage({ project }: { project: typeof projects[number] }) {
         <div>
           <p className="project-summary">{project.description}</p>
           <div className="project-links">
-            <a href={project.href} target="_blank" rel="noreferrer">Repository <Icon name="up-right" /></a>
-            {project.liveHref && <a href={project.liveHref} target="_blank" rel="noreferrer">Live demo <Icon name="up-right" /></a>}
+            <MagneticLink variant="scroll" href={project.href} target="_blank">
+              Repository <span className="arrow-disc"><Icon name="up-right" /></span>
+            </MagneticLink>
+            {project.liveHref && (
+              <MagneticLink variant="scroll" href={project.liveHref} target="_blank">
+                Live demo <span className="arrow-disc"><Icon name="up-right" /></span>
+              </MagneticLink>
+            )}
           </div>
         </div>
       </div>
@@ -171,7 +208,7 @@ function ContactPage() {
     if (import.meta.env.DEV && !import.meta.env.VITE_CONTACT_API) {
       const subject = encodeURIComponent(`Inquiry from ${formData.name}`)
       const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
-      window.location.href = `mailto:nawanshusharma05@gmail.com?subject=${subject}&body=${body}`
+      window.location.href = `${emailHref}?subject=${subject}&body=${body}`
       setStatus('draft')
       return
     }
@@ -205,9 +242,8 @@ function ContactPage() {
           <div className="contact-info-blocks">
             <div className="contact-info-group">
               <span className="contact-info-eyebrow">Contact Details</span>
-              <a href="mailto:nawanshusharma05@gmail.com" className="contact-info-link">
-                nawanshusharma05@gmail.com
-              </a>
+              <a href={emailHref} className="contact-info-link">{contactEmail}</a>
+              <a href={phoneHref} className="contact-info-link">{contactPhone}</a>
               <span className="contact-info-text">Alwar, India</span>
             </div>
 

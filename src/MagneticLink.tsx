@@ -1,7 +1,7 @@
 import type { PointerEvent, ReactNode } from 'react'
 
 type BaseProps = {
-  variant: 'scroll' | 'mail-button' | 'about-button' | 'touch-button' | 'submit-button' | 'floating-btn'
+  variant: 'scroll' | 'mail-button' | 'about-button' | 'contact-method' | 'touch-button' | 'submit-button' | 'floating-btn'
   label?: string
   className?: string
   children: ReactNode
@@ -10,6 +10,7 @@ type BaseProps = {
 type AnchorProps = BaseProps & {
   as?: 'a'
   href: string
+  target?: HTMLAnchorElement['target']
   type?: never
   onClick?: () => void
 }
@@ -75,6 +76,8 @@ export function MagneticLink(props: MagneticProps) {
   return (
     <a
       href={props.href}
+      target={props.target}
+      rel={props.target === '_blank' ? 'noreferrer' : undefined}
       className={fullClassName}
       aria-label={label}
       onClick={onClick}
