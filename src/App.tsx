@@ -241,13 +241,21 @@ function ContactPage() {
           </h1>
 
           <div className="contact-info-blocks">
-            <div className="contact-info-group">
-              <span className="contact-info-eyebrow">Contact Details</span>
-              <a href={emailHref} className="contact-info-link">{contactEmail}</a>
-              <a href={phoneHref} className="contact-info-link">{contactPhone}</a>
-              <span className="contact-info-text">Alwar, India</span>
+            <div className="direct-contacts">
+              <a href={emailHref} className="direct-contact">
+                <span className="contact-info-eyebrow">Email</span>
+                <span>{contactEmail}</span>
+              </a>
+              <a href={phoneHref} className="direct-contact">
+                <span className="contact-info-eyebrow">Phone</span>
+                <span>{contactPhone}</span>
+              </a>
             </div>
 
+            <div className="contact-info-group">
+              <span className="contact-info-eyebrow">Location</span>
+              <span className="contact-info-text">Alwar, India</span>
+            </div>
             <div className="contact-info-group">
               <span className="contact-info-eyebrow">Socials</span>
               <div className="contact-social-links">
@@ -274,12 +282,10 @@ function ContactPage() {
               </button>
             </div>
           ) : (
-            <form className="dennis-form" onSubmit={handleSubmit}>
+            <form className="contact-form" aria-labelledby="message-heading" onSubmit={handleSubmit}>
+              <h2 id="message-heading">Send a message<span>.</span></h2>
               <div className="form-field">
-                <div className="field-header">
-                  <span className="field-num">01</span>
-                  <label htmlFor="name" className="field-label">What’s your name?</label>
-                </div>
+                <label htmlFor="name" className="field-label">Your name</label>
                 <input
                   id="name"
                   name="name"
@@ -288,7 +294,6 @@ function ContactPage() {
                   required
                   maxLength={120}
                   readOnly={sending}
-                  placeholder="John Doe *"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
                   className="field-input"
@@ -296,10 +301,7 @@ function ContactPage() {
               </div>
 
               <div className="form-field">
-                <div className="field-header">
-                  <span className="field-num">02</span>
-                  <label htmlFor="email" className="field-label">What’s your email?</label>
-                </div>
+                <label htmlFor="email" className="field-label">Your email</label>
                 <input
                   id="email"
                   name="email"
@@ -309,7 +311,6 @@ function ContactPage() {
                   required
                   maxLength={254}
                   readOnly={sending}
-                  placeholder="john@doe.com *"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
                   className="field-input"
@@ -317,10 +318,7 @@ function ContactPage() {
               </div>
 
               <div className="form-field">
-                <div className="field-header">
-                  <span className="field-num">03</span>
-                  <label htmlFor="message" className="field-label">Your message</label>
-                </div>
+                <label htmlFor="message" className="field-label">Your message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -328,7 +326,6 @@ function ContactPage() {
                   maxLength={5000}
                   readOnly={sending}
                   rows={4}
-                  placeholder="Hello Nawanshu, can you help me with ... *"
                   value={formData.message}
                   onChange={e => setFormData({ ...formData, message: e.target.value })}
                   className="field-textarea"

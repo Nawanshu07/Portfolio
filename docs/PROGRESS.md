@@ -332,3 +332,17 @@ At 390 × 844 the original hero ended at 623px. The revised hero fills the space
 Changed `src/index.css`, `src/App.tsx`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
 
 Ran `npm run build` and checked the production output in Edge at 320×568, 360×740, 390×844, 430×932, 600×960, 768×1024, 820×1180, 568×320, 844×390, 1024×768, and 1440×900. All seven routes fit the viewport width. Reviewed portrait, landscape, and Work screenshots. Tested touch navigation from the hero through a project and the menu to Contact with standard and reduced motion, contact field entry and focus, and contact link target heights. The changes are local. Physical-device testing remains open.
+
+## 2026-11-23 — Hero placement and contact spacing
+
+Centered the name, quote, and introduction as a group in the portrait hero. At 390×844 the name starts 248px from the top and Explore work ends at 726px. The homepage contact buttons stack on mobile. On the Contact page, email and phone have individual labeled rows above location and social links. The message form has a distinct background, heading, and individually outlined fields.
+
+Changed `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
+
+The production build passed. Checked responsive bounds on all seven routes at 11 phone, tablet, and desktop viewport sizes. Reviewed phone screenshots of the hero and both contact areas. Verified email and phone destinations, touch navigation with both motion preferences, and form submission, success, and reset with a mocked endpoint. Physical-device testing and deployment remain pending.
+
+## 2026-11-23 — Pale peach background
+
+Applied a shared pale peach color (`#f7f2e8`) to the light page backgrounds, homepage header and hero, light button faces, and curved edge above Contact. Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
+
+The production build passed. Edge checks at 390px and 1440px verified the new canvas on Home, Work, About, and a project page, plus the charcoal Contact page background. Reviewed the mobile hero screenshot. The change is local.
