@@ -1,13 +1,44 @@
-<img width="1920" height="943" alt="Screenshot 2026-07-09 180927" src="https://github.com/user-attachments/assets/5e920245-ce6d-4d33-87f2-b144da4b9995" />
+# my-portfolio
 
-# **Portfolio**
-My personal portfolio website built to showcase my projects, skills, and experience.
-🌐 **Live Demo:** https://nawanshu.dpdns.org
+A minimalist, high-performance developer portfolio built with modern web technologies and a brutalist design system.
 
-### About
-This portfolio was vibe coded using **Antigravity**. To get better results, I used structured prompting along with **AGENTS.md** and **Vercel's `design.md`** guidelines to improve the overall design, code quality, and development workflow.
+## Project Structure
 
-## Tech Stack
-* React
-* Vite
-* Tailwind CSS
+```
+my-portfolio/
+│
+├── AGENTS.md            # Guidelines and instructions for autonomous coding agents
+├── GEMINI.md            # Gemini project rules and directives
+├── README.md            # Project overview and instructions
+├── DESIGN.md            # Brutalist design specification & design token reference
+│
+├── docs/
+│   ├── PROJECT.md       # Vision, architecture, and scope
+│   ├── PROGRESS.md      # Milestones and progress tracker
+│   ├── TASKS.md         # Active backlog and planned tasks
+│   └── DECISIONS.md     # Architectural Decision Records (ADRs)
+│
+├── src/                 # Application source code
+├── public/              # Static assets
+└── package.json         # Package manifest and scripts
+```
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start local development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Documentation
+- [Project Overview](file:///a:/Portfolio/docs/PROJECT.md)
+- [Progress Log](file:///a:/Portfolio/docs/PROGRESS.md)
+- [Tasks & Backlog](file:///a:/Portfolio/docs/TASKS.md)
+- [Architecture Decisions](file:///a:/Portfolio/docs/DECISIONS.md)
+- [Design Specification](file:///a:/Portfolio/DESIGN.md)

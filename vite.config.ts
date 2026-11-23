@@ -1,37 +1,29 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { pages, pageTitle } from './src/pages'
 
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
-  build: {
-    target: 'esnext',
-    cssMinify: true,
-    modulePreload: {
-      polyfill: false,
-    },
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-            return 'vendor-react'
+  plugins: [
+    react(),
+    {
+      name: 'portfolio-page-entries',
+      enforce: 'post',
+      generateBundle: {
+        order: 'post',
+        handler(_, bundle) {
+          const home = bundle['index.html']
+          if (home?.type !== 'asset' || typeof home.source !== 'string') {
+            this.error('Missing built index.html')
           }
-          if (id.includes('framer-motion')) {
-            return 'vendor-motion'
-          }
-          if (id.includes('lucide-react')) {
-            return 'vendor-icons'
+          for (const page of pages.filter(page => page.path !== '/')) {
+            this.emitFile({
+              type: 'asset',
+              fileName: page.path.slice(1) + '/index.html',
+              source: home.source.replace(/<title>.*?<\/title>/, `<title>${pageTitle(page.label)}</title>`),
+            })
           }
         },
       },
     },
-  },
+  ],
 })
