@@ -222,3 +222,12 @@ Changed files: `src/App.tsx`, `src/index.css`, `docs/PROGRESS.md`. Production bu
   - `src/index.css`
   - `docs/PROGRESS.md`
 
+## 2026-11-23 — Initial Mount Sidebar Flash Bugfix
+
+- **Root Cause**: The drawer animation `useEffect` in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L75-L145) executed on initial mount with `isOpen = false`, triggering the `else` (closing) branch starting at `translateX = 0%`, which caused the sidebar to briefly appear and slide away on page load.
+- **Fix**:
+  - Added an `isFirstRender` ref check in [src/NavigationDrawer.tsx](file:///a:/Portfolio/src/NavigationDrawer.tsx#L76-L81) that exits immediately on initial mount, preventing any animation loop from running until user interaction.
+  - Added baseline `transform: translate3d(100%, 0, 0);` to `.menu-drawer` in [src/index.css](file:///a:/Portfolio/src/index.css#L520-L532) so the drawer is strictly positioned off-screen before and during initial render.
+- **Verification**: `npm run build` passed with zero errors. Hot reload confirmed in browser dev server.
+
+

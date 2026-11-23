@@ -14,6 +14,7 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const animFrameRef = useRef<number | null>(null)
+  const isFirstRender = useRef(true)
 
   // Scroll tracking: on home page, appear after hero (scrollY > 220px)
   useEffect(() => {
@@ -74,6 +75,11 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
 
   // Animated curved wave drawer entry & exit
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+
     const drawer = drawerRef.current
     const path = pathRef.current
     if (!drawer || !path) return
