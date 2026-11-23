@@ -54,6 +54,7 @@ function ProjectList({ items }: { items: readonly (typeof projects)[number][] })
             <a href={item.path} className="project-row">
               <h2 className="project-row-title">{item.title}</h2>
               <span className="project-row-type">{item.type}</span>
+              <Icon name="right" />
             </a>
           </li>
         ))}
@@ -283,6 +284,7 @@ function ContactPage() {
                   id="name"
                   name="name"
                   type="text"
+                  autoComplete="name"
                   required
                   maxLength={120}
                   readOnly={sending}
@@ -302,6 +304,8 @@ function ContactPage() {
                   id="email"
                   name="email"
                   type="email"
+                  autoComplete="email"
+                  spellCheck={false}
                   required
                   maxLength={254}
                   readOnly={sending}

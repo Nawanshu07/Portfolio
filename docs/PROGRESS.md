@@ -324,3 +324,11 @@ Changed src/App.tsx, src/MagneticLink.tsx, src/index.css and docs/PROGRESS.md. T
 Added outlined magnetic email and phone buttons to the homepage contact section with the curved cobalt fill rising from the bottom. The buttons use mailto and tel. Added the supplied phone number to the Contact page and content source.
 
 Changed src/App.tsx, src/MagneticLink.tsx, src/index.css, docs/INFO.md and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium checked both destinations, keyboard focus, reduced motion and viewport fit at 320px, 390px and 1440px. A desktop check verified the animated fill and release and that the site leaves native link events to the browser. Mail and dialer apps were not opened during the test. Deployment remains pending.
+
+## 2026-11-23 — Responsive hero and touch controls
+
+At 390 × 844 the original hero ended at 623px. The revised hero fills the space below the header, balances the quote across lines, and keeps Explore work visible. Short landscape screens use two columns and allow scrolling when content needs more room. Narrow project rows show a direction arrow. Contact links have larger tap areas, name and email support autofill, and form fields have visible keyboard focus.
+
+Changed `src/index.css`, `src/App.tsx`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
+
+Ran `npm run build` and checked the production output in Edge at 320×568, 360×740, 390×844, 430×932, 600×960, 768×1024, 820×1180, 568×320, 844×390, 1024×768, and 1440×900. All seven routes fit the viewport width. Reviewed portrait, landscape, and Work screenshots. Tested touch navigation from the hero through a project and the menu to Contact with standard and reduced motion, contact field entry and focus, and contact link target heights. The changes are local. Physical-device testing remains open.
