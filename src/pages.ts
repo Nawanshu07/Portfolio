@@ -11,7 +11,6 @@ export const projects = [
     type: 'Interaction & Automation',
     description: 'Desktop voice automation CLI with speech recognition, web search, and local command dispatch.',
     href: 'https://github.com/Nawanshu07/Voice-Assistant',
-    artwork: new URL('./assets/projects/microphone.webp', import.meta.url).href,
   },
   {
     title: 'Python Music Player',
@@ -19,7 +18,6 @@ export const projects = [
     type: 'Software & Application',
     description: 'Terminal audio player with queue management and playback.',
     href: 'https://github.com/Nawanshu07/Music-Player',
-    artwork: new URL('./assets/projects/record.webp', import.meta.url).href,
   },
   {
     title: 'Netflix Clone',
@@ -28,7 +26,6 @@ export const projects = [
     description: 'Responsive dark-theme interface built with semantic HTML and modern CSS.',
     href: 'https://github.com/Nawanshu07/Netfilx-Website-clone',
     liveHref: 'https://netflix-clone.nawanshu.dpdns.org/',
-    artwork: new URL('./assets/projects/filmstrip.webp', import.meta.url).href,
   },
 ]
 

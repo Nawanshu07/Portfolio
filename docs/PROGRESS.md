@@ -240,3 +240,69 @@ Changed files: `src/App.tsx`, `src/index.css`, `docs/PROGRESS.md`. Production bu
 
 
 
+
+## 2026-11-23 — Mobile navigation and layout
+
+Made the floating menu the primary phone navigation, including short touch landscape screens. Kept the curved animation and made rapid direction changes continue from the current drawer position. The open menu locks background interaction, contains keyboard focus and scrolls on short screens. The route curtain covers the floating control during navigation. Fixed intrinsic project image sizing and stacked the contact call to action on narrow phones.
+
+Changed src/NavigationDrawer.tsx, src/App.tsx, src/index.css and docs/PROGRESS.md. Production build passed. Chromium checks at 320×640, 390×844, 844×390, 768×1024 and 1280×800 covered viewport width on all seven routes, homepage contact button bounds, focus cycling, Escape, drawer links, scrollable socials and mobile rapid taps. Tested normal and reduced motion. Physical iOS and Android devices were not tested.
+
+## 2026-11-23 — Homepage hero and navigation legibility
+
+Moved the desktop links onto a solid header. Promoted the introduction to the main headline, grouped it with the work link and location, and gave the existing CRT artwork and moving name separate space. The mobile layout stacks the introduction and image and uses the hamburger for navigation.
+
+Changed src/App.tsx, src/index.css and docs/PROGRESS.md. The production build passed. Chromium viewport checks covered 1919×955, 1024×768, 768×1024, 360×800 and 320×640, including horizontal overflow, headline and image separation, desktop link targets and mobile menu opening and closing. Physical phone verification remains open.
+
+## 2026-11-23 — Unframed homepage artwork
+
+Replaced the framed computer photograph with an original transparent image of an exploded cobalt keyboard switch. Removed the looping name, its animation and the charcoal strip. Changed src/App.tsx, src/index.css and docs/PROGRESS.md and added src/assets/keyboard-switch.webp.
+
+The production build passed. Edge checks at 360×800, 768×1024 and 1919×955 verified image decoding, separation from the headline and controls, absence of the marquee and viewport-width layout.
+
+## 2026-11-23 — Full-width workspace hero
+
+Replaced the keyboard switch with a continuous blue-hour workspace scene, locally bundled as a 44 kB WebP. The desktop photo fills the hero behind the text. At phone widths, the image fades in beneath the introduction and crops toward the laptop and lamp. The work link leads the actions, with Alwar beside it as a plain location label.
+
+Built-in ImageGen prompt
+
+> Create a wide 2:1 editorial photograph for a full-bleed software developer portfolio hero. A quiet modern workstation at blue hour, lit by soft indigo daylight through a tall window. Put an open graphite laptop on a dark walnut desk in the rightmost third, in three-quarter view, with a dim editor showing tiny abstract strokes. Include a single small warm desk lamp toward the far right. Keep the center-left and left 48 percent very dark, nearly featureless deep slate wall for large white website text. Artistically composed with muted blue, charcoal and a touch of amber, natural shadows, realistic materials, and subtle analog grain. The laptop and lamp should read clearly in a square crop of the right side. Entire scene is continuous edge to edge. No people, legible text, logos, retro computer or floating objects.
+
+Changed src/App.tsx, src/index.css and docs/PROGRESS.md. Added src/assets/blue-hour-workspace.webp. The user removed the task board, so this entry records the update.
+
+The production build and Git whitespace check passed. Chromium checks at 320×640, 390×844, 768×1024, 1024×768, 1440×900 and 1919×955 verified image decoding, full-width layout, absence of the marquee and Explore work hit testing. Reviewed screenshots at 390, 1024, 1440 and 1919 pixels. Also verified Explore work, browser Back and About with standard motion and the phone menu and Contact with touch emulation and reduced motion. Physical phone testing remains open.
+
+## 2026-11-23 — Typography-led portfolio
+
+Replaced the homepage photograph with oversized cobalt type, a warm paper background and the original quote “We come and go. The web remembers.” Removed the project images and their imports. Project pages now lead with the category, summary and links in a responsive text layout. The original asset files remain in the workspace.
+
+Changed src/App.tsx, src/index.css, src/pages.ts, docs/INFO.md and docs/PROGRESS.md. The task board had been removed by the user.
+
+The production build and Git whitespace check passed. Chromium checks against the production output loaded all seven routes at 320 and 1440 pixels and confirmed that they display and request no artwork. Checked the homepage from 320 to 1919 pixels for overflow, heading fit with Inter and Arial, and reduced motion. Reviewed desktop and phone screenshots and verified keyboard activation of Explore work, the Netflix project links, next-project navigation, browser Back and the touch menu. Physical phone testing remains open.
+
+## 2026-11-23 — White hero and outlined buttons
+
+Changed the hero background to pure white. Added a 1px solid black border to the moving faces of the action buttons on light sections.
+
+Changed src/index.css and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium checks at 390px and 1440px confirmed the white hero, black borders on all three light-section buttons, the existing dark-section button style, and keyboard focus and activation of Explore work.
+
+## 2026-11-23 — Homepage quote
+
+Updated the hero and the content source to “The best way to predict the future is to invent it.” The final phrase uses the existing cobalt accent.
+
+Changed src/App.tsx, docs/INFO.md and docs/PROGRESS.md. The production build and Git whitespace check passed. Chromium verified the exact copy, cobalt emphasis and fit at 320, 390, 768 and 1440 pixels.
+
+## 2026-11-23 — Contact form email delivery
+
+Prepared the production contact form to send through the Vercel function at /api/contact. The function validates the submission, sends from the configured Gmail account to nawanshusharma05@gmail.com, and sets Reply-To to the visitor. The form retains the draft if delivery fails. Plain Vite development uses the existing email draft flow. Set VITE_CONTACT_API=1 for local testing with a server that exposes the function.
+
+Changed api/contact.js, src/App.tsx, src/MagneticLink.tsx, tsconfig.json, package.json, package-lock.json and docs/PROGRESS.md.
+
+The production build passed. Node checks covered request method and format, validation, missing credentials, and mocked SMTP success and failure. Chromium with a mocked API verified the production form payload, pending state, failure, retry, success and reset. Git whitespace checks passed.
+
+Live delivery requires the sender address in Vercel as GMAIL_SENDER and the sender account's app password as GMAIL_APP_PASSWORD, followed by deployment and a test submission. No live email was sent.
+
+## 2026-11-23 — Contact form deployed and verified
+
+Built and staged the portfolio on the existing Vercel production project. The staged contact endpoint returned HTTP 405 for GET and HTTP 200 for a test submission. The owner confirmed receipt in the destination Gmail inbox. Promoted the deployment and checked that the domain serves the contact page with HTTP 200 and the contact endpoint rejects GET with HTTP 405.
+
+Ran npm run build, node --check api/contact.js and git diff --check. Vercel linked the project locally and added .vercel to .gitignore. The commit includes the deployed UI and form changes, dependency and TypeScript updates, .gitignore and the documentation. The two unused, untracked hero images remain local.

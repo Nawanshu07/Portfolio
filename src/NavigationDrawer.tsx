@@ -5,12 +5,15 @@ interface NavigationDrawerProps {
   home: boolean
 }
 
+const compactMenu = '(max-width: 48rem), (pointer: coarse) and (max-height: 32rem)'
+
 export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [compact, setCompact] = useState(() => matchMedia(compactMenu).matches)
   const [isAnimating, setIsAnimating] = useState(false)
   
-  const drawerRef = useRef<HTMLElement>(null)
+  const drawerRef = useRef<HTMLElement | null>(null)
   const pathRef = useRef<SVGPathElement>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -29,11 +32,17 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   }, [])
 
   // Floating button visible on interior pages immediately, or on scroll on home page, or whenever open
-  const isButtonVisible = !home || isScrolled || isOpen
+  useEffect(() => {
+    const query = matchMedia(compactMenu)
+    const sync = () => setCompact(query.matches)
+    query.addEventListener('change', sync)
+    return () => query.removeEventListener('change', sync)
+  }, [])
+  const isButtonVisible = compact || !home || isScrolled || isOpen
 
   // Magnetic hover tracking for the floating button wrapper
   function handlePointerMove(e: PointerEvent<HTMLDivElement>) {
-    if (e.pointerType === 'touch' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    if (e.pointerType === 'touch' || !window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return
     const el = wrapRef.current
     if (!el) return
     const rect = el.getBoundingClientRect()
@@ -55,7 +64,19 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape' && isOpen) {
+        buttonRef.current?.focus({ preventScroll: true })
         setIsOpen(false)
+      }
+      if (isOpen && e.key === 'Tab') {
+        const links = drawerRef.current?.querySelectorAll<HTMLAnchorElement>('a[href]')
+        const last = links?.[links.length - 1]
+        if (e.shiftKey && document.activeElement === buttonRef.current) {
+          e.preventDefault()
+          last?.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          buttonRef.current?.focus()
+        }
       }
     }
     window.addEventListener('keydown', onKeyDown)
@@ -64,13 +85,15 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
 
   // Body scroll locking when open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    if (!isOpen) return
+    buttonRef.current?.focus({ preventScroll: true })
+    const background = document.querySelectorAll<HTMLElement>('#top > :is(header, main, footer, .skip):not([inert])')
+    background.forEach(el => { el.inert = true })
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = previous
+      background.forEach(el => { el.inert = false })
     }
   }, [isOpen])
 
@@ -102,7 +125,9 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
 
     const startTime = performance.now()
-    const duration = 650
+    const start = Math.max(0, Math.min(100, new DOMMatrix(getComputedStyle(drawer).transform).m41 / drawer.offsetWidth * 100))
+    const end = isOpen ? 0 : 100
+    const duration = Math.max(1, (compact ? 360 : 650) * Math.abs(end - start) / 100)
 
     // Smooth power3 in/out curve for perfectly symmetric organic drawer motion
     function easeInOutCubic(t: number): number {
@@ -119,17 +144,8 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
       const bulge = Math.sin(progress * Math.PI) * 180
       const cx = 100 - bulge
 
-      if (isOpen) {
-        // Slide in from 100% to 0%
-        const translateX = (1 - eased) * 100
-        drawer!.style.transform = `translate3d(${translateX}%, 0, 0)`
-        path!.setAttribute('d', `M 100 0 L 100 100 Q ${cx} 50 100 0 Z`)
-      } else {
-        // Slide out from 0% to 100% with identical organic curve dynamics
-        const translateX = eased * 100
-        drawer!.style.transform = `translate3d(${translateX}%, 0, 0)`
-        path!.setAttribute('d', `M 100 0 L 100 100 Q ${cx} 50 100 0 Z`)
-      }
+      drawer!.style.transform = `translate3d(${start + (end - start) * eased}%, 0, 0)`
+      path!.setAttribute('d', `M 100 0 L 100 100 Q ${cx} 50 100 0 Z`)
 
       if (progress < 1) {
         animFrameRef.current = requestAnimationFrame(step)
@@ -151,7 +167,7 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
     }
-  }, [isOpen])
+  }, [isOpen, compact])
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -177,6 +193,8 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
           onClick={() => setIsOpen(prev => !prev)}
           aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={isOpen}
+          aria-controls="quick-navigation"
+          disabled={!isButtonVisible}
         >
           <div className="menu-burger-bars" aria-hidden="true">
             <span className="burger-bar" />
@@ -194,7 +212,8 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
 
       {/* Side curved drawer */}
       <aside
-        ref={drawerRef}
+        id="quick-navigation"
+        ref={el => { drawerRef.current = el; if (el) el.inert = !isOpen }}
         className={`menu-drawer ${isOpen ? 'is-open' : ''} ${isAnimating ? 'is-animating' : ''}`}
         aria-label="Side navigation"
         aria-hidden={!isOpen}

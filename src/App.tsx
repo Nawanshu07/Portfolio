@@ -5,11 +5,10 @@ import { PageTransition } from './PageTransition'
 import { MagneticLink } from './MagneticLink'
 import { NavigationDrawer } from './NavigationDrawer'
 
-type IconName = 'mark' | 'globe' | 'down' | 'up-right' | 'right' | 'mail'
+type IconName = 'mark' | 'down' | 'up-right' | 'right' | 'mail'
 
 const iconPaths: Record<IconName, string> = {
   mark: 'M3 17 9 7m0 10L15 7m0 10 6-10',
-  globe: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0ZM2 12h20M12 2c-6 5-6 15 0 20 6-5 6-15 0-20Z',
   down: 'M12 3v17m-7-7 7 7 7-7',
   'up-right': 'M5 19 19 5M5 5h14v14',
   right: 'M3 12h17m-7-7 7 7-7 7',
@@ -43,85 +42,24 @@ function Work() {
   )
 }
 
-function NameMarquee() {
-  const trackRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    let x = 0
-    let scrollV = 0
-    let lastY = window.scrollY
-    let half = 0
-    let raf: number
-    const baseSpeed = -0.9
-
-    function measure() { half = track!.scrollWidth / 2 }
-
-    function tick() {
-      if (!half) measure()
-      scrollV *= 0.92
-      x += baseSpeed + scrollV
-      if (half > 0) {
-        if (x <= -half) x += half
-        if (x >= 0) x -= half
-      }
-      track!.style.transform = `translate3d(${x}px,0,0)`
-      raf = requestAnimationFrame(tick)
-    }
-
-    function onScroll() {
-      const y = window.scrollY
-      const delta = (y - lastY) * 0.05
-      scrollV = Math.max(-3.5, Math.min(3.5, scrollV + delta))
-      lastY = y
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', measure)
-    raf = requestAnimationFrame(tick)
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', measure)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  const segment = 'Nawanshu \u2014 '
-
-  return (
-    <div className="name-marquee" aria-hidden="true">
-      <div className="marquee-track" ref={trackRef}>
-        <span>{segment.repeat(6)}</span>
-        <span>{segment.repeat(6)}</span>
-      </div>
-    </div>
-  )
-}
-
 function Hero() {
   return (
     <section className="hero" aria-labelledby="intro-title">
-      <img className="hero-photo" src={new URL('./assets/studio-computer.webp', import.meta.url).href} width="1536" height="1024" alt="" fetchPriority="high" />
       <div className="hero-inner wrap">
-        <div className="hero-title">
-          <p className="role"><i aria-hidden="true" /> Student developer</p>
-          <h1 id="intro-title" className="sr-only">Nawanshu</h1>
-          <p className="intro">Building practical software with<br />C, C++, Python, and the web.</p>
-        </div>
-        <div className="hero-foot">
-          <div className="location-badge">
-            <span className="location-text">Located<br />in Alwar</span>
-            <span className="badge-globe"><Icon name="globe" /></span>
+        <h1 className="hero-title" id="intro-title">Nawanshu</h1>
+        <div className="hero-bottom">
+          <blockquote className="hero-quote">
+            <p>The best way to predict the future <span>is to invent it.</span></p>
+          </blockquote>
+          <div className="hero-profile">
+            <p className="hero-role">Student developer · Alwar</p>
+            <p className="hero-intro">BCA undergraduate building practical software with C, C++, Python, and the web.</p>
+            <MagneticLink variant="scroll" href="/work">
+              Explore work <span className="arrow-disc"><Icon name="right" /></span>
+            </MagneticLink>
           </div>
-          <MagneticLink variant="scroll" href="/work">
-            Explore work <span className="arrow-disc"><Icon name="right" /></span>
-          </MagneticLink>
         </div>
       </div>
-      <NameMarquee />
     </section>
   )
 }
@@ -203,10 +141,9 @@ function ProjectPage({ project }: { project: typeof projects[number] }) {
     <article className="route-body wrap" aria-labelledby="page-title">
       <a className="back-link" href="/work">All projects</a>
       <h1 className="page-title" id="page-title">{project.title}<span>.</span></h1>
-      <div className="project-spread">
-        <img className="cover" src={project.artwork} width="960" height="960" alt="" />
+      <div className="project-overview">
+        <p className="eyebrow">{project.type}</p>
         <div>
-          <p className="eyebrow">{project.type}</p>
           <p className="project-summary">{project.description}</p>
           <div className="project-links">
             <a href={project.href} target="_blank" rel="noreferrer">Repository <Icon name="up-right" /></a>
@@ -223,15 +160,38 @@ function ProjectPage({ project }: { project: typeof projects[number] }) {
 }
 
 function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'draft' | 'error'>('idle')
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const sending = status === 'sending'
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Inquiry from ${formData.name}`)
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
-    window.location.href = `mailto:nawanshusharma05@gmail.com?subject=${subject}&body=${body}`
-    setSubmitted(true)
+    if (sending) return
+
+    if (import.meta.env.DEV && !import.meta.env.VITE_CONTACT_API) {
+      const subject = encodeURIComponent(`Inquiry from ${formData.name}`)
+      const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
+      window.location.href = `mailto:nawanshusharma05@gmail.com?subject=${subject}&body=${body}`
+      setStatus('draft')
+      return
+    }
+
+    setStatus('sending')
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      if (!response.ok || (await response.json()).sent !== true) {
+        setStatus('error')
+        return
+      }
+      setFormData({ name: '', email: '', message: '' })
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -266,13 +226,14 @@ function ContactPage() {
         </div>
 
         <div className="contact-page-right">
-          {submitted ? (
+          {status === 'sent' || status === 'draft' ? (
             <div className="form-success">
-              <span className="field-num">00</span>
-              <h2>Message initiated!</h2>
-              <p>Your mail client has been opened to dispatch your message directly to nawanshusharma05@gmail.com.</p>
-              <button type="button" className="form-reset-btn" onClick={() => setSubmitted(false)}>
-                Send another message <Icon name="right" />
+              <div role="status">
+                <h2>{status === 'sent' ? 'Message sent.' : 'Finish in your email app.'}</h2>
+                <p>{status === 'sent' ? 'Thanks for reaching out.' : 'Send the draft from your email app to complete your message.'}</p>
+              </div>
+              <button type="button" className="form-reset-btn" onClick={() => setStatus('idle')}>
+                {status === 'sent' ? 'Send another message' : 'Back to the form'} <Icon name="right" />
               </button>
             </div>
           ) : (
@@ -284,8 +245,11 @@ function ContactPage() {
                 </div>
                 <input
                   id="name"
+                  name="name"
                   type="text"
                   required
+                  maxLength={120}
+                  readOnly={sending}
                   placeholder="John Doe *"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -300,8 +264,11 @@ function ContactPage() {
                 </div>
                 <input
                   id="email"
+                  name="email"
                   type="email"
                   required
+                  maxLength={254}
+                  readOnly={sending}
                   placeholder="john@doe.com *"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
@@ -316,7 +283,10 @@ function ContactPage() {
                 </div>
                 <textarea
                   id="message"
+                  name="message"
                   required
+                  maxLength={5000}
+                  readOnly={sending}
                   rows={4}
                   placeholder="Hello Nawanshu, can you help me with ... *"
                   value={formData.message}
@@ -325,9 +295,12 @@ function ContactPage() {
                 />
               </div>
 
+              {status === 'error' && (
+                <p role="alert">Your message couldn’t be sent. Try again or use the email link.</p>
+              )}
               <div className="form-submit-row">
-                <MagneticLink as="button" type="submit" variant="submit-button" label="Send it!">
-                  Send it!
+                <MagneticLink as="button" type="submit" variant="submit-button" disabled={sending}>
+                  {sending ? 'Sending…' : 'Send it!'}
                 </MagneticLink>
               </div>
             </form>
@@ -374,7 +347,7 @@ export default function App() {
   return (
     <div id="top" className={home ? 'home-page' : 'interior-page'}>
       <PageTransition onNavigate={setPathname} />
-      <NavigationDrawer pathname={pathname} home={home} />
+      <NavigationDrawer key={pathname} pathname={pathname} home={home} />
       <a className="skip" href="#main">Skip to content</a>
       <header className="masthead wrap">
         <a className="brand" href="/" aria-label="Nawanshu portfolio home" aria-current={home ? 'page' : undefined}>

@@ -8,6 +8,7 @@ This file is the factual source for portfolio content. Update the `Needs confirm
 - **Role:** Student developer
 - **Location:** Alwar
 - **Short introduction:** BCA undergraduate building practical software with C, C++, Python, and the web.
+- **Homepage quote:** The best way to predict the future is to invent it.
 - **Availability:** Avilable for job and internships
 
 ## Links

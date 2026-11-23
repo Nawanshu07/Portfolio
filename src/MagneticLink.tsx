@@ -18,6 +18,7 @@ type ButtonProps = BaseProps & {
   as: 'button'
   href?: never
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
   onClick?: () => void
 }
 
@@ -58,6 +59,7 @@ export function MagneticLink(props: MagneticProps) {
     return (
       <button
         type={props.type ?? 'button'}
+        disabled={props.disabled}
         className={fullClassName}
         aria-label={label}
         onClick={onClick}
