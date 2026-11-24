@@ -10,6 +10,7 @@
   --blue: #264ae8;
   --rule: #cdcecb;
   --gutter: clamp(1.35rem, 5.2vw, 6rem);
+  --curve-depth: clamp(2.5rem, 5.8vw, 8rem);
   --masthead-height: clamp(4.5rem, 7.5vw, 6.8rem);
   --mono: "JetBrains Mono", ui-monospace, monospace;
   font-synthesis: none;
@@ -36,7 +37,19 @@ a:focus-visible, button:focus-visible, [role="tabpanel"]:focus-visible { outline
 .masthead { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; height: var(--masthead-height); }
 .brand, nav, nav a, .scroll, .role, .contact-socials a, footer a { display: inline-flex; align-items: center; }
 .brand { font-weight: 600; font-size: 1.1rem; gap: .48rem; min-height: 44px; letter-spacing: -.035em; }
-.brand .icon { width: 1.8rem; height: 1.8rem; }
+.brand-mark { display: block; width: 1.8rem; height: 1.8rem; }
+.brand-mark, .brand-name { overflow: hidden; }
+.brand-track { position: relative; display: block; }
+.brand-track > :last-child { position: absolute; }
+.brand-name .brand-track > span { right: calc(100% + .5em); top: 0; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .brand-track { transition: transform .46s cubic-bezier(.22,.7,.25,1); }
+  .brand-mark path { transition: transform .4s cubic-bezier(.4,0,.2,1); }
+  .brand-mark path:nth-child(2) { transition-delay: .1s; }
+  .brand-mark path:nth-child(3) { transition-delay: .2s; }
+  .brand:is(:hover, :focus-visible) .brand-mark path { transform: translateY(-100%); }
+  .brand:is(:hover, :focus-visible) .brand-name .brand-track { transform: translateX(calc(100% + .5em)); }
+}
 nav { gap: clamp(1.1rem, 3vw, 3rem); }
 nav a { position: relative; min-height: 44px; font-weight: 500; font-size: clamp(.95rem, 1.1vw, 1.1rem); letter-spacing: -.02em; }
 nav a::after { content: ''; position: absolute; left: 50%; bottom: 2px; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); opacity: 0; }
@@ -183,6 +196,15 @@ button.magnetic-link {
   .button-fill { transition: clip-path .48s cubic-bezier(.25,.75,.2,1); }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .masthead nav a > span, .masthead nav a::after {
+    pointer-events: none;
+    transform: translate(
+      clamp(-5px, calc(var(--pull-x, 0px) * .65), 5px),
+      clamp(-2.5px, calc(var(--pull-y, 0px) * .65), 2.5px)
+    );
+    transition: transform .24s ease-out;
+  }
+  .masthead nav a:hover > span, .masthead nav a:hover::after { transition-duration: .14s; }
   .magnetic-link {
     --return-ease: cubic-bezier(.18,1.65,.32,1);
   }
@@ -254,20 +276,11 @@ button.magnetic-link {
   border-bottom: 1px solid var(--rule);
   text-decoration: none;
   color: inherit;
-  transition: padding-inline .35s cubic-bezier(.16, 1, .3, 1), color .3s ease;
   cursor: pointer;
 }
 .project-row > .icon { display: none; }
-@media (hover: hover) and (pointer: fine) {
-  .project-row:hover {
-    color: var(--muted);
-    padding-inline: clamp(1.2rem, 2.5vw, 2.8rem);
-  }
-  .project-row:hover .project-row-title {
-    color: var(--ink);
-    transform: translateX(.12em);
-  }
-  .project-row:hover .project-row-type { color: var(--ink); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project-row:hover .project-row-title { transform: translateX(.16em); }
 }
 .project-row-title {
   font-size: clamp(2.4rem, 5.8vw, 6.2rem);
@@ -316,15 +329,17 @@ dd { max-width: 30ch; }
   overflow: clip;
   background: var(--charcoal);
 }
+.section-curve {
+  display: block;
+  width: 100%;
+  height: var(--curve-depth);
+  pointer-events: none;
+}
 .section-edge {
   position: relative;
   z-index: 1;
-  display: block;
-  width: 100%;
-  height: clamp(2.5rem, 5.8vw, 8rem);
   fill: var(--canvas);
   transform-origin: top;
-  pointer-events: none;
 }
 .contact-reveal .contact {
   min-height: 100vh;
@@ -344,6 +359,15 @@ dd { max-width: 30ch; }
       animation: uncover-contact linear both;
       animation-timeline: --contact-entry;
       animation-range: entry 0% entry 100%;
+    }
+    .contact-reveal .touch-button {
+      animation: slide-contact-button linear both;
+      animation-timeline: --contact-entry;
+      animation-range: entry 25% entry 100%;
+    }
+    @keyframes slide-contact-button {
+      from { transform: translateX(clamp(-56px, -4vw, -24px)); }
+      to { transform: translateX(0); }
     }
     @keyframes lift-edge { to { transform: scaleY(0); } }
     @keyframes uncover-contact { from { transform: translateY(-64svh); } to { transform: none; } }
@@ -377,12 +401,49 @@ dd { max-width: 30ch; }
   overflow-wrap: anywhere;
 }
 .contact-socials, footer .wrap { gap: 1.5rem; }
-.contact-socials a:hover, footer a:hover { text-decoration: underline; text-underline-offset: .3em; }
+footer a:hover { text-decoration: underline; text-underline-offset: .3em; }
+.link-underline {
+  background: linear-gradient(currentColor, currentColor) center bottom / 0% 1px no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+a:focus-visible .link-underline { background-size: 100% 1px; }
+@media (hover: hover) {
+  a:hover .link-underline { background-size: 100% 1px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .link-underline { transition: background-size .28s ease-out; }
+}
+@media (forced-colors: active) {
+  a:is(:hover, :focus-visible) .link-underline { text-decoration: underline; }
+}
 .contact :focus-visible, footer :focus-visible { outline-color: #9bb0ff; }
 footer .wrap { justify-content: space-between; padding-block: 1rem; font-family: var(--mono); font-size: .82rem; }
 footer .icon { transform: rotate(180deg); }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+  .hero-quote::after {
+    transform-origin: left center;
+    animation: draw-quote-line .55s cubic-bezier(.22,.7,.28,1) calc(var(--heading-delay, 0ms) + .18s) backwards;
+  }
+  @keyframes draw-quote-line {
+    from { transform: rotate(-4deg) scaleX(0); }
+    to { transform: rotate(-4deg) scaleX(1); }
+  }
+  .project-row:focus-visible .project-row-title { transform: translateX(.16em); }
+  .scroll { --arrow-step: 3px 0; }
+  .project-links .scroll { --arrow-step: 2px -2px; }
+  footer a { --arrow-step: 0 -3px; }
+  :is(.scroll, footer a) .icon { transition: translate .22s cubic-bezier(.2,.72,.24,1); }
+  :is(.scroll, footer a):focus-visible .icon { translate: var(--arrow-step); }
+  @media (hover: hover) and (pointer: fine) {
+    :is(.scroll, footer a):hover .icon { translate: var(--arrow-step); }
+  }
+  .magnetic-link[data-pressed] .button-face { scale: .97; }
+  @media (pointer: coarse) {
+    .magnetic-link .button-face { transition: scale .18s ease-out; }
+    .magnetic-link[data-pressed] .button-face { transition-duration: .08s; }
+  }
   .contact-method .button-fill { transition-duration: .6s; }
   .hero-title { animation: arrive .65s cubic-bezier(.2,.7,.3,1) var(--heading-delay, 0ms) backwards; }
   .project-panel:not([hidden]) { animation: arrive .3s ease-out; }
@@ -448,27 +509,33 @@ footer .icon { transform: rotate(180deg); }
   nav a { font-size: .92rem; }
   dl { grid-template-columns: 1fr; gap: 1.2rem; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .project-row:hover .project-row-title { transform: none; }
-}
 
 .page-curtain {
   position: fixed;
-  inset: -2px;
+  inset: calc(-2px - var(--curve-depth)) -2px;
   z-index: 300;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .45em;
   padding: var(--gutter);
-  background: var(--blue);
   color: white;
   font-size: clamp(2.15rem, 6vw, 6.75rem);
   line-height: 1;
   letter-spacing: -.06em;
   transform: translateY(103%);
-  pointer-events: none;
 }
+.page-curtain::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  /* Overlap each SVG by a pixel to avoid a seam during fractional translation. */
+  inset: calc(var(--curve-depth) - 1px) 0;
+  background: var(--blue);
+}
+.curtain-edge { position: absolute; left: 0; fill: var(--blue); }
+.curtain-edge-top { top: 0; transform: scaleY(-1); }
+.curtain-edge-bottom { bottom: 0; }
+.curtain-caption { display: flex; align-items: center; gap: .45em; opacity: 0; }
 .curtain-mark { font-family: var(--mono); font-weight: 650; letter-spacing: -.17em; opacity: .65; }
 .interior-page { display: flex; flex-direction: column; min-height: 100svh; }
 .interior-page .masthead { position: relative; border-bottom: 1px solid var(--rule); }
@@ -700,14 +767,9 @@ nav a[aria-current]::after { opacity: 1; }
 }
 .menu-socials-list a:hover {
   color: #ffffff;
-  text-decoration: underline;
-  text-underline-offset: .25em;
 }
 
 .menu-socials-list a { display: inline-flex; align-items: center; min-height: 44px; }
-@media (min-width: 48.01rem) {
-  .interior-page .masthead { padding-right: max(var(--gutter), 8.5rem); }
-}
 @media (max-width: 48rem), (pointer: coarse) and (max-height: 32rem) {
   .masthead nav { display: none; }
   .floating-menu-wrap {
@@ -782,10 +844,6 @@ nav a[aria-current]::after { opacity: 1; }
   letter-spacing: -.035em;
   overflow-wrap: anywhere;
 }
-.direct-contact:is(:hover, :focus-visible) > :last-child {
-  text-decoration: underline;
-  text-underline-offset: .2em;
-}
 .contact-info-group {
   display: flex;
   flex-direction: column;
@@ -806,10 +864,6 @@ nav a[aria-current]::after { opacity: 1; }
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-}
-.contact-info-link:hover {
-  text-decoration: underline;
-  text-underline-offset: .25em;
 }
 .contact-social-links {
   display: flex;
@@ -914,6 +968,16 @@ nav a[aria-current]::after { opacity: 1; }
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    .project-row { view-timeline-name: --project-entry; }
+    .project-row-title {
+      animation: lift-project-title linear both;
+      animation-timeline: --project-entry;
+      animation-range: entry 0% entry 100%;
+    }
+    @keyframes lift-project-title {
+      from { translate: 0 .28em; }
+      to { translate: 0 0; }
+    }
     .work-heading, .about .statement, .next-project {
       animation: section-in linear both;
       animation-timeline: view();

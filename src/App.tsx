@@ -2,18 +2,18 @@ import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } fr
 
 import { findPage, navigation, projects } from './pages'
 import { PageTransition } from './PageTransition'
-import { MagneticLink } from './MagneticLink'
+import { MagneticLink, magneticPointerEvents } from './MagneticLink'
 import { NavigationDrawer } from './NavigationDrawer'
+import { SectionCurve } from './SectionCurve'
 
 const contactEmail = 'nawanshusharma05@gmail.com'
 const contactPhone = '+91 9509055309'
 const emailHref = `mailto:${contactEmail}`
 const phoneHref = `tel:${contactPhone.replace(/\s/g, '')}`
 
-type IconName = 'mark' | 'down' | 'up-right' | 'right' | 'mail'
+type IconName = 'down' | 'up-right' | 'right' | 'mail'
 
 const iconPaths: Record<IconName, string> = {
-  mark: 'M3 17 9 7m0 10L15 7m0 10 6-10',
   down: 'M12 3v17m-7-7 7 7 7-7',
   'up-right': 'M5 19 19 5M5 5h14v14',
   right: 'M3 12h17m-7-7 7 7-7 7',
@@ -21,7 +21,7 @@ const iconPaths: Record<IconName, string> = {
 }
 
 function Icon({ name }: { name: IconName }) {
-  return <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={name === 'mark' ? 2.8 : 2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={iconPaths[name]} /></svg>
+  return <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={iconPaths[name]} /></svg>
 }
 
 function ProjectList({ items }: { items: readonly (typeof projects)[number][] }) {
@@ -138,8 +138,8 @@ function Contact({ standalone = false }: { standalone?: boolean }) {
             <MagneticLink variant="contact-method" href={phoneHref}>{contactPhone}</MagneticLink>
           </div>
           <div className="contact-socials">
-            <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer">GitHub <Icon name="up-right" /></a>
-            <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer">LinkedIn <Icon name="up-right" /></a>
+            <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer"><span className="link-underline">GitHub</span> <Icon name="up-right" /></a>
+            <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer"><span className="link-underline">LinkedIn</span> <Icon name="up-right" /></a>
           </div>
         </div>
       </div>
@@ -150,9 +150,7 @@ function Contact({ standalone = false }: { standalone?: boolean }) {
 function ContactReveal() {
   return (
     <div className="contact-reveal">
-      <svg className="section-edge" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 0H100Q50 20 0 0Z" />
-      </svg>
+      <SectionCurve className="section-edge" />
       <Contact />
     </div>
   )
@@ -246,11 +244,11 @@ function ContactPage() {
             <div className="direct-contacts">
               <a href={emailHref} className="direct-contact">
                 <span className="contact-info-eyebrow">Email</span>
-                <span>{contactEmail}</span>
+                <span><span className="link-underline">{contactEmail}</span></span>
               </a>
               <a href={phoneHref} className="direct-contact">
                 <span className="contact-info-eyebrow">Phone</span>
-                <span>{contactPhone}</span>
+                <span><span className="link-underline">{contactPhone}</span></span>
               </a>
             </div>
 
@@ -262,10 +260,10 @@ function ContactPage() {
               <span className="contact-info-eyebrow">Socials</span>
               <div className="contact-social-links">
                 <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer" className="contact-info-link">
-                  GitHub <Icon name="up-right" />
+                  <span className="link-underline">GitHub</span> <Icon name="up-right" />
                 </a>
                 <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer" className="contact-info-link">
-                  LinkedIn <Icon name="up-right" />
+                  <span className="link-underline">LinkedIn</span> <Icon name="up-right" />
                 </a>
               </div>
             </div>
@@ -385,18 +383,25 @@ export default function App() {
 
   return (
     <div id="top" className={home ? 'home-page' : 'interior-page'}>
-      <PageTransition onNavigate={setPathname} />
+      <PageTransition label={page?.label ?? 'Page not found'} onNavigate={setPathname} />
       <NavigationDrawer key={pathname} pathname={pathname} home={home} />
       <a className="skip" href="#main">Skip to content</a>
       <header className="masthead wrap">
         <a className="brand" href="/" aria-label="Nawanshu portfolio home" aria-current={home ? 'page' : undefined}>
-          <Icon name="mark" />Portfolio
+          <svg className="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" aria-hidden="true">
+            {[3, 9, 15].map(x => (
+              <path key={x} d={`M${x} 17l6 -10 M${x} 41l6 -10`} />
+            ))}
+          </svg>
+          <span className="brand-name" aria-hidden="true">
+            <span className="brand-track">Nawanshu<span>Nawanshu</span></span>
+          </span>
         </a>
         <nav aria-label="Main navigation">
           {navigation.map(item => (
-            <a key={item.path} href={item.path}
+            <a key={item.path} href={item.path} {...magneticPointerEvents}
               aria-current={page?.path === item.path ? 'page' : page?.path.startsWith(item.path + '/') ? 'location' : undefined}>
-              {item.label}
+              <span>{item.label}</span>
             </a>
           ))}
         </nav>

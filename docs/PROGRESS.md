@@ -354,3 +354,67 @@ Added Xwhispers as the newest project on Home and Work. Its detail page at `/wor
 Changed `src/pages.ts`, `src/App.tsx`, `docs/INFO.md`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
 
 `npm run build` passed. Edge checks at 390px and 1440px verified the listings, detail navigation, live link destination, direct reload, viewport fit, and next-project repository link. The supplied demo URL returned HTTP 200 and its HTML title was “Smalltalk.”
+
+## 2026-11-24 — Homepage contact button motion
+
+The Get in touch button slides right into its original alignment as the contact section enters the viewport and retraces its path on upward scroll. It uses the section’s existing CSS scroll timeline. Reduced-motion users and browsers without scroll timeline support see the button in its resting position.
+
+Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge checks at 390px, 768px, and 1440px measured 24px, 31px, and 56px of travel, respectively. Verified reverse scrolling, viewport fit, reduced motion, and keyboard navigation to Contact. The change is local.
+
+## 2026-11-24 — Hero and project list details
+
+The orange stroke under the homepage quote draws in as the page opens. Project titles on Home and Work rise slightly as their rows enter view and follow the scroll back down in reverse. A short cobalt stroke marks the row under the mouse or keyboard focus. With reduced motion the quote and titles are static and the focus stroke appears immediately.
+
+Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge at 320px, 390px, and 1440px verified the quote stroke, forward and reverse title movement, viewport width, and reduced motion. Touch emulation and desktop keyboard checks opened Xwhispers. Desktop hover and keyboard focus checks verified the accent. Changes are local.
+
+## 2026-11-24 — Project rows and button feedback
+
+Removed the cobalt hover and focus stroke from the project lists. Project titles shift slightly on hover or keyboard focus while row padding stays fixed. The Explore work, project action, and Back to top arrows move a few pixels in their pointing direction. Magnetic buttons compress on touch and release on lift or cancellation. Reduced motion keeps these details static.
+
+Changed `src/index.css`, `src/MagneticLink.tsx`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge tests at 1440px verified arrow hover, release and keyboard focus, stable project-row padding, removal of the accent line, focus visibility, and project navigation. At 390px, touch emulation verified the pressed scale, cancellation, reduced motion, and navigation to Work. Changes are local.
+
+## 2026-11-24 — Selecting Home on the homepage
+
+Reproduced a second document request when selecting Home in the drawer. The navigation handler now recognizes links to the current portfolio page, lets the drawer unlock the background, focuses the main content, and returns to the top. Repeated clicks keep the current history entry.
+
+Changed `src/PageTransition.tsx`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge tests at 1440px and 390px covered keyboard and touch drawer selection, repeated clicks on the header logo, scroll position, focus, history length, and Back and Forward through Work. Each run recorded a single document request, including the initial load. Also checked reduced motion at 390px. The fix is local.
+
+## 2026-11-24 — Blue page transition
+
+Page links raise the blank blue curtain over 580 ms. Once it covers the viewport, the destination renders underneath. After 80 ms the title fades and lifts into place over 300 ms, holds for 320 ms, then travels upward with the curtain over 720 ms. Reduced motion switches pages immediately.
+
+Changed `src/PageTransition.tsx`, `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge frame sampling at 1440px (Work via the header) and 390px (About via the touch menu) verified the blank rise, title appearance on the covered screen, reading pause, and shared upward exit. Also checked Back, reduced motion, and navigation within one document. Changes are local.
+
+## 2026-11-24 — Curved transition edges
+
+Contact and the blue page panel now share the same SVG arc and responsive depth. The upper edge bows upward during entry and the lower edge bows downward during departure. Both sit outside the viewport while the title is held.
+
+Changed `src/SectionCurve.tsx`, `src/PageTransition.tsx`, `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge screenshot sampling measured matching entry and exit curves of 38px at a 390px viewport and 83px at 1440px. Verified full blue coverage at all four corners during the title hold, the hidden title during entry, and immediate reduced-motion navigation. Changes are local.
+
+## 2026-11-24 — Navbar hover
+
+Work, About, and Contact share the existing magnetic pointer tracking. Their labels and dots move up to 4px horizontally and 2px vertically while the anchors stay fixed. Moving away eases them back to center.
+
+Changed `src/App.tsx`, `src/MagneticLink.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge at 1440px verified both movement directions, return to center, stable anchor bounds, reduced motion, and keyboard navigation. Touch-emulated menu navigation passed at 390px. Changes are local.
+
+Increased the navbar pull slightly, with limits of 5px horizontally and 2.5px vertically. Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. At 1440px, Edge measured horizontal offsets of 3.1–4.8px near the link edges and verified stable click targets, return to center, and reduced motion. The adjustment is local.
+
+## 2026-11-24 — Social and contact link underlines
+
+Underlines expand from the center of each text label on hover and keyboard focus, then retract on release. Applied this to the social links on Home, in the drawer, and on Contact, including the drawer Email link and the Contact page’s email and phone values.
+
+Changed `src/App.tsx`, `src/NavigationDrawer.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge verified intermediate and final underline widths, center alignment, and retraction on all nine links, plus keyboard focus, immediate reduced-motion feedback, the forced-colors underline, and viewport fit at 320px. Changes are local.
+
+## 2026-11-24 — Navbar name and mark
+
+The navbar home link now reads Nawanshu. On hover the three slashes roll up and return from below, while the name slides right and returns from the left. The two parts move within clipped areas inside the same home link.
+
+Changed `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge verified both directions, final alignment, return to rest and stable link bounds across two desktop hover cycles. Checked reduced motion, keyboard activation, and touch navigation home at 320px. Changes are local.
+
+Refined the mark so each slash starts 100 ms after the previous one, from left to right. Each exits upward and returns from below. Changed `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge frame sampling verified separate departures and arrivals, final alignment and reset. Also checked the name slide, reduced motion, and navigation home. The change is local.
+
+## 2026-11-24 — Interior menu visibility
+
+On interior desktop pages, the floating menu button appears after the navbar links scroll fully out of view and hides when they return. The header now uses the standard right gutter. Compact layouts keep the menu available at the top.
+
+Changed `src/NavigationDrawer.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge checked Work, About, and Contact at the top, with the navbar partially visible, after scrolling it offscreen, and on return. Also checked opening and closing the drawer, compact navigation, resizing back to desktop, and the existing homepage scroll threshold. Changes are local.

@@ -41,8 +41,24 @@ function followPointer(event: PointerEvent<HTMLElement>) {
 }
 
 function releasePointer(event: PointerEvent<HTMLElement>) {
+  delete event.currentTarget.dataset.pressed
   event.currentTarget.style.removeProperty('--pull-x')
   event.currentTarget.style.removeProperty('--pull-y')
+}
+
+export const magneticPointerEvents = {
+  onPointerMove: followPointer,
+  onPointerLeave: releasePointer,
+  onPointerCancel: releasePointer,
+}
+
+const touchFeedback = {
+  onPointerDown(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType === 'touch') event.currentTarget.dataset.pressed = ''
+  },
+  onPointerUp(event: PointerEvent<HTMLElement>) {
+    delete event.currentTarget.dataset.pressed
+  },
 }
 
 export function MagneticLink(props: MagneticProps) {
@@ -64,9 +80,8 @@ export function MagneticLink(props: MagneticProps) {
         className={fullClassName}
         aria-label={label}
         onClick={onClick}
-        onPointerMove={followPointer}
-        onPointerLeave={releasePointer}
-        onPointerCancel={releasePointer}
+        {...touchFeedback}
+        {...magneticPointerEvents}
       >
         {innerContent}
       </button>
@@ -81,9 +96,8 @@ export function MagneticLink(props: MagneticProps) {
       className={fullClassName}
       aria-label={label}
       onClick={onClick}
-      onPointerMove={followPointer}
-      onPointerLeave={releasePointer}
-      onPointerCancel={releasePointer}
+      {...touchFeedback}
+      {...magneticPointerEvents}
     >
       {innerContent}
     </a>

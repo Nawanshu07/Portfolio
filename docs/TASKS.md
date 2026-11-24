@@ -4,3 +4,13 @@
 - [x] Lower the name in the portrait hero and give the email, phone number, and message form distinct space on mobile.
 - [x] Match the light page backgrounds to the supplied pale peach reference.
 - [x] Feature Xwhispers in Recent work and the Work index, with a project page linking to the live chat app.
+- [x] Move the homepage Get in touch button horizontally with the contact section reveal.
+- [x] Animate the hero quote underline and project titles as rows enter view.
+- [x] Remove the project-row accent line and refine title movement, directional arrows, and touch press feedback.
+- [x] Make selecting Home again close the drawer and return to the top without reloading the page.
+- [x] Slow the page-link transition so the blue panel covers the screen before the destination title appears and both exit upward together.
+- [x] Use the Contact section’s curve on the rising and departing edges of the blue transition.
+- [x] Add and fine-tune the magnetic hover on Work, About, and Contact in the top navbar.
+- [x] Animate the social and contact text-link underlines outward from the center.
+- [x] Rename the navbar home link to Nawanshu, roll the three slashes upward in sequence, and slide the name rightward on hover.
+- [x] Show the interior desktop menu button only after the navbar links scroll out of view.

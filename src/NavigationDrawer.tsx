@@ -20,25 +20,28 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
   const animFrameRef = useRef<number | null>(null)
   const hasOpenedRef = useRef(false)
 
-  // Scroll tracking: on home page, appear after hero (scrollY > 220px)
   useEffect(() => {
+    const nav = document.querySelector('.masthead nav')!
     function onScroll() {
-      setIsScrolled(window.scrollY > 220)
+      setIsScrolled(home ? window.scrollY > 220 : nav.getBoundingClientRect().bottom <= 0)
     }
 
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [home])
 
-  // Floating button visible on interior pages immediately, or on scroll on home page, or whenever open
   useEffect(() => {
     const query = matchMedia(compactMenu)
     const sync = () => setCompact(query.matches)
     query.addEventListener('change', sync)
     return () => query.removeEventListener('change', sync)
   }, [])
-  const isButtonVisible = compact || !home || isScrolled || isOpen
+  const isButtonVisible = compact || isScrolled || isOpen
 
   // Magnetic hover tracking for the floating button wrapper
   function handlePointerMove(e: PointerEvent<HTMLDivElement>) {
@@ -255,13 +258,13 @@ export function NavigationDrawer({ pathname, home }: NavigationDrawerProps) {
             <p className="menu-section-eyebrow">Socials</p>
             <div className="menu-socials-list">
               <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer" onClick={() => setIsOpen(false)}>
-                GitHub
+                <span className="link-underline">GitHub</span>
               </a>
               <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer" onClick={() => setIsOpen(false)}>
-                LinkedIn
+                <span className="link-underline">LinkedIn</span>
               </a>
               <a href="mailto:nawanshusharma05@gmail.com" onClick={() => setIsOpen(false)}>
-                Email
+                <span className="link-underline">Email</span>
               </a>
             </div>
           </div>
