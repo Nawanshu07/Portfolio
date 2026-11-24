@@ -6,6 +6,13 @@ export const navigation = [
 
 export const projects = [
   {
+    title: 'Xwhispers',
+    path: '/work/xwhispers',
+    type: 'Web Application',
+    description: 'A web-based chat system for exchanging private messages.',
+    liveHref: 'https://xwhispers.vercel.app/',
+  },
+  {
     title: 'Virtual Voice Assistant',
     path: '/work/virtual-voice-assistant',
     type: 'Interaction & Automation',

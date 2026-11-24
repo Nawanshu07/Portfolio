@@ -346,3 +346,11 @@ The production build passed. Checked responsive bounds on all seven routes at 11
 Applied a shared pale peach color (`#f7f2e8`) to the light page backgrounds, homepage header and hero, light button faces, and curved edge above Contact. Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
 
 The production build passed. Edge checks at 390px and 1440px verified the new canvas on Home, Work, About, and a project page, plus the charcoal Contact page background. Reviewed the mobile hero screenshot. The change is local.
+
+## 2026-11-24 — Xwhispers
+
+Added Xwhispers as the newest project on Home and Work. Its detail page at `/work/xwhispers` links to the live chat app. Repository buttons now appear only for projects with a supplied repository URL.
+
+Changed `src/pages.ts`, `src/App.tsx`, `docs/INFO.md`, `docs/TASKS.md`, and `docs/PROGRESS.md`.
+
+`npm run build` passed. Edge checks at 390px and 1440px verified the listings, detail navigation, live link destination, direct reload, viewport fit, and next-project repository link. The supplied demo URL returned HTTP 200 and its HTML title was “Smalltalk.”

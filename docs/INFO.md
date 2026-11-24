@@ -21,6 +21,11 @@ This file is the factual source for portfolio content. Update the `Needs confirm
 
 ## Featured projects
 
+### Xwhispers
+
+- **Live site:** https://xwhispers.vercel.app/
+- **Summary:** A web-based chat system for exchanging private messages.
+
 ### Virtual Voice Assistant
 
 - **Repository:** https://github.com/Nawanshu07/Voice-Assistant

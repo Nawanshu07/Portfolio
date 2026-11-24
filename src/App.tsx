@@ -178,9 +178,11 @@ function ProjectPage({ project }: { project: typeof projects[number] }) {
         <div>
           <p className="project-summary">{project.description}</p>
           <div className="project-links">
-            <MagneticLink variant="scroll" href={project.href} target="_blank">
-              Repository <span className="arrow-disc"><Icon name="up-right" /></span>
-            </MagneticLink>
+            {project.href && (
+              <MagneticLink variant="scroll" href={project.href} target="_blank">
+                Repository <span className="arrow-disc"><Icon name="up-right" /></span>
+              </MagneticLink>
+            )}
             {project.liveHref && (
               <MagneticLink variant="scroll" href={project.liveHref} target="_blank">
                 Live demo <span className="arrow-disc"><Icon name="up-right" /></span>
