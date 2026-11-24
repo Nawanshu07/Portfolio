@@ -260,10 +260,10 @@ function ContactPage() {
               <span className="contact-info-eyebrow">Socials</span>
               <div className="contact-social-links">
                 <a href="https://github.com/Nawanshu07" target="_blank" rel="noreferrer" className="contact-info-link">
-                  <span className="link-underline">GitHub</span> <Icon name="up-right" />
+                  <span className="link-underline">GitHub</span> <span className="social-arrow" aria-hidden="true"><span className="social-arrow-track"><Icon name="up-right" /><Icon name="up-right" /></span></span>
                 </a>
                 <a href="https://www.linkedin.com/in/nawanshu-sharma-104619351" target="_blank" rel="noreferrer" className="contact-info-link">
-                  <span className="link-underline">LinkedIn</span> <Icon name="up-right" />
+                  <span className="link-underline">LinkedIn</span> <span className="social-arrow" aria-hidden="true"><span className="social-arrow-track"><Icon name="up-right" /><Icon name="up-right" /></span></span>
                 </a>
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function App() {
         <a className="brand" href="/" aria-label="Nawanshu portfolio home" aria-current={home ? 'page' : undefined}>
           <svg className="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" aria-hidden="true">
             {[3, 9, 15].map(x => (
-              <path key={x} d={`M${x} 17l6 -10 M${x} 41l6 -10`} />
+              <path key={x} d={`M${x} 17l6 -10 M${x - 14.4} 41l6 -10`} />
             ))}
           </svg>
           <span className="brand-name" aria-hidden="true">

@@ -14,3 +14,9 @@
 - [x] Animate the social and contact text-link underlines outward from the center.
 - [x] Rename the navbar home link to Nawanshu, roll the three slashes upward in sequence, and slide the name rightward on hover.
 - [x] Show the interior desktop menu button only after the navbar links scroll out of view.
+- [x] Move the navbar slashes diagonally along their angle.
+- [x] Slow the button hover fill animation.
+- [x] Refine the Contact page message form styling.
+- [x] Animate the Contact page social arrows diagonally on hover and focus.
+- [x] Fix homepage horizontal overflow and refine the mobile project list.
+- [ ] Preserve or warn about contact drafts before navigation.

@@ -418,3 +418,31 @@ Refined the mark so each slash starts 100 ms after the previous one, from left t
 On interior desktop pages, the floating menu button appears after the navbar links scroll fully out of view and hides when they return. The header now uses the standard right gutter. Compact layouts keep the menu available at the top.
 
 Changed `src/NavigationDrawer.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge checked Work, About, and Contact at the top, with the navbar partially visible, after scrolling it offscreen, and on return. Also checked opening and closing the drawer, compact navigation, resizing back to desktop, and the existing homepage scroll threshold. Changes are local.
+
+## 2026-11-25 — Diagonal slash motion
+
+The three navbar slashes now move up and right along their angle and enter from below left, preserving their stagger. Changed `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge verified the final diagonal translation and reduced-motion behavior. The change is local.
+
+## 2026-11-25 — Slower button fills
+
+Increased the button fill transition to 0.7 seconds across button styles. Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge verified the timing and completed fill on four button variants and confirmed reduced motion remains immediate. Changes are local.
+
+## 2026-11-25 — Contact form styling
+
+Refined the message panel with a blue top edge, stronger heading, monospaced labels, larger dark inputs, and blue focus feedback. Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Reviewed Edge screenshots at 390px and 1440px and verified field entry, viewport width, and mocked successful submission and reset. No live message was sent. Changes are local.
+
+## 2026-11-25 — Contact social arrows
+
+The GitHub and LinkedIn arrows travel up and right on hover or keyboard focus and return from below left. Changed `src/App.tsx`, `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge verified the final arrow alignment on both links and reduced-motion behavior. Changes are local.
+
+## 2026-11-25 — Interface review
+
+Reviewed the local site and animation code against the Web Interface Guidelines. The production build passed. Edge checks at 320, 390, 768, and 1440 pixels covered Home, Work, About, Contact, and Xwhispers with reduced motion. Home overflowed by 2, 8, and 19 pixels at the first three widths. A typed contact draft was lost after navigating to Work and using Back. The configured page transition takes about two seconds and ignores additional in-site navigation while the cover is moving. No physical-device or other-engine testing was performed.
+
+Changed `docs/TASKS.md` and `docs/PROGRESS.md` for this review. The identified issues remain open.
+
+## 2026-11-25 — Mobile homepage refinement
+
+Constrained the portrait hero grid and scaled its name to fit narrow screens. Gave the mobile Recent work label a cobalt accent and the project arrows outlined circular treatments with more room in each row. Desktop styles remain outside these mobile rules.
+
+Changed `src/index.css`, `docs/TASKS.md`, and `docs/PROGRESS.md`. The production build passed. Edge checked Home, Work, About, Contact, and Xwhispers at 320×640, 390×844, 430×932, 768×1024, 844×390, and 1440×900 with no horizontal overflow. Reviewed the 390px homepage screenshot and tested touch navigation to a project and Contact plus message entry. Physical-device checks and the contact draft issue remain open. Changes are local.
